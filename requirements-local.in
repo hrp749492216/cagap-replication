@@ -1,0 +1,21 @@
+# Optional local-inference dependencies for operators serving local/self-hosted
+# subjects or A4 validators from local Apple Silicon checkpoints. This lock is a superset of
+# `requirements.lock`; install it instead of the core lock on MLX machines.
+# Regeneration procedure (run from repo root, with Python 3.11):
+#   python -m pip install pip-tools==7.4.1
+#   pip-compile --generate-hashes --allow-unsafe --output-file=requirements-local.lock requirements-local.in
+# Then verify with `pip install --require-hashes -r requirements-local.lock`.
+#
+# `sentence-transformers==3.4.1` is intentionally absent from the active local
+# lock: it requires `transformers<5`, while `mlx-lm==0.31.3` requires
+# `transformers>=5`. The active codebase does not import sentence-transformers.
+
+-r requirements.in
+
+# --- Local-inference path (local/self-hosted subjects; A4 validators OLMo + Granite) ---
+torch
+transformers>=5
+mlx==0.31.2
+mlx-lm==0.31.3
+bitsandbytes==0.49.0
+ctranslate2==4.7.1

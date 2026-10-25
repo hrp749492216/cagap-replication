@@ -1,0 +1,167 @@
+{
+  "schema_version": "disabled_format_control.locked_inputs.v3",
+  "status": "locked_before_first_official_dispatch",
+  "locked_at_utc": "2026-09-05T23:49:30Z",
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_openrouter_n3_eligible.json",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-05-v3-OPENROUTER-N3-ELIGIBLE",
+  "protocol_sha256": "2a0708d28269914dd1ebada131febf72a882bc8d318abc90f08a3e5a6ab57d52",
+  "population": {
+    "subjects": [
+      "llama-3.3-70b-instruct",
+      "grok-4.3",
+      "claude-opus-4-7",
+      "gpt-5.5"
+    ],
+    "execution_order": [
+      "llama-3.3-70b-instruct",
+      "grok-4.3",
+      "claude-opus-4-7",
+      "gpt-5.5"
+    ],
+    "analysis_sets_per_arm": 4608,
+    "full_rows": 13824,
+    "excluded_canary_rows": 12
+  },
+  "determinism": {
+    "independent_generations": 2,
+    "request_files_byte_identical": true,
+    "verification_method": "Two independent in-memory generations per profile were byte-compared with every checked-in request file."
+  },
+  "full": {
+    "profile": "full",
+    "analysis_inclusion": true,
+    "batches_dir": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/batches",
+    "manifest_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/batches/disabled_format_control_manifest.json",
+    "manifest_sha256": "1fe62d08de6568ef041e4f2b31acbfbd770f29cf76d00a1bedf5f39d38d97583",
+    "row_count": 13824,
+    "per_subject_rows": {
+      "claude-opus-4-7": 3456,
+      "gpt-5.5": 3456,
+      "grok-4.3": 3456,
+      "llama-3.3-70b-instruct": 3456
+    },
+    "arm_counts": {
+      "DISABLED_BASELINE": 4608,
+      "DISABLED_FORMAT_JSON": 4608,
+      "TOOL_CONTEMPORANEOUS": 4608
+    },
+    "route_counts": {
+      "openrouter": 13824
+    },
+    "output_files": {
+      "input_claude-opus-4-7.jsonl": {
+        "rows": 3456,
+        "sha256": "9f8378ec4576d328fbf74d394473ae58e86d4c7e9b6a059fd11804e8cdae675d"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 3456,
+        "sha256": "c0c34b5c2923639d654dc67824927a2fce820a641717fb7856fc22eeb4f35475"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 3456,
+        "sha256": "91560d1131ff8e62cde28d9b18dd1d37585f8914dca84b7d67d34ca4edebb136"
+      },
+      "input_llama-3.3-70b-instruct.jsonl": {
+        "rows": 3456,
+        "sha256": "32413c3bedd9f99ea538d70619a4f802aa21e40fc06ccc50dbddaee2817ee9e6"
+      }
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "method": "conservative UTF-8-byte input-token ceiling plus configured maximum output tokens; route-specific current pricing overlays; excludes local GPU rental",
+      "claude-opus-4-7": 421.15203,
+      "gpt-5.5": 245.870415,
+      "grok-4.3": 52.264327,
+      "llama-3.3-70b-instruct": 19.684612,
+      "total": 738.971385,
+      "runtime_note": "Whole-shard maxima are reporting bounds. Synchronous dispatch enforces smaller receipt-bound runtime caps after every durable response while reserving the next worst-case request."
+    }
+  },
+  "canary": {
+    "profile": "canary",
+    "analysis_inclusion": false,
+    "batches_dir": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/batches",
+    "manifest_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/batches/disabled_format_control_manifest.json",
+    "manifest_sha256": "378e6a261e63fbdab523997dd2e07c4d9147bc4a7408c2cc0ff95b134424b9e2",
+    "row_count": 12,
+    "per_subject_rows": {
+      "claude-opus-4-7": 3,
+      "gpt-5.5": 3,
+      "grok-4.3": 3,
+      "llama-3.3-70b-instruct": 3
+    },
+    "arm_counts": {
+      "DISABLED_BASELINE": 4,
+      "DISABLED_FORMAT_JSON": 4,
+      "TOOL_CONTEMPORANEOUS": 4
+    },
+    "route_counts": {
+      "openrouter": 12
+    },
+    "output_files": {
+      "input_claude-opus-4-7.jsonl": {
+        "rows": 3,
+        "sha256": "d9653699edd9ee17679e1ac8266a0ca2e24da1fa902927b6031cb584e3aa43d2"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 3,
+        "sha256": "7c6de15792fad14dba8aa084184100d516482eadf35e0c4ab4c367dd71f0688a"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 3,
+        "sha256": "c228b773c8077097911f9db7bc408506fc0b7bf1f63a411e801799ec469b3a39"
+      },
+      "input_llama-3.3-70b-instruct.jsonl": {
+        "rows": 3,
+        "sha256": "0587698b8356bddf5eced105634d3a1a992b0feb9cc15ea5b25437bf37b1d970"
+      }
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "method": "conservative UTF-8-byte input-token ceiling plus configured maximum output tokens; route-specific current pricing overlays; excludes local GPU rental",
+      "claude-opus-4-7": 0.364565,
+      "gpt-5.5": 0.213355,
+      "grok-4.3": 0.04433,
+      "llama-3.3-70b-instruct": 0.017183,
+      "total": 0.639433
+    }
+  },
+  "spending_plan": {
+    "openrouter": {
+      "authorized_total_usd": 140,
+      "spent_before_official_usd": 1.22860691,
+      "remaining_before_official_usd": 138.77139309,
+      "profile_subject_runtime_caps_usd": {
+        "canary": {
+          "llama-3.3-70b-instruct": 0.03,
+          "grok-4.3": 0.06,
+          "claude-opus-4-7": 0.5,
+          "gpt-5.5": 0.25
+        },
+        "full": {
+          "llama-3.3-70b-instruct": 8,
+          "grok-4.3": 16,
+          "claude-opus-4-7": 80,
+          "gpt-5.5": 33.93139309
+        }
+      },
+      "allocated_total_usd": 138.77139309,
+      "planning_estimate_full_usd": {
+        "low_usd": 83.05,
+        "high_usd": 85.68,
+        "method": "Scale route-specific observed diagnostic or historical per-row input/output token costs to 3,456 rows per subject at the exact frozen OpenRouter prices."
+      }
+    }
+  },
+  "pricing_snapshots": {
+    "config/api_pricings_native_providers.json": "cd3c293269416e0ed960b4827245ec6782d58cbd4beff3c641d476127b8c6436",
+    "config/openrouter_pricing_current.json": "6c1eb34c2c9bbcd1d9b168d24f4ccca34f6a6eed603daf1ef9f87af1bdd37502"
+  },
+  "execution_state": {
+    "submission_status": "not_submitted",
+    "official_canary_started": false,
+    "official_full_run_started": false,
+    "official_responses_present": false,
+    "official_labels_present": false,
+    "official_analysis_present": false,
+    "next_gate": "Create and validate the prospective exploratory governance amendment and execution authorization, then dispatch the 12 excluded canary requests in frozen order."
+  }
+}

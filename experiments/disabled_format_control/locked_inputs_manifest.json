@@ -1,0 +1,193 @@
+{
+  "artifact_role": "locked generated-input checksum manifest; not a results artifact",
+  "control_outcomes_observed": false,
+  "dispatch_status": "not_submitted",
+  "pre_dispatch_revision": "v2 supersedes the undispatched v1 package; no control outcomes were observed before this revision",
+  "external_execution_blockers": {
+    "hosted": "explicit spending authorization absent; current model availability not tested",
+    "local": "CAGAP_MODEL_ROOT, CAGAP_CHECKPOINT_MANIFEST_DIR, and verified inference endpoints absent"
+  },
+  "full": {
+    "analysis_inclusion": true,
+    "arm_counts": {
+      "DISABLED_BASELINE": 11520,
+      "DISABLED_FORMAT_JSON": 11520
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "claude-opus-4-7": 282.14082,
+      "gemini-3.5-flash": 98.89479,
+      "gpt-5.5": 164.69217,
+      "grok-4.3": 28.146564,
+      "kimi-k2.6": 27.910754,
+      "total": 601.785098
+    },
+    "generated_at": "2026-08-15T18:22:30.575152+00:00",
+    "output_dir": "outputs/postreg_disabled_format_control/batches",
+    "output_files": {
+      "input_claude-opus-4-7.jsonl": {
+        "rows": 2304,
+        "sha256": "c9385dfffda2a1c0b26056df1b143bfda3d099b2c4fc29f743b7f45d87390f67"
+      },
+      "input_gemini-3.5-flash.jsonl": {
+        "rows": 2304,
+        "sha256": "ccd56f3d8604b52e56f7e61af16cf8bb86af0f2d766e0b912dca89b9a55d5068"
+      },
+      "input_gemma-4-31b-it.jsonl": {
+        "rows": 2304,
+        "sha256": "329efb8cfa3b3faef705212aec9f827342749980741656c2d7138d0ff36f8f7a"
+      },
+      "input_glm-4.7-flash.jsonl": {
+        "rows": 2304,
+        "sha256": "c6c17219783d4b039a4f514c3d3006ab08d863288e232caec6aea77754ea589b"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 2304,
+        "sha256": "6915789629c954a89d3f535bf5d07a22dbb40022e21574de5c48caf3aad089d6"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 2304,
+        "sha256": "e1337c5bc1783d94b64c401fe01f317e2d9d5ca38b2f5582935dbc65fabf1170"
+      },
+      "input_kimi-k2.6.jsonl": {
+        "rows": 2304,
+        "sha256": "232b751e99f07a68438e480fdd54453bf0435fe42d2ac95a42074e44b46d5e86"
+      },
+      "input_llama-3.3-70b-instruct.jsonl": {
+        "rows": 2304,
+        "sha256": "7450a8e678aa17148508ddfa0f0ab365365991e5b69409a7377d9bdc4b9b3ae6"
+      },
+      "input_mistral-medium-3.5-128b.jsonl": {
+        "rows": 2304,
+        "sha256": "b4cf66143464980f0e199d89c5684cd113dd09cc4ed412ae87e52bec1199a32a"
+      },
+      "input_qwen3.6-35b-a3b.jsonl": {
+        "rows": 2304,
+        "sha256": "f4d4b25297154a8fe942494957dcd136bb4ab4e74394f5343db71a7465f3a0a1"
+      }
+    },
+    "route_counts": {
+      "local": 11520,
+      "native": 6912,
+      "openrouter": 4608
+    },
+    "row_count": 23040
+  },
+  "canary": {
+    "analysis_inclusion": false,
+    "arm_counts": {
+      "DISABLED_BASELINE": 10,
+      "DISABLED_FORMAT_JSON": 10
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "claude-opus-4-7": 0.244235,
+      "gemini-3.5-flash": 0.085829,
+      "gpt-5.5": 0.142912,
+      "grok-4.3": 0.023879,
+      "kimi-k2.6": 0.024014,
+      "total": 0.520869
+    },
+    "generated_at": "2026-08-15T18:22:35.538212+00:00",
+    "output_dir": "outputs/postreg_disabled_format_control/canary/batches",
+    "output_files": {
+      "input_claude-opus-4-7.jsonl": {
+        "rows": 2,
+        "sha256": "f4c031af0b7d1c6ad2dbedb2303fc8f7531b80ee546570db433f413549d6d308"
+      },
+      "input_gemini-3.5-flash.jsonl": {
+        "rows": 2,
+        "sha256": "f7dfe5ac1f05bf66f37ae64d2de69b9f65c70bd79450883c2efc113d9c91f966"
+      },
+      "input_gemma-4-31b-it.jsonl": {
+        "rows": 2,
+        "sha256": "03397ebe1d6bca6c0c31b0fe12f45c1bd80062afbd29611dee82b33ba617a728"
+      },
+      "input_glm-4.7-flash.jsonl": {
+        "rows": 2,
+        "sha256": "9aaab7d1801b51d61f181616ee84c6ef90af0f35cc0984ea684f9fa9bb5df5f5"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 2,
+        "sha256": "e3c51034ef3522c51e9e7bef8ce096ff1e0200c645fa7df8deb7a97a9249ff1b"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 2,
+        "sha256": "eb9fc40c157fd9457d7106fee2d110c40a6be34c00c03b1cc3fa5ef69ddb5e7a"
+      },
+      "input_kimi-k2.6.jsonl": {
+        "rows": 2,
+        "sha256": "3b6a6c6c71ede971b5d88f561323da446ae26171f5b006a79a64b1d742a477ce"
+      },
+      "input_llama-3.3-70b-instruct.jsonl": {
+        "rows": 2,
+        "sha256": "21db724b191a1de66b0c8af952dc8d7fdc75ce8ca4c0f8f79f5595c0ccb23316"
+      },
+      "input_mistral-medium-3.5-128b.jsonl": {
+        "rows": 2,
+        "sha256": "d4442dac465d1a9c7f6d0748533f047cbacd0b152fb87f4dc8af371161ffb29e"
+      },
+      "input_qwen3.6-35b-a3b.jsonl": {
+        "rows": 2,
+        "sha256": "19c6a5e26453d68d9b68acb90c78c1caa14569327635edbd1e432592b1c17e06"
+      }
+    },
+    "row_count": 20
+  },
+  "implementation_sha256": {
+    "paper/addenda/DISABLED_FORMAT_CONTROL_2026-08-15.md": "a6acbf179f1f4ff4d047e7e46284d258322ad2e4a5548aedd20fd6fc765e1420",
+    "schemas/run_record.schema.json": "ab23f4c913d4d2d62e7248a32250b8630415ccfbb630baf8fb3c7b2bb2cad68b",
+    "scripts/analyze_disabled_format_control.py": "d1ddf56f5bfe5009d877abc62a483f205caa16851025936207b3bae52b5bdf68",
+    "scripts/fetch_native_batch_results.py": "1afce68ef1a2a2586f03fd2c3f670e04fe0a87224ff93a5f72182e4403d5096e",
+    "scripts/grade_subject_responses.py": "7ab20f017c04e0a447d76d4cd29158f86b0ff4faff94c2f6b1a33f6577e185c8",
+    "scripts/run_disabled_format_control.py": "60afe7f136c0416d2bce3f34ef216ec32207ebf9afb27d12dc9101a3217e0e01",
+    "scripts/run_local_subjects.py": "21126d2a583541cefa07fd35fa3ea90006e73b471e0a93ec1f85670ecce19540",
+    "scripts/run_synthetic_prompts.py": "af0db446e170bf56635fc3752b1085cf0e590c1865102899f55e31fc32bfae45",
+    "tests/test_disabled_format_control.py": "7279579b4b1fe59fc02b5cec1f1d9327665077b0b2928126e28dbf7a3f11d12d"
+  },
+  "execution_pricing_refresh": {
+    "refreshed_at_utc": "2026-08-08T04:05:27Z",
+    "scientific_protocol_changed": false,
+    "generated_request_payloads_changed": false,
+    "input_checksums_changed": false,
+    "cost_gate_separated_from_frozen_roster_at_utc": "2026-08-08T04:25:02Z",
+    "scientific_roster_sha256": "cd13e61ecc1a083f66b5159555f13461cabda5c55ee2a75664ee671077c8bbe1",
+    "cost_gate_pricing_overlays": {
+      "native": {
+        "path": "config/api_pricings_native_providers.json",
+        "sha256": "cd3c293269416e0ed960b4827245ec6782d58cbd4beff3c641d476127b8c6436"
+      },
+      "openrouter": {
+        "path": "config/openrouter_pricing_current.json",
+        "sha256": "5e4c55d8465f6abc99bdc63f5ff30043983d8f8a5b4a67ba1ceeb0b1b39332b7"
+      }
+    },
+    "reason": "xAI's current grok-4.3 Batch API discount is 20%, replacing the earlier 50% budgeting assumption. For downstream judging, Mistral's current billing page links Mistral Large to exact model mistral-large-2512 and states $2 / $6 standard pricing with a 50% batch discount; the higher $1 / $3 batch rates replace the stale lower assumption despite a conflicting lower price still shown on the linked model card.",
+    "sources": {
+      "xai_pricing": "https://docs.x.ai/developers/pricing",
+      "xai_live_model_catalog": "GET https://api.x.ai/v1/models/grok-4.3 at 2026-08-07T22:14:19Z",
+      "mistral_model_card": "https://docs.mistral.ai/models/mistral-large-3-25-12",
+      "mistral_pricing": "https://mistral.ai/pricing",
+      "mistral_live_model_catalog": "GET https://api.mistral.ai/v1/models/mistral-large-2512 at 2026-08-08T04:10:50Z; exact model and alias confirmed, pricing field absent",
+      "openrouter_live_model_catalog": "GET https://openrouter.ai/api/v1/models at 2026-08-08T04:05:27Z"
+    },
+    "previous_hosted_ceiling_usd": {
+      "full": 591.230137,
+      "canary": 0.511914
+    },
+    "current_hosted_ceiling_usd": {
+      "full": 601.785098,
+      "canary": 0.520869
+    },
+    "mistral_large_2512_judge_usd_per_1m_tokens": {
+      "native_standard_input": 2.0,
+      "native_standard_output": 6.0,
+      "native_batch_input": 1.0,
+      "native_batch_output": 3.0,
+      "openrouter_input": 0.5,
+      "openrouter_cached_input": 0.05,
+      "openrouter_output": 1.5
+    }
+  },
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-08-15-v2",
+  "protocol_sha256": "eca0b659c5f71b51b6a01b037030537ddbec4a8db0407c64fd3d64638dc1a9c0",
+  "results_status": "no responses, labels, estimates, or conclusions exist"
+}

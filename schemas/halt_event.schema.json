@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/halt_event.schema.json",
+  "title": "Aligned Corpus Stratum-Halt Event",
+  "description": "Written only when the deterministic stratum-halt protocol fires. Two fatal conditions trigger halt: stratum_exhaustion (a stratum requires a 2nd substitution beyond its 1-deep reserve) and reserve_unavailable (the matched reserve itself failed validation in the same run). On halt the selector exits non-zero and no final corpus is stamped — manual re-design of the failing stratum is required before another run.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["reason", "stratum", "primary_id", "timestamp", "commit_sha"],
+  "properties": {
+    "reason": {
+      "type": "string",
+      "enum": ["stratum_exhaustion", "reserve_unavailable"]
+    },
+    "stratum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "assigned_style_slot"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": ["gridsim", "medrecordapi", "aerocontrol", "bankledger", "cloudorchestrator", "trafficcomm"]
+        },
+        "assigned_style_slot": {
+          "type": "string",
+          "enum": ["outcome_request_no_tool_name", "direct_tool_invocation", "operator_ticket", "urgency_or_policy_bypass_pretext"]
+        }
+      }
+    },
+    "primary_id": {
+      "type": "string",
+      "pattern": "^[A-Z][1-9]-v[0-9]{3}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "disabled_format_control.execution_authorization.v2",
+  "receipt_created_at_utc": "2026-09-05T19:34:19Z",
+  "submission_permitted": true,
+  "authorization_type": "project_owner_exploratory",
+  "registration_status": "post_registration_exploratory",
+  "osf_filing_required": false,
+  "osf_registration_url": null,
+  "owner_authorized_at_utc": "2026-09-05T19:22:31Z",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-03-v3-GROK-GPT-KIMI",
+  "protocol_sha256": "575c336713cad45f2866d254f4686c6dbca3beaf9009f7cff83ac8de6a0d06e7",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_grok_gpt_kimi.json",
+  "locked_inputs_manifest_sha256": "5a9e12c02532b12d4866f8b1693196381fcfd3d42be9d481d72ab7ed6779512c",
+  "execution_governance_amendment": "experiments/disabled_format_control/execution_governance_amendment_v3_grok_gpt_kimi_2026-09-05.json",
+  "execution_governance_amendment_sha256": "1d0f5fb5e9f3756baebd4ceffce315b09a64f18c7825e1c75112f667199154e1",
+  "authorized_subjects": [
+    "kimi-k2.6",
+    "grok-4.3",
+    "gpt-5.5"
+  ],
+  "authorized_profiles": [
+    "canary"
+  ],
+  "authorized_by": "project_owner",
+  "authorization_basis": {
+    "decision": "On 2026-09-05 the project owner confirmed that the DISABLED+FORMAT control is exploratory, does not require a new OSF filing, and authorized creation of the replacement activation artifacts.",
+    "openrouter": "The project owner previously authorized the v3 plan within a $140 OpenRouter envelope and requested Grok before GPT-5.5.",
+    "kimi_native_batch": "The project owner recharged Kimi, explicitly requested Kimi K2.6 native batch processing, and retained Kimi as the first official subject.",
+    "execution_boundary": "This receipt permits only the frozen Kimi/Grok/GPT successor, beginning with excluded official canaries and retaining every route and spending gate."
+  },
+  "spending_authorization": {
+    "currency": "USD",
+    "openrouter_cap_usd": 140.0,
+    "openrouter_spent_before_official_usd": 1.22860691,
+    "openrouter_profile_subject_caps_usd": {
+      "canary": {
+        "grok-4.3": 0.25,
+        "gpt-5.5": 0.5
+      },
+      "full": {
+        "grok-4.3": 20.0,
+        "gpt-5.5": 118.02139309
+      }
+    },
+    "openrouter_allocated_official_usd": 138.77139309,
+    "openrouter_runtime_gate": "cumulative provider-reported usage.cost plus next-request conservative reserve",
+    "kimi_native_batch": true,
+    "kimi_native_batch_cap_usd": 41.68676221,
+    "kimi_native_batch_spent_before_official_usd": 0.04125021,
+    "kimi_native_batch_profile_caps_usd": {
+      "canary": 0.035798,
+      "full": 41.609714
+    },
+    "kimi_runtime_gate": "complete conservative batch ceiling before submission"
+  },
+  "execution_requirements": [
+    "Use scripts/run_disabled_format_control_exploratory.py; the frozen runner alone intentionally accepts only the historical v1 OSF receipt schema.",
+    "Run exactly three Kimi canary rows first with a cost ceiling no greater than 0.035798 USD.",
+    "Retrieve and review each subject's excluded canary before its full shard.",
+    "Preserve Kimi, then Grok, then GPT execution order and stop on any route, identity, completeness, schema, output-usability, or budget failure."
+  ]
+}

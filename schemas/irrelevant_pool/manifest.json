@@ -1,0 +1,35 @@
+{
+  "pool_id": "irrelevant_pool",
+  "authoring_status": "regenerated via Cohere Command A (command-a-03-2025); repository contract-validated at lock time",
+  "author_model": "cohere-command-a-03-2025",
+  "temperature": 0.2,
+  "seed": 42,
+  "user_validated_at": "2026-05-03T19:24:57Z",
+  "domains": [
+    {
+      "domain": "library_catalog",
+      "file": "library_catalog.json",
+      "n_tools": 8
+    },
+    {
+      "domain": "garden_simulator",
+      "file": "garden_simulator.json",
+      "n_tools": 8
+    },
+    {
+      "domain": "cooking_recipes",
+      "file": "cooking_recipes.json",
+      "n_tools": 8
+    },
+    {
+      "domain": "music_player",
+      "file": "music_player.json",
+      "n_tools": 8
+    },
+    {
+      "domain": "weather_forecast",
+      "file": "weather_forecast.json",
+      "n_tools": 8
+    }
+  ]
+}

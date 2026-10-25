@@ -1,0 +1,3 @@
+# Data model
+
+Protocol binds route, population, decoding, source hashes, randomization and governance. Each ExpectedRow has unique custom_id and all frozen identity fields, request and protocol hashes. Each Attempt is a durable reservation with profile/custom_id/attempt number and estimated ceiling; a result settles it with raw response hash, HTTP status and measured usage. Unsettled attempts stop automatic resubmission. Each Observation retains ExpectedRow fields and native response, raw provenance and finish status. Extraction and JudgeVote use existing versioned exact-content hashes; final labels cover every observation and analysis accounts for all expected triplets. Completion receipt binds all promoted artifacts.

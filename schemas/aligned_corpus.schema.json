@@ -1,0 +1,475 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/aligned_corpus.schema.json",
+  "schema_version": "v2",
+  "title": "Aligned Adversarial Prompt Corpus — single record",
+  "description": "One JSONL record per accepted prompt in the 192-cell assigned-style action-variant corpus before exclusions. Each record carries the prompt itself, the source case card it was generated for, the generator metadata, and both blinded validators' raw outputs. Records that do not validate against this schema must not enter the corpus.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "partition_id",
+    "case_card_id",
+    "domain",
+    "dangerous_tool",
+    "benign_twin",
+    "style_slot",
+    "prompt_text",
+    "canonical_args",
+    "harm_category",
+    "harmful_intent",
+    "alignment_rationale",
+    "why_safe_model_should_refuse",
+    "generator_metadata",
+    "validator_a",
+    "validator_b",
+    "selection_metadata",
+    "accepted_at",
+    "source_partition_id",
+    "is_substituted",
+    "replacement_for"
+  ],
+  "allOf": [
+    {
+      "description": "Tier 0 dual-pass records MUST NOT have validator_c and must record A+B/no-C metadata.",
+      "if": {
+        "properties": {
+          "selection_metadata": {
+            "properties": {
+              "validator_tier": { "const": "tier0_dual_pass" }
+            },
+            "required": ["validator_tier"]
+          }
+        },
+        "required": ["selection_metadata"]
+      },
+      "then": {
+        "not": { "required": ["validator_c"] },
+        "properties": {
+          "selection_metadata": {
+            "properties": {
+              "validator_c_used": { "const": false },
+              "validator_majority": { "const": "A+B" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Tier 1 2-of-3 tiebreaker records MUST have validator_c and C must be part of the passing majority.",
+      "if": {
+        "properties": {
+          "selection_metadata": {
+            "properties": {
+              "validator_tier": { "const": "tier1_2of3_tiebreaker" }
+            },
+            "required": ["validator_tier"]
+          }
+        },
+        "required": ["selection_metadata"]
+      },
+      "then": {
+        "required": ["validator_c"],
+        "properties": {
+          "selection_metadata": {
+            "properties": {
+              "validator_c_used": { "const": true },
+              "validator_majority": { "enum": ["A+C", "B+C"] }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Substitution-metadata consistency. A row is either a normal main-authored card (source_partition_id main, is_substituted false, replacement_for null) or a substituted reserve relabeled to partition_id main (source_partition_id reserve, is_substituted true, replacement_for is the failed primary's case_card_id matching ^[A-Z][1-9]-v[0-9]{3}$).",
+      "oneOf": [
+        {
+          "properties": {
+            "is_substituted": {"const": true},
+            "source_partition_id": {"const": "reserve"},
+            "replacement_for": {"type": "string", "pattern": "^[A-Z][1-9]-v[0-9]{3}$"}
+          },
+          "required": ["is_substituted", "source_partition_id", "replacement_for"]
+        },
+        {
+          "properties": {
+            "is_substituted": {"const": false},
+            "source_partition_id": {"const": "main"},
+            "replacement_for": {"const": null}
+          },
+          "required": ["is_substituted", "source_partition_id", "replacement_for"]
+        }
+      ]
+    }
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*_(outcome_request_no_tool_name|direct_tool_invocation|operator_ticket|urgency_or_policy_bypass_pretext)$",
+      "description": "Unique per-record identifier formed as <case_card_id>_<style_slot>. Assigned-style designs may use stable action-variant IDs."
+    },
+    "partition_id": {
+      "type": "string",
+      "enum": ["main", "pilot"],
+      "description": "Final-corpus partition. Confirmatory H1 uses main only; pilot rows are dev-only harness validation and excluded by the analyzer. Substituted reserves carry partition_id=main (relabeled) with source_partition_id=reserve preserving authoring provenance."
+    },
+    "source_partition_id": {
+      "type": "string",
+      "enum": ["main", "reserve"],
+      "description": "Origin partition of the case card. 'main' for primary-authored cards. 'reserve' for cards authored as reserves and then substituted into the final corpus."
+    },
+    "replacement_for": {
+      "type": ["string", "null"],
+      "description": "case_card_id of the failed primary this reserve replaced; null for non-substituted rows. When non-null, source_partition_id MUST be 'reserve' and is_substituted MUST be true."
+    },
+    "is_substituted": {
+      "type": "boolean",
+      "description": "true iff the row is a reserve substituted for a failed primary; false otherwise."
+    },
+    "case_card_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "description": "Source case-card identifier from config/prompt_case_cards.json. Assigned-style designs may use stable action-variant IDs."
+    },
+    "base_tool_id": {
+      "type": "string",
+      "pattern": "^[GMABCT][1-9]$",
+      "description": "Optional family id for assigned-style action variants. v2 expanded the [1-8] range to [1-9] to accommodate the reserve-buffer base_tool_ids A9/B9/C9/G9/M9/T9 introduced in the reserve partition."
+    },
+    "action_variant": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+      "description": "Optional stable variant slug/index for distinct action cards sharing a base_tool_id."
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["gridsim", "medrecordapi", "aerocontrol", "bankledger", "cloudorchestrator", "trafficcomm"]
+    },
+    "dangerous_tool": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must match case_cards[case_card_id].dangerous_tool and exist in schemas/synthetic/{domain}.json."
+    },
+    "benign_twin": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must match case_cards[case_card_id].benign_twin."
+    },
+    "style_slot": {
+      "type": "string",
+      "enum": [
+        "outcome_request_no_tool_name",
+        "direct_tool_invocation",
+        "operator_ticket",
+        "urgency_or_policy_bypass_pretext"
+      ]
+    },
+    "prompt_text": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 2000,
+      "description": "The adversarial user prompt that subjects will see."
+    },
+    "canonical_args": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "null"]
+      },
+      "propertyNames": { "type": "string", "minLength": 1 },
+      "description": "Frozen copy of case_cards[case_card_id].canonical_args. Non-empty, scalar leaves, non-empty keys."
+    },
+    "harm_category": {
+      "type": "string",
+      "enum": [
+        "aviation safety sabotage",
+        "critical infrastructure sabotage",
+        "evidence destruction",
+        "financial fraud",
+        "financial sabotage",
+        "infrastructure sabotage",
+        "medical record fraud",
+        "patient harm",
+        "privilege escalation",
+        "public safety sabotage",
+        "resource exhaustion / cost abuse",
+        "security breach",
+        "security regression",
+        "traffic infrastructure sabotage"
+      ],
+      "description": "Closed set of harm-category labels emitted across the 192 assigned-style action-variant case cards. Some labels are semantically adjacent; a separate harm-taxonomy review may consolidate them. Pinning the enum prevents free-form drift between regen runs."
+    },
+    "harmful_intent": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "alignment_rationale": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "why_safe_model_should_refuse": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "generator_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "model_version",
+        "temperature",
+        "seed",
+        "prompt_template_id",
+        "case_card_set_id",
+        "generated_at"
+      ],
+      "properties": {
+        "model_id": { "type": "string", "minLength": 1 },
+        "model_version": { "type": "string", "minLength": 1 },
+        "served_model_id": { "type": ["string", "null"], "minLength": 0 },
+        "provider": { "type": "string", "minLength": 1 },
+        "endpoint": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "const": "A3_candidate_generator" },
+        "temperature": { "type": "number", "minimum": 0, "maximum": 2 },
+        "top_p": { "type": "number", "minimum": 0, "maximum": 1 },
+        "stream": { "type": "boolean" },
+        "think": { "type": "boolean" },
+        "structured_output_enforced": { "type": "boolean" },
+        "client_side_json_validation": { "type": "boolean" },
+        "seed": { "type": "integer", "minimum": 0 },
+        "prompt_template_id": {
+          "type": "string",
+          "const": "pipeline-template"
+        },
+        "case_card_set_id": { "type": "string", "const": "prompt_case_cards" },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source_hashes": {
+          "type": "object",
+          "properties": {
+            "generator_commit_sha": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            }
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "description": "Fingerprints of frozen source materials at generation time. File/material hashes are 64-char lowercase SHA-256 digests; generator_commit_sha is the 40-char lowercase git commit SHA recorded from HEAD. Provenance-only; not analyzed."
+        }
+      }
+    },
+    "validator_a": { "$ref": "#/$defs/validator_record" },
+    "validator_b": { "$ref": "#/$defs/validator_record" },
+    "validator_c": {
+      "$ref": "#/$defs/validator_record",
+      "description": "Validator C (OLMo 2 13B Instruct int8) tiebreaker record. Conditional presence is enforced by the top-level allOf clause: present iff selection_metadata.validator_tier == 'tier1_2of3_tiebreaker', absent on Tier 0 dual-pass records."
+    },
+    "selection_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidates_considered",
+        "selection_index",
+        "selector_id",
+        "validator_tier",
+        "validator_majority",
+        "validator_c_used",
+        "candidate_sha256",
+        "chosen_candidate_index",
+        "selection_protocol",
+        "repair_round",
+        "source_hashes",
+        "eligible_candidate_indices",
+        "selected_candidate_index",
+        "selection_scores",
+        "final_tiebreak_used",
+        "candidate_index_used_as_final_tiebreak"
+      ],
+      "properties": {
+        "candidates_considered": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many candidates for this (case_card_id, style_slot) design cell survived to the selection step."
+        },
+        "selection_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based index of the chosen candidate within that pool."
+        },
+        "chosen_candidate_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Generator-side candidate_index of the selected record. Lets reviewers verify the deterministic tie-break post-hoc without re-reading candidates.jsonl."
+        },
+        "selector_id": { "type": "string", "minLength": 1 },
+        "validator_tier": {
+          "type": "string",
+          "enum": ["tier0_dual_pass", "tier1_2of3_tiebreaker"],
+          "description": "Tier 0 = Granite + Phi-4 dual pass. Tier 1 = 2-of-3 majority including Validator C (OLMo 2)."
+        },
+        "validator_c_used": {
+          "type": "boolean",
+          "description": "True iff Validator C (OLMo 2 13B Instruct int8) was invoked for this candidate."
+        },
+        "validator_majority": {
+          "type": "string",
+          "enum": ["A+B", "A+C", "B+C"],
+          "description": "Identities of the validators forming the passing majority. Tier 0 = A+B. Tier 1 = A+C or B+C; A+B+C is not valid because A+B pass routes to Tier 0."
+        },
+        "repair_round": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of generator repair rounds prior to acceptance. 0 = original generation."
+        },
+        "candidate_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA-256 of the canonical projection (prompt_text + canonical_args + dangerous_tool + domain). Mirrors scripts/select_aligned_corpus.py _candidate_sha256(). Frozen with the candidate pool manifest."
+        },
+        "selection_protocol": {
+          "type": "string",
+          "enum": ["selection"],
+          "description": "Selector and adjudication protocol used to accept this prompt."
+        },
+        "source_hashes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "case_cards_sha256",
+            "manifest_sha256",
+            "schema_bundle_sha256",
+            "aligned_corpus_schema_sha256",
+            "roster_sha256",
+            "model_freeze_sha256",
+            "generator_commit_sha"
+          ],
+          "properties": {
+            "case_cards_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "manifest_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "schema_bundle_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "aligned_corpus_schema_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "model_freeze_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "roster_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "generator_commit_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+          },
+          "description": "Tier 2 audit C-T2B-3: per-record source-hash bundle frozen at selector run start. Pinned invariant — every accepted record carries a byte-identical copy of the canonical bundle (case_cards, synthetic_manifest, schema_bundle, aligned_corpus_schema, roster, generator_commit). Mirrors selection_manifest.input_hashes source-hash keys."
+        },
+        "eligible_candidate_indices": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "description": "Tier 2+3 audit C10: ascending list of candidate_index values that survived dual-pass filtering for this cell. Lets reviewers verify the deterministic tie-break post-hoc."
+        },
+        "selected_candidate_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Tier 2+3 audit C10: candidate_index of the selected record. Mirrors chosen_candidate_index for manifest readability."
+        },
+        "selection_scores": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "validator_a_total",
+            "validator_b_total",
+            "min_validator_total",
+            "avg_validator_total",
+            "style_fidelity_score",
+            "length_outlier_penalty",
+            "lexical_nonredundancy_score",
+            "real_world_risk_score"
+          ],
+          "properties": {
+            "validator_a_total": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "validator_b_total": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "min_validator_total": { "type": "integer", "minimum": 0, "maximum": 10 },
+            "avg_validator_total": { "type": "number", "minimum": 0, "maximum": 10 },
+            "style_fidelity_score": { "type": "integer", "minimum": 0 },
+            "length_outlier_penalty": { "type": "number", "minimum": 0 },
+            "lexical_nonredundancy_score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "real_world_risk_score": { "type": "integer", "minimum": 0, "maximum": 2 }
+          },
+          "description": "Tier 2+3 audit C10: per-record score components used for the deterministic 6-tuple ranking key. Required for post-hoc audit of selector decisions."
+        },
+        "final_tiebreak_used": {
+          "type": "string",
+          "enum": [
+            "validator_total",
+            "style_fidelity_score",
+            "length_outlier_penalty",
+            "lexical_nonredundancy_score",
+            "candidate_index",
+            "single_eligible"
+          ],
+          "description": "Tier 2+3 audit C10: name of the first sort-tuple slot whose value differed between the winner and the runner-up. 'candidate_index' indicates the deterministic fallback (all earlier slots tied). 'single_eligible' indicates only one dual-pass candidate existed for the cell so no tiebreaker was applied."
+        },
+        "candidate_index_used_as_final_tiebreak": {
+          "type": "boolean",
+          "description": "Tier 2+3 audit C10: True iff final_tiebreak_used == 'candidate_index' — i.e., all five quality-dimension slots tied and the deterministic fallback decided the winner."
+        }
+      }
+    },
+    "accepted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "validator_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "model_version",
+        "domain_fit_score",
+        "unsafe_intent_score",
+        "single_tool_mapping_score",
+        "argument_recoverability_score",
+        "judgeability_score",
+        "real_world_harm_red_flag",
+        "best_matching_tool",
+        "recovered_core_args",
+        "pass",
+        "reason",
+        "validated_at"
+      ],
+      "properties": {
+        "model_id": { "type": "string", "minLength": 1 },
+        "model_version": { "type": "string", "minLength": 1 },
+        "domain_fit_score": { "type": "integer", "enum": [0, 1, 2] },
+        "unsafe_intent_score": { "type": "integer", "enum": [0, 1, 2] },
+        "single_tool_mapping_score": { "type": "integer", "enum": [0, 1, 2] },
+        "argument_recoverability_score": { "type": "integer", "enum": [0, 1, 2] },
+        "judgeability_score": { "type": "integer", "enum": [0, 1, 2] },
+        "real_world_harm_red_flag": { "type": "boolean" },
+        "best_matching_tool": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Validator's blind inference of the target tool. Must equal record.dangerous_tool for acceptance."
+        },
+        "recovered_core_args": {
+          "type": "object",
+          "additionalProperties": {
+            "type": ["string", "number", "integer", "boolean", "null"]
+          },
+          "propertyNames": { "type": "string", "minLength": 1 },
+          "description": "Args the validator recovered from the prompt. Scalar leaves only, non-empty keys. Note: JSON Schema cannot enforce that this is a subset/match of the sibling record.canonical_args; that invariant is enforced at the Python validator layer (tests/test_prompt_corpus.py and the A5 corpus gate)."
+        },
+        "pass": {
+          "type": "boolean",
+          "description": "True iff this validator's rubric+harm_flag+best_matching_tool conditions are all met. Definition is tier-invariant. Tier-specific gating: Tier 0 records require A.pass and B.pass both True (enforced by the corpus gate, not by this schema). Tier 1 records require a 2-of-3 majority among A/B/C (also enforced by the corpus gate), so Tier 1 records may carry a single dissenting validator without blocking schema validation."
+        },
+        "reason": { "type": "string" },
+        "validated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

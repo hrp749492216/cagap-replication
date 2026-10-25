@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/model_freeze.schema.json",
+  "title": "Conversation-Action-Gap model freeze — config/model_freeze.json",
+  "description": "Records HF commit SHAs and per-quant safetensors hashes for local subjects + the A3 corpus generator bakeoff results. CI validates config/model_freeze.json against this schema to prevent silent freeze drift.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "freeze_script_version",
+    "roster_freeze_date",
+    "aligned_corpus_generator",
+    "models"
+  ],
+  "properties": {
+    "freeze_script_version": { "type": "string" },
+    "roster_freeze_date": { "type": "string", "format": "date" },
+    "aligned_corpus_generator": {
+      "type": "object",
+      "required": ["active"],
+      "properties": {
+        "active": { "$ref": "#/$defs/activeGenerator" },
+        "rejected_or_archived": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "reason"],
+            "properties": {
+              "key": { "type": "string" },
+              "reason": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "models": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/modelEntry" }
+    },
+    "roster_refs": {
+      "type": "object",
+      "description": "Provider-hosted roster entries that cannot be locally hash-frozen. Keys mirror config/roster.json model ids; values pin route metadata for provenance.",
+      "additionalProperties": { "$ref": "#/$defs/rosterRefEntry" }
+    },
+    "reproducibility_note": { "type": "string" },
+    "osf_upload_list": { "type": "array", "items": { "type": "string" } },
+    "osf_exclude_note": { "type": "string" },
+    "local_substrate_validation_2026_05_07": {
+      "type": "object",
+      "description": "Operator validation summary for local/self-hosted serving substrates. Current Sen-Q covers paired BF16/FP16-vs-4-bit routes across all five local/self-hosted subjects.",
+      "additionalProperties": false,
+      "required": [
+        "primary_substrate",
+        "fallback_substrate",
+        "valid_for",
+        "validation_run",
+        "fallback_trigger",
+        "concurrent_serving"
+      ],
+      "properties": {
+        "primary_substrate": { "type": "string" },
+        "fallback_substrate": { "type": "string" },
+        "valid_for": { "type": "string" },
+        "validation_run": { "type": "string" },
+        "fallback_trigger": { "type": "string" },
+        "concurrent_serving": { "type": "string" }
+      }
+    },
+    "gemma_int4_alternatives_2026_05_08": {
+      "type": "object",
+      "description": "Substrate-conditional INT4 alternatives to NVFP4 for Gemma 4 31B IT. Adopted to enable cost-effective dispatch on Hopper/Ampere when Blackwell capacity is unavailable; operator selects exactly one (format × substrate) tuple per main-run audit dispatch. Each predeclared path freezes the HF source repo, optional commit SHA, vLLM loader, and permitted substrates.",
+      "additionalProperties": true,
+      "required": ["design_record", "predeclared_paths"],
+      "properties": {
+        "design_record": { "type": "string" },
+        "motivation": { "type": "string" },
+        "predeclared_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": true,
+            "required": ["format", "hf_repo", "loader", "permitted_substrates"],
+            "properties": {
+              "format": { "type": "string" },
+              "hf_repo": { "type": "string" },
+              "hf_commit_sha_resolved": { "type": "string" },
+              "loader": { "type": "string" },
+              "permitted_substrates": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "validation": { "type": "string" }
+            }
+          }
+        },
+        "selection_rule": { "type": "string" },
+        "smoke_gate": { "type": "string" },
+        "pooling_rule": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA-256 over the indicated artifact."
+    },
+    "quantHashSet": {
+      "type": "object",
+      "description": "Filename → SHA-256 over the file's bytes (or, for safetensors, over the index manifest).",
+      "additionalProperties": { "$ref": "#/$defs/sha256Hex" }
+    },
+    "activeGenerator": {
+      "type": "object",
+      "required": ["key", "model_id", "provider", "role"],
+      "properties": {
+        "key": { "type": "string" },
+        "model_id": { "type": "string" },
+        "model_digest_prefix": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{11,64}$",
+          "description": "Ollama model manifest digest prefix recorded at A3 generator-lock for provenance."
+        },
+        "provider": { "type": "string" },
+        "developer_family": { "type": "string" },
+        "role": { "type": "string" },
+        "selection_reason": { "type": "string" },
+        "cloud_model": { "type": "boolean" },
+        "local_hash_available": { "type": "boolean" },
+        "structured_output_enforced": { "type": "boolean" },
+        "client_side_json_validation": { "type": "boolean" },
+        "context_window_tokens": { "type": "integer", "minimum": 1 },
+        "license": { "type": "string" },
+        "ollama_client_version": { "$ref": "#/$defs/preLockOrSemver" },
+        "ollama_model_show": { "$ref": "#/$defs/preLockOrModelShow" },
+        "parameters": { "type": "object" }
+      }
+    },
+    "preLockOrSemver": {
+      "type": "string",
+      "anyOf": [
+        { "const": "FILL_AT_LOCK" },
+        { "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?([+\\-].*)?$" }
+      ],
+      "description": "Pre-lock placeholder ('FILL_AT_LOCK') or a semver-shaped version string. The materials_lock script (scripts/lock_materials.py) refuses to lock while the value is still 'FILL_AT_LOCK'; only the post-lock semver form may persist into the locked freeze."
+    },
+    "preLockOrModelShow": {
+      "type": "string",
+      "anyOf": [
+        { "const": "FILL_AT_LOCK" },
+        { "minLength": 32 }
+      ],
+      "description": "Pre-lock placeholder ('FILL_AT_LOCK') or a populated `ollama show` output (>=32 chars). Materials lock rejects 'FILL_AT_LOCK'."
+    },
+    "modelEntry": {
+      "type": "object",
+      "required": ["role", "display_name", "hf_repo", "hf_commit_sha_resolved"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "subject",
+            "judge",
+            "extractor",
+            "validator_a",
+            "validator_b",
+            "validator_c_tiebreaker",
+            "generator",
+            "excluded_generator_candidate"
+          ]
+        },
+        "display_name": { "type": "string" },
+        "hf_repo": { "type": "string" },
+        "hf_commit_sha_resolved": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "bf16": { "$ref": "#/$defs/quantHashSet" },
+        "fp8_official": { "$ref": "#/$defs/quantHashSet" },
+        "int8_mlx": { "$ref": "#/$defs/quantHashSet" },
+        "int4_mlx": { "$ref": "#/$defs/quantHashSet" }
+      }
+    },
+    "rosterRefEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section",
+        "role",
+        "source",
+        "display_name",
+        "family",
+        "local_hash_available",
+        "freeze_mode"
+      ],
+      "properties": {
+        "section": { "type": "string" },
+        "role": { "type": "string" },
+        "source": { "type": "string" },
+        "display_name": { "type": "string" },
+        "family": { "type": "string" },
+        "native_slug": { "type": ["string", "null"] },
+        "openrouter_slug": { "type": ["string", "null"] },
+        "openrouter_pinned_provider": { "type": ["string", "null"] },
+        "ollama_cloud_slug": { "type": ["string", "null"] },
+        "ollama_cloud_digest_prefix": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[0-9a-f]{11,64}$" },
+            { "type": "null" }
+          ]
+        },
+        "local_hash_available": { "const": false },
+        "freeze_mode": {
+          "type": "string",
+          "enum": ["api_roster_reference"]
+        }
+      }
+    }
+  }
+}

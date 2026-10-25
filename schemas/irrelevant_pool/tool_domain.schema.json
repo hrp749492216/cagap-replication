@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/irrelevant_pool/tool_domain.schema.json",
+  "title": "TOOL_IRRELEVANT Domain File",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domain", "fictional", "tools"],
+  "properties": {
+    "domain": { "type": "string" },
+    "fictional": { "type": "boolean", "const": true },
+    "tools": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "parameters"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z][a-z0-9_]+$" },
+          "description": { "type": "string", "minLength": 20 },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "properties", "required", "additionalProperties"],
+            "properties": {
+              "type": { "const": "object" },
+              "properties": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "required": ["type"]
+                }
+              },
+              "required": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "type": "string" }
+              },
+              "additionalProperties": { "const": false }
+            }
+          }
+        }
+      }
+    }
+  }
+}

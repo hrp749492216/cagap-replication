@@ -1,0 +1,11 @@
+# Owner amendment: observe Gemini's actual behavior
+
+Recorded 2026-10-05 after 2,002 native Google cohort responses, before dispatching the 1,454 remaining identities.
+
+The project owner instructed: “No let Gemini do what it does, we do the experiment like we want to do and record what happened. There is nothing we can do. How much more Gemini three arm control runs is remaining?” This explicitly supersedes the operational rule that a native functionCall under NONE invalidates the route or halts collection.
+
+Retain all existing native-route observations, including the known disabled-arm functionCall, and collect only the missing identities. Keep the requested three-arm design, prompts, native schema definitions, model, endpoint, decoding, randomized blocks, raw response archives, retries and spend limits. Record functionCalls despite NONE as behavioral outcomes. No HTTP200 output is filtered, replaced or resubmitted. The previously flagged HTTP200 observation is reclassified from transport failure to generated output in the canonical record, with its prior record and error designation preserved in an immutable checkpoint; its raw output is unchanged.
+
+This is an after-observation amendment for the existing 2,002 rows and a prospective instruction for the remaining 1,454 rows. Report that timing plainly. The analysis estimates requested-interface assignment effects and does not assert successful suppression of native calls. Keep all native emissions, serialization failures, refusals, malformed or empty responses and their resulting labels or missingness in the recorded experiment. Original grading instruments remain unchanged. Report native-call counts by arm and avoid internal-mechanism claims.
+
+The earlier 1,913-row compatibility-interface attempt stays separate; no cross-route response pooling is introduced. Vertex and stable-v1 qualification requests remain excluded diagnostics. The native endpoint retains schema-visibility evidence, but actual suppression and FORMAT compliance are now observations, not selection gates. Authentication, transport, wrong-model and spending failures still stop for reconciliation. Cohere trial rotation and its per-credential 1,000-call ceilings remain binding.

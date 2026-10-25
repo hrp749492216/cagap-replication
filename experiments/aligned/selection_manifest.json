@@ -1,0 +1,64 @@
+{
+  "cascade_summary": {
+    "completed_at": "2026-05-06T08:23:21Z",
+    "excluded_count": 0,
+    "exclusion_cap_violated": false,
+    "halt_message": null,
+    "selection_protocol": "selection",
+    "tier0_count": 191,
+    "tier1_count": 1,
+    "total_cells": 192
+  },
+  "completed_at": "2026-05-09T13:57:01Z",
+  "excluded_cells": [],
+  "excluded_count": 0,
+  "expected_total_design": 192,
+  "input_hashes": {
+    "aligned_corpus_schema_sha256": "7e0929e05e4ac0af31793a1b8e9a60134c2edf147a549c9bd549c87930fa72db",
+    "candidates_jsonl": "7c70cdff70aac312e4e1cfe041d84adcfd52d3e32a50d611c3a3109d583bd51e",
+    "candidates_jsonl_sha256": "7c70cdff70aac312e4e1cfe041d84adcfd52d3e32a50d611c3a3109d583bd51e",
+    "case_cards": "27c8c613aae85605532881e80bb94a7625372e738efc5a954c1f98e7becdc758",
+    "case_cards_sha256": "27c8c613aae85605532881e80bb94a7625372e738efc5a954c1f98e7becdc758",
+    "final_cell_selection_jsonl": "45e0220cad23f976e988a688f51bff234b9dc725ed25c2fbee06a02669d5731d",
+    "generator_commit_sha": "b752c04c49bd71fab3d01dc9c395f6795e0642f1",
+    "manifest_sha256": "1d1eeab19b4e0647d89122e8c708af16077528bce87fb6a5354c01490ac5c99e",
+    "model_freeze_sha256": "3b1182eea5e063ff5a211b73e0b308048939e8bc711143435c9ec1798599db69",
+    "pre_osf_prompt_repairs_sha256": "888ca002044f3e58878d351a950c40542e6bba139dd9c88960a2c81da4870ae1",
+    "roster": "cd13e61ecc1a083f66b5159555f13461cabda5c55ee2a75664ee671077c8bbe1",
+    "roster_sha256": "cd13e61ecc1a083f66b5159555f13461cabda5c55ee2a75664ee671077c8bbe1",
+    "schema": "7e0929e05e4ac0af31793a1b8e9a60134c2edf147a549c9bd549c87930fa72db",
+    "schema_bundle_sha256": "505fd327158f212bb98568ecf4a9c07b1a3edf54303db78a932f56ac9443ae63",
+    "synthetic_manifest": "1d1eeab19b4e0647d89122e8c708af16077528bce87fb6a5354c01490ac5c99e",
+    "validator_c_transcripts_jsonl": "425eb2bbddad1861e9141358222c143e32f67330d830074a8dc0d8cb781f75e9",
+    "validator_transcripts_jsonl": "10730ab3470dfe2f1d5010c83dca534caf54a632a2adcef95af33d10e1104618",
+    "roster_hash_refresh_note": "Roster updated post-selection with additive audit metadata (CB-1 schema-visibility blocks, M-2 tier rename hosted_api/hosted_route_class, xAI batch transport switch xai-sdk -> xai-http). Corpus-selection inputs (case_cards, aligned_corpus_schema, synthetic_manifest, schema_bundle) all match live SHA-256. Judge identity (glm-5.1, command-a-03-2025, mistral-large-2512) unchanged. Hash refreshed on 2026-05-23.",
+    "model_freeze_hash_refresh_note": "Model freeze updated post-selection with additive metadata (download_hash_policy docs, post_download_manifest_required flags, public/private OSF roster asset split). A3 generator (nemotron-3-super:cloud) and A4 validators (Granite 3.3 8B, Phi-4 8-bit, OLMo 2 13B) unchanged. Hash refreshed on 2026-05-23."
+  },
+  "partition_counts": {
+    "main": 192,
+    "reserve": 0
+  },
+  "repair_round_distribution": {
+    "0": 134,
+    "1": 58
+  },
+  "selected_count": 192,
+  "selection_protocol": "selection",
+  "selector_id": "deterministic-surface",
+  "tier0_count": 191,
+  "tier1_count": 1,
+  "validators": {
+    "validator_a": {
+      "model_id": "$LOCAL_MODELS_DIR/granite-3.3-8b-instruct-8bit",
+      "model_version": "265b90718032d76d98f71715f389fdd597db55b4"
+    },
+    "validator_b": {
+      "model_id": "$LOCAL_MODELS_DIR/phi-4-8bit",
+      "model_version": "7a40ce2189ec31997a0f9bb949d60206f90527c8"
+    },
+    "validator_c": {
+      "model_id": "$LOCAL_MODELS_DIR/olmo-2-13b-instruct-8bit",
+      "model_version": "fa30532fb000395e1e4a70fa86e23af52a681fce"
+    }
+  }
+}

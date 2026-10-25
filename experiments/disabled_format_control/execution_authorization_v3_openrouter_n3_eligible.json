@@ -1,0 +1,62 @@
+{
+  "schema_version": "disabled_format_control.execution_authorization.v2",
+  "receipt_created_at_utc": "2026-09-05T23:51:08Z",
+  "submission_permitted": true,
+  "authorization_type": "project_owner_exploratory",
+  "registration_status": "post_registration_exploratory",
+  "osf_filing_required": false,
+  "osf_registration_url": null,
+  "owner_authorized_at_utc": "2026-09-05T23:27:31Z",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-05-v3-OPENROUTER-N3-ELIGIBLE",
+  "protocol_sha256": "2a0708d28269914dd1ebada131febf72a882bc8d318abc90f08a3e5a6ab57d52",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_openrouter_n3_eligible.json",
+  "locked_inputs_manifest_sha256": "739c86769e95098a5607f29baf27fda59a0017ec84dbc3197268ed549577529e",
+  "execution_governance_amendment": "experiments/disabled_format_control/execution_governance_amendment_v3_openrouter_n3_eligible_2026-09-05.json",
+  "execution_governance_amendment_sha256": "8289cd5fe02e52e76d70557dcebe0461df12969440e3db47ed05615161c1ba9e",
+  "authorized_subjects": [
+    "llama-3.3-70b-instruct",
+    "grok-4.3",
+    "claude-opus-4-7",
+    "gpt-5.5"
+  ],
+  "authorized_profiles": [
+    "canary"
+  ],
+  "authorized_by": "project_owner",
+  "authorization_basis": {
+    "decision": "On 2026-09-05 the project owner directed completion of the currently supportable OpenRouter routes with n=3 trials and confirmed that this exploratory study does not require a new OSF filing.",
+    "credential_source": "Use the valid OPENROUTER_API_KEY from the project-local .env; explicitly unset any inherited stale shell value before launcher execution.",
+    "candidate_boundary": "Only the four exact routes with complete prospective route-support evidence are candidates. No route fallback, provider substitution, or Kimi native request is authorized.",
+    "execution_boundary": "This receipt initially permits only the 12 excluded canary requests. Full authorization may be added prospectively only after a hash-bound canary review records the passing subjects.",
+    "pre_response_compatibility_correction": "The first Llama invocation made no network request. The regenerated packet uses its hash-pinned process-local OpenRouter route adapter and leaves the shared historical runner unchanged."
+  },
+  "spending_authorization": {
+    "currency": "USD",
+    "openrouter_cap_usd": 140.0,
+    "openrouter_spent_before_official_usd": 1.22860691,
+    "openrouter_profile_subject_caps_usd": {
+      "canary": {
+        "llama-3.3-70b-instruct": 0.03,
+        "grok-4.3": 0.06,
+        "claude-opus-4-7": 0.5,
+        "gpt-5.5": 0.25
+      },
+      "full": {
+        "llama-3.3-70b-instruct": 8.0,
+        "grok-4.3": 16.0,
+        "claude-opus-4-7": 80.0,
+        "gpt-5.5": 33.93139309
+      }
+    },
+    "openrouter_allocated_official_usd": 138.77139309,
+    "openrouter_runtime_gate": "cumulative provider-reported usage.cost plus next-request conservative reserve",
+    "native_provider_spend_authorized": false
+  },
+  "execution_requirements": [
+    "Use scripts/run_disabled_format_control_openrouter_n3.py, which delegates to the exploratory launcher and unchanged scientific runner, with the exact protocol, lock, governance amendment, and receipt paths in this packet.",
+    "Run exactly three excluded canary rows per candidate in Llama, Grok, Claude, GPT order with the receipt-bound subject cap.",
+    "Retrieve and review all canary outputs before changing authorized_profiles to include full.",
+    "Stop a candidate on any route, provider/model identity, completeness, schema/tool, non-null output-usability, or budget failure; do not replace it.",
+    "After prospective full authorization, passing subject shards may run concurrently as independent resumable processes."
+  ]
+}

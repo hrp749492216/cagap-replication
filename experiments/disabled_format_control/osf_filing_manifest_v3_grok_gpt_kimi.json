@@ -1,0 +1,77 @@
+{
+  "schema_version": "disabled_format_control.osf_filing_manifest.v1",
+  "status": "ready_for_project_owner_filing",
+  "prepared_at_utc": "2026-09-03T19:15:20Z",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-03-v3-GROK-GPT-KIMI",
+  "filing_completed": false,
+  "osf_registration_url": null,
+  "osf_filed_at_utc": null,
+  "must_precede_first_official_dispatch": true,
+  "upload_this_manifest": true,
+  "files": [
+    {
+      "path": "paper/addenda/DISABLED_FORMAT_CONTROL_2026-09-03.md",
+      "role": "dated prospective successor addendum",
+      "size_bytes": 7713,
+      "sha256": "673be62706a91f563683efa662283cd9fb988158548daf70b8e9bc5a42f2fc64"
+    },
+    {
+      "path": "experiments/disabled_format_control/protocol_v3_grok_gpt_kimi.json",
+      "role": "frozen executable scientific protocol",
+      "size_bytes": 16113,
+      "sha256": "575c336713cad45f2866d254f4686c6dbca3beaf9009f7cff83ac8de6a0d06e7"
+    },
+    {
+      "path": "experiments/disabled_format_control/locked_inputs_manifest_v3_grok_gpt_kimi.json",
+      "role": "full and excluded-canary input commitment",
+      "size_bytes": 5953,
+      "sha256": "5a9e12c02532b12d4866f8b1693196381fcfd3d42be9d481d72ab7ed6779512c"
+    },
+    {
+      "path": "experiments/disabled_format_control/kimi_native_batch_pilot_v3_2026-09-03.json",
+      "role": "excluded Kimi native-route evidence",
+      "size_bytes": 4611,
+      "sha256": "ba466cbc20ad924c694c6be06636ca0a2dc303b8be708c4d2c10389a9b701873"
+    },
+    {
+      "path": "experiments/disabled_format_control/format_pilot_v3_2026-09-02.json",
+      "role": "excluded Grok and GPT route evidence and OpenRouter spend ledger",
+      "size_bytes": 6908,
+      "sha256": "aa67031781319b996e0c7783a21c0f7d30a18752bc922476ed4d955dc6e45ea3"
+    },
+    {
+      "path": "experiments/disabled_format_control/protocol_v3_draft.json",
+      "role": "preserved ten-subject predecessor draft",
+      "size_bytes": 20731,
+      "sha256": "8198871b28e4bb9fc174faa6b6ae5d6501fe7e112aaed54b7af1bc459be1d54e"
+    },
+    {
+      "path": "paper/addenda/DISABLED_FORMAT_CONTROL_2026-09-01_DRAFT.md",
+      "role": "preserved predecessor-draft narrative",
+      "size_bytes": 9129,
+      "sha256": "5d028e2ca1009805922221446de1e3568d5a6d9c4087edc0ab33758cc43eb8da"
+    }
+  ],
+  "locked_generated_inputs": {
+    "public_upload": false,
+    "reason": "The registration commits to their exact bytes through the locked-input manifest; generated synthetic request bodies remain in the controlled artifact tree.",
+    "full_rows": 10368,
+    "excluded_canary_rows": 9,
+    "all_six_request_file_hashes_present_in_lock": true
+  },
+  "pre_filing_verification": {
+    "all_file_hashes_match": true,
+    "protocol_status_frozen_before_first_dispatch": true,
+    "protocol_hash_matches_addendum": true,
+    "lock_hash_matches_addendum": true,
+    "official_canary_started": false,
+    "official_full_run_started": false,
+    "executable_receipt_present": false
+  },
+  "owner_actions": [
+    "Upload this manifest and every file listed in files to one dated OSF registration or amendment.",
+    "Verify the OSF copies preserve the listed SHA-256 values.",
+    "Return the https://osf.io/ registration URL and UTC filing timestamp.",
+    "Create the final execution receipt from the checked-in non-executable template only after those checks."
+  ]
+}

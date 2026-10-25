@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/irrelevant_pool/manifest.schema.json",
+  "title": "TOOL_IRRELEVANT Pool Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pool_id",
+    "authoring_status",
+    "author_model",
+    "temperature",
+    "seed",
+    "user_validated_at",
+    "domains"
+  ],
+  "properties": {
+    "pool_id": { "type": "string", "const": "irrelevant_pool" },
+    "authoring_status": { "type": "string" },
+    "author_model": { "type": "string" },
+    "temperature": { "type": "number", "minimum": 0, "maximum": 2 },
+    "seed": { "type": "integer", "minimum": 0 },
+    "user_validated_at": { "type": ["string", "null"] },
+    "domains": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["domain", "file", "n_tools"],
+        "properties": {
+          "domain": { "type": "string" },
+          "file": { "type": "string", "pattern": "^[a-z_]+\\.json$" },
+          "n_tools": { "type": "integer", "const": 8 }
+        }
+      }
+    }
+  }
+}

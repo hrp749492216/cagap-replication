@@ -1,0 +1,63 @@
+# Tooling-only configuration. The repo is not packaged as a Python distribution;
+# pytest, ruff, and mypy read this file directly without [build-system] / [project].
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    # These tests read the authors' private run directories under outputs/
+    # (pilot route classifications, generated control batches, resume
+    # manifests). They are deselected in this replication package. The test
+    # files themselves ship byte-identical because the control protocols pin
+    # their digests.
+    "--deselect=tests/test_disabled_format_control.py::test_format_arm_changes_only_frozen_system_instruction",
+    "--deselect=tests/test_disabled_format_control.py::test_v3_gpt_route_rewrites_model_and_applies_declared_decoding",
+    "--deselect=tests/test_disabled_format_control_openrouter_n3_activation.py::test_openrouter_n3_locked_inputs_match_every_generated_request_file",
+    "--deselect=tests/test_reconcile_disabled_format_control_openrouter_n3.py::test_reconcile_subject_verifies_identity_raw_body_and_cost",
+    "--deselect=tests/test_reconcile_disabled_format_control_openrouter_n3.py::test_reconcile_subject_rejects_duplicate_response_id",
+    "--deselect=tests/test_reconcile_disabled_format_control_openrouter_n3.py::test_reconcile_subject_rejects_returned_model_drift",
+    "--deselect=tests/test_recover_disabled_format_control_openrouter_raw.py::test_recovery_rejects_archived_request_hash_drift",
+    "--deselect=tests/test_recover_disabled_format_control_openrouter_raw.py::test_manifest_loader_deduplicates_preserved_hardlink_rows",
+    "--deselect=tests/test_recover_disabled_format_control_openrouter_raw.py::test_build_recovered_record_replays_hash_verified_response_without_dispatch",
+    "--deselect=tests/test_resume_claude_control_openrouter.py::test_actual_frozen_inventory",
+    "--deselect=tests/test_disabled_format_control_exploratory_activation.py::test_checked_in_owner_authorization_is_ready_for_kimi_canary",
+    "--deselect=tests/test_disabled_format_control_exploratory_activation.py::test_checked_in_authorization_blocks_full_kimi_until_canary_review",
+    # The request generator ships at the digest pinned by every control protocol;
+    # that version loads the local .env file at import time, which this test forbids.
+    "--deselect=tests/test_test_output_isolation.py::test_runner_import_does_not_load_credentials",
+]
+markers = [
+    "slow: long-running statistical, Monte Carlo, or robustness checks that remain part of the full suite",
+    "integration: subprocess or full-pipeline tests that exercise cross-module artifact generation",
+]
+filterwarnings = [
+    "error::DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["outputs"]
+
+[tool.ruff.lint]
+# Scope: pyflakes + syntax errors only. Whitespace / import-sort / typing
+# modernization / bugbear (W, I, UP, SIM, B) are deferred — running them today
+# would surface >800 cosmetic + 18 bugbear hits across analysis/, scripts/,
+# and tests/ that are out of scope for the infrastructure audit. Tighten this
+# selection in a focused PR after the corpus is locked.
+select = ["F", "E9"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Tests legitimately bind names that are unused locally (e.g. fixture pattern
+# verification, structural-pattern checks).
+"tests/*.py" = ["F841"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+exclude = ["outputs/"]

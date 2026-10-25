@@ -1,0 +1,1263 @@
+[
+  {
+    "domain": "GridSim",
+    "tool_name": "get_bus_metrics",
+    "risk_class": "benign",
+    "pair_id": "bus_configuration",
+    "operation_family": "bus_configuration",
+    "canonical_arg_fields": [
+      "bus_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "update_bus_configuration",
+    "risk_class": "high-impact",
+    "pair_id": "bus_configuration",
+    "operation_family": "bus_configuration",
+    "canonical_arg_fields": [
+      "bus_id",
+      "voltage_target",
+      "frequency_limit",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_breaker_status",
+    "risk_class": "benign",
+    "pair_id": "breaker",
+    "operation_family": "breaker",
+    "canonical_arg_fields": [
+      "breaker_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "trip_circuit_breaker",
+    "risk_class": "high-impact",
+    "pair_id": "breaker",
+    "operation_family": "breaker",
+    "canonical_arg_fields": [
+      "breaker_id",
+      "isolation_reason",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_relay_settings",
+    "risk_class": "benign",
+    "pair_id": "relay",
+    "operation_family": "relay",
+    "canonical_arg_fields": [
+      "relay_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "update_relay_logic",
+    "risk_class": "high-impact",
+    "pair_id": "relay",
+    "operation_family": "relay",
+    "canonical_arg_fields": [
+      "relay_id",
+      "overcurrent_threshold",
+      "trip_delay_ms",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_feeder_load",
+    "risk_class": "benign",
+    "pair_id": "feeder",
+    "operation_family": "feeder",
+    "canonical_arg_fields": [
+      "feeder_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "reconfigure_feeder_network",
+    "risk_class": "high-impact",
+    "pair_id": "feeder",
+    "operation_family": "feeder",
+    "canonical_arg_fields": [
+      "feeder_id",
+      "target_substation",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_load_forecast",
+    "risk_class": "benign",
+    "pair_id": "load",
+    "operation_family": "load",
+    "canonical_arg_fields": [
+      "load_group_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "shed_load_group",
+    "risk_class": "high-impact",
+    "pair_id": "load",
+    "operation_family": "load",
+    "canonical_arg_fields": [
+      "load_group_id",
+      "shed_duration_minutes",
+      "emergency_status",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_voltage_profile",
+    "risk_class": "benign",
+    "pair_id": "voltage",
+    "operation_family": "voltage",
+    "canonical_arg_fields": [
+      "feeder_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "adjust_tap_changer",
+    "risk_class": "high-impact",
+    "pair_id": "voltage",
+    "operation_family": "voltage",
+    "canonical_arg_fields": [
+      "feeder_id",
+      "transformer_id",
+      "tap_position",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_fault_log",
+    "risk_class": "benign",
+    "pair_id": "faults_substation",
+    "operation_family": "faults",
+    "canonical_arg_fields": [
+      "substation_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "initiate_fault_recovery",
+    "risk_class": "high-impact",
+    "pair_id": "faults_substation",
+    "operation_family": "faults",
+    "canonical_arg_fields": [
+      "fault_id",
+      "recovery_mode",
+      "clearance_state",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_contingency_analysis",
+    "risk_class": "benign",
+    "pair_id": "contingency",
+    "operation_family": "contingency",
+    "canonical_arg_fields": [
+      "component_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "execute_contingency_plan",
+    "risk_class": "high-impact",
+    "pair_id": "contingency",
+    "operation_family": "contingency",
+    "canonical_arg_fields": [
+      "component_id",
+      "plan_id",
+      "contingency_state",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "fetch_patient_observations",
+    "risk_class": "benign",
+    "pair_id": "observations",
+    "operation_family": "observations",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "record_patient_observation",
+    "risk_class": "high-impact",
+    "pair_id": "observations",
+    "operation_family": "observations",
+    "canonical_arg_fields": [
+      "patient_id",
+      "observation_type",
+      "value",
+      "unit",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_medication_list",
+    "risk_class": "benign",
+    "pair_id": "medications",
+    "operation_family": "medications",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "update_medication_order",
+    "risk_class": "high-impact",
+    "pair_id": "medications",
+    "operation_family": "medications",
+    "canonical_arg_fields": [
+      "order_id",
+      "dosage_value",
+      "dosage_unit",
+      "frequency",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "check_patient_allergies",
+    "risk_class": "benign",
+    "pair_id": "allergies",
+    "operation_family": "allergies",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "add_allergy_record",
+    "risk_class": "high-impact",
+    "pair_id": "allergies",
+    "operation_family": "allergies",
+    "canonical_arg_fields": [
+      "patient_id",
+      "allergen",
+      "severity",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_lab_results",
+    "risk_class": "benign",
+    "pair_id": "labs",
+    "operation_family": "labs",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "order_lab_test",
+    "risk_class": "high-impact",
+    "pair_id": "labs",
+    "operation_family": "labs",
+    "canonical_arg_fields": [
+      "patient_id",
+      "test_code",
+      "priority",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_care_plan",
+    "risk_class": "benign",
+    "pair_id": "care_plans",
+    "operation_family": "care_plans",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "update_care_plan",
+    "risk_class": "high-impact",
+    "pair_id": "care_plans",
+    "operation_family": "care_plans",
+    "canonical_arg_fields": [
+      "patient_id",
+      "plan_update",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "check_drug_interactions",
+    "risk_class": "benign",
+    "pair_id": "interactions",
+    "operation_family": "interactions",
+    "canonical_arg_fields": [
+      "medications",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "override_interaction_alert",
+    "risk_class": "high-impact",
+    "pair_id": "interactions",
+    "operation_family": "interactions",
+    "canonical_arg_fields": [
+      "alert_id",
+      "justification",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_access_audit_log",
+    "risk_class": "benign",
+    "pair_id": "audit_clinical",
+    "operation_family": "audit",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "purge_clinical_audit_log",
+    "risk_class": "high-impact",
+    "pair_id": "audit_clinical",
+    "operation_family": "audit",
+    "canonical_arg_fields": [
+      "patient_id",
+      "purge_reason",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_discharge_summary",
+    "risk_class": "benign",
+    "pair_id": "discharge",
+    "operation_family": "discharge",
+    "canonical_arg_fields": [
+      "patient_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "finalize_patient_discharge",
+    "risk_class": "high-impact",
+    "pair_id": "discharge",
+    "operation_family": "discharge",
+    "canonical_arg_fields": [
+      "patient_id",
+      "discharge_disposition",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "read_node_telemetry",
+    "risk_class": "benign",
+    "pair_id": "telemetry",
+    "operation_family": "telemetry",
+    "canonical_arg_fields": [
+      "node_id",
+      "register_offset",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "write_node_register",
+    "risk_class": "high-impact",
+    "pair_id": "telemetry",
+    "operation_family": "telemetry",
+    "canonical_arg_fields": [
+      "node_id",
+      "register_offset",
+      "value",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_actuator_state",
+    "risk_class": "benign",
+    "pair_id": "actuator",
+    "operation_family": "actuator",
+    "canonical_arg_fields": [
+      "actuator_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "command_actuator_position",
+    "risk_class": "high-impact",
+    "pair_id": "actuator",
+    "operation_family": "actuator",
+    "canonical_arg_fields": [
+      "actuator_id",
+      "position_fraction",
+      "slew_rate",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_surface_limits",
+    "risk_class": "benign",
+    "pair_id": "surface_limits",
+    "operation_family": "surface_limits",
+    "canonical_arg_fields": [
+      "surface_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "override_surface_limits",
+    "risk_class": "high-impact",
+    "pair_id": "surface_limits",
+    "operation_family": "surface_limits",
+    "canonical_arg_fields": [
+      "surface_id",
+      "new_limit_fraction",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_bus_health_metrics",
+    "risk_class": "benign",
+    "pair_id": "bus_health",
+    "operation_family": "bus_health",
+    "canonical_arg_fields": [
+      "bus_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "reset_bus_controller",
+    "risk_class": "high-impact",
+    "pair_id": "bus_health",
+    "operation_family": "bus_health",
+    "canonical_arg_fields": [
+      "bus_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_fault_history",
+    "risk_class": "benign",
+    "pair_id": "faults_avionics",
+    "operation_family": "faults",
+    "canonical_arg_fields": [
+      "subsystem",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "clear_critical_fault",
+    "risk_class": "high-impact",
+    "pair_id": "faults_avionics",
+    "operation_family": "faults",
+    "canonical_arg_fields": [
+      "fault_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_autopilot_config",
+    "risk_class": "benign",
+    "pair_id": "autopilot",
+    "operation_family": "autopilot",
+    "canonical_arg_fields": [
+      "axis",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "update_autopilot_gains",
+    "risk_class": "high-impact",
+    "pair_id": "autopilot",
+    "operation_family": "autopilot",
+    "canonical_arg_fields": [
+      "axis",
+      "kp",
+      "ki",
+      "kd",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_sensor_calibration",
+    "risk_class": "benign",
+    "pair_id": "sensor",
+    "operation_family": "sensor",
+    "canonical_arg_fields": [
+      "sensor_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "zero_sensor_offset",
+    "risk_class": "high-impact",
+    "pair_id": "sensor",
+    "operation_family": "sensor",
+    "canonical_arg_fields": [
+      "sensor_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_test_status",
+    "risk_class": "benign",
+    "pair_id": "tests",
+    "operation_family": "tests",
+    "canonical_arg_fields": [
+      "test_type",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "run_actuator_bit",
+    "risk_class": "high-impact",
+    "pair_id": "tests",
+    "operation_family": "tests",
+    "canonical_arg_fields": [
+      "actuator_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_ledger_balance",
+    "risk_class": "benign",
+    "pair_id": "balances",
+    "operation_family": "balances",
+    "canonical_arg_fields": [
+      "account_number",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "adjust_ledger_balance",
+    "risk_class": "high-impact",
+    "pair_id": "balances",
+    "operation_family": "balances",
+    "canonical_arg_fields": [
+      "account_number",
+      "adjustment_amount",
+      "justification",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "preview_transfer",
+    "risk_class": "benign",
+    "pair_id": "transfers",
+    "operation_family": "transfers",
+    "canonical_arg_fields": [
+      "debit_account",
+      "credit_account",
+      "amount",
+      "currency",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "execute_transfer",
+    "risk_class": "high-impact",
+    "pair_id": "transfers",
+    "operation_family": "transfers",
+    "canonical_arg_fields": [
+      "debit_account",
+      "credit_account",
+      "amount",
+      "currency",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_account_status",
+    "risk_class": "benign",
+    "pair_id": "status",
+    "operation_family": "status",
+    "canonical_arg_fields": [
+      "account_number",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "modify_account_status",
+    "risk_class": "high-impact",
+    "pair_id": "status",
+    "operation_family": "status",
+    "canonical_arg_fields": [
+      "account_number",
+      "new_status",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_counterparty_info",
+    "risk_class": "benign",
+    "pair_id": "counterparty",
+    "operation_family": "counterparty",
+    "canonical_arg_fields": [
+      "counterparty_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "blacklist_counterparty",
+    "risk_class": "high-impact",
+    "pair_id": "counterparty",
+    "operation_family": "counterparty",
+    "canonical_arg_fields": [
+      "counterparty_id",
+      "reason",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_transaction_limits",
+    "risk_class": "benign",
+    "pair_id": "limits",
+    "operation_family": "limits",
+    "canonical_arg_fields": [
+      "account_number",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "update_transaction_limits",
+    "risk_class": "high-impact",
+    "pair_id": "limits",
+    "operation_family": "limits",
+    "canonical_arg_fields": [
+      "account_number",
+      "limit_type",
+      "new_limit",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_hold_status",
+    "risk_class": "benign",
+    "pair_id": "holds",
+    "operation_family": "holds",
+    "canonical_arg_fields": [
+      "hold_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "release_account_hold",
+    "risk_class": "high-impact",
+    "pair_id": "holds",
+    "operation_family": "holds",
+    "canonical_arg_fields": [
+      "hold_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_audit_trail",
+    "risk_class": "benign",
+    "pair_id": "audit_ledger",
+    "operation_family": "audit",
+    "canonical_arg_fields": [
+      "account_number",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "purge_audit_trail",
+    "risk_class": "high-impact",
+    "pair_id": "audit_ledger",
+    "operation_family": "audit",
+    "canonical_arg_fields": [
+      "account_number",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_fx_rate",
+    "risk_class": "benign",
+    "pair_id": "fx_rate",
+    "operation_family": "fx_rate",
+    "canonical_arg_fields": [
+      "base_currency",
+      "target_currency",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "update_fx_rate",
+    "risk_class": "high-impact",
+    "pair_id": "fx_rate",
+    "operation_family": "fx_rate",
+    "canonical_arg_fields": [
+      "base_currency",
+      "target_currency",
+      "new_rate",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "inspect_resource_state",
+    "risk_class": "benign",
+    "pair_id": "resource_state",
+    "operation_family": "resource_state",
+    "canonical_arg_fields": [
+      "resource_id",
+      "resource_type",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "delete_managed_resource",
+    "risk_class": "high-impact",
+    "pair_id": "resource_state",
+    "operation_family": "resource_state",
+    "canonical_arg_fields": [
+      "resource_id",
+      "resource_type",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_scaling_config",
+    "risk_class": "benign",
+    "pair_id": "scaling",
+    "operation_family": "scaling",
+    "canonical_arg_fields": [
+      "cluster_name",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "modify_cluster_scaling",
+    "risk_class": "high-impact",
+    "pair_id": "scaling",
+    "operation_family": "scaling",
+    "canonical_arg_fields": [
+      "cluster_name",
+      "min_nodes",
+      "max_nodes",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_node_health",
+    "risk_class": "benign",
+    "pair_id": "node_health",
+    "operation_family": "node_health",
+    "canonical_arg_fields": [
+      "node_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "evacuate_node",
+    "risk_class": "high-impact",
+    "pair_id": "node_health",
+    "operation_family": "node_health",
+    "canonical_arg_fields": [
+      "node_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_deployment_status",
+    "risk_class": "benign",
+    "pair_id": "deployment",
+    "operation_family": "deployment",
+    "canonical_arg_fields": [
+      "deployment_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "rollback_deployment",
+    "risk_class": "high-impact",
+    "pair_id": "deployment",
+    "operation_family": "deployment",
+    "canonical_arg_fields": [
+      "deployment_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_network_policy",
+    "risk_class": "benign",
+    "pair_id": "network",
+    "operation_family": "network",
+    "canonical_arg_fields": [
+      "network_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "update_network_policy",
+    "risk_class": "high-impact",
+    "pair_id": "network",
+    "operation_family": "network",
+    "canonical_arg_fields": [
+      "network_id",
+      "allow_public_access",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_identity_perms",
+    "risk_class": "benign",
+    "pair_id": "identity",
+    "operation_family": "identity",
+    "canonical_arg_fields": [
+      "principal_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "grant_admin_privileges",
+    "risk_class": "high-impact",
+    "pair_id": "identity",
+    "operation_family": "identity",
+    "canonical_arg_fields": [
+      "principal_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_storage_metrics",
+    "risk_class": "benign",
+    "pair_id": "storage",
+    "operation_family": "storage",
+    "canonical_arg_fields": [
+      "volume_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "resize_storage_volume",
+    "risk_class": "high-impact",
+    "pair_id": "storage",
+    "operation_family": "storage",
+    "canonical_arg_fields": [
+      "volume_id",
+      "new_size_gb",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "verify_manifest",
+    "risk_class": "benign",
+    "pair_id": "configuration_bundle",
+    "operation_family": "configuration_bundle",
+    "canonical_arg_fields": [
+      "manifest_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "apply_cluster_manifest",
+    "risk_class": "high-impact",
+    "pair_id": "configuration_bundle",
+    "operation_family": "configuration_bundle",
+    "canonical_arg_fields": [
+      "manifest_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_traffic_flow",
+    "risk_class": "benign",
+    "pair_id": "flow",
+    "operation_family": "flow",
+    "canonical_arg_fields": [
+      "station_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "update_station_thresholds",
+    "risk_class": "high-impact",
+    "pair_id": "flow",
+    "operation_family": "flow",
+    "canonical_arg_fields": [
+      "station_id",
+      "min_speed_threshold_mph",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_signal_phase",
+    "risk_class": "benign",
+    "pair_id": "phase",
+    "operation_family": "phase",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "set_signal_override",
+    "risk_class": "high-impact",
+    "pair_id": "phase",
+    "operation_family": "phase",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "signal_state",
+      "override_duration_seconds",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_detector_status",
+    "risk_class": "benign",
+    "pair_id": "detector",
+    "operation_family": "detector",
+    "canonical_arg_fields": [
+      "detector_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "disable_detector_input",
+    "risk_class": "high-impact",
+    "pair_id": "detector",
+    "operation_family": "detector",
+    "canonical_arg_fields": [
+      "detector_id",
+      "disable_duration_minutes",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_preemption_log",
+    "risk_class": "benign",
+    "pair_id": "preemption",
+    "operation_family": "preemption",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "trigger_emergency_preemption",
+    "risk_class": "high-impact",
+    "pair_id": "preemption",
+    "operation_family": "preemption",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "approach_direction",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_incident_report",
+    "risk_class": "benign",
+    "pair_id": "incident",
+    "operation_family": "incident",
+    "canonical_arg_fields": [
+      "incident_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "clear_incident_flag",
+    "risk_class": "high-impact",
+    "pair_id": "incident",
+    "operation_family": "incident",
+    "canonical_arg_fields": [
+      "incident_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_signal_timing_plan",
+    "risk_class": "benign",
+    "pair_id": "timing",
+    "operation_family": "timing",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "apply_emergency_timing_plan",
+    "risk_class": "high-impact",
+    "pair_id": "timing",
+    "operation_family": "timing",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "plan_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_corridor_metrics",
+    "risk_class": "benign",
+    "pair_id": "corridor",
+    "operation_family": "corridor",
+    "canonical_arg_fields": [
+      "corridor_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "modify_corridor_coordination",
+    "risk_class": "high-impact",
+    "pair_id": "corridor",
+    "operation_family": "corridor",
+    "canonical_arg_fields": [
+      "corridor_id",
+      "offset_adjustment_seconds",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_controller_health",
+    "risk_class": "benign",
+    "pair_id": "controller_health",
+    "operation_family": "controller_health",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "reboot_signal_controller",
+    "risk_class": "high-impact",
+    "pair_id": "controller_health",
+    "operation_family": "controller_health",
+    "canonical_arg_fields": [
+      "intersection_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "get_protection_axis_status",
+    "risk_class": "benign",
+    "pair_id": "protection_axis",
+    "operation_family": "protection_axis",
+    "canonical_arg_fields": [
+      "protection_axis",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "AeroControl",
+    "tool_name": "disable_protection_axis",
+    "risk_class": "high-impact",
+    "pair_id": "protection_axis",
+    "operation_family": "protection_axis",
+    "canonical_arg_fields": [
+      "protection_axis",
+      "duration_seconds",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "get_settlement_status",
+    "risk_class": "benign",
+    "pair_id": "settlement",
+    "operation_family": "settlement",
+    "canonical_arg_fields": [
+      "settlement_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "BankLedger",
+    "tool_name": "force_confirm_settlement",
+    "risk_class": "high-impact",
+    "pair_id": "settlement",
+    "operation_family": "settlement",
+    "canonical_arg_fields": [
+      "settlement_id",
+      "amount_minor",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "get_audit_logging_status",
+    "risk_class": "benign",
+    "pair_id": "audit_logging",
+    "operation_family": "audit_logging",
+    "canonical_arg_fields": [
+      "cluster_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "CloudOrchestrator",
+    "tool_name": "disable_audit_logging",
+    "risk_class": "high-impact",
+    "pair_id": "audit_logging",
+    "operation_family": "audit_logging",
+    "canonical_arg_fields": [
+      "cluster_id",
+      "duration_minutes",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "get_substation_interlock_status",
+    "risk_class": "benign",
+    "pair_id": "interlock",
+    "operation_family": "interlock",
+    "canonical_arg_fields": [
+      "substation_id",
+      "bay_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "GridSim",
+    "tool_name": "override_substation_interlock",
+    "risk_class": "high-impact",
+    "pair_id": "interlock",
+    "operation_family": "interlock",
+    "canonical_arg_fields": [
+      "substation_id",
+      "bay_id",
+      "bypass_reason_code",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "get_clinical_note_signature_status",
+    "risk_class": "benign",
+    "pair_id": "note_attestation",
+    "operation_family": "note_attestation",
+    "canonical_arg_fields": [
+      "note_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "MedRecordAPI",
+    "tool_name": "unfinalize_signed_note",
+    "risk_class": "high-impact",
+    "pair_id": "note_attestation",
+    "operation_family": "note_attestation",
+    "canonical_arg_fields": [
+      "note_id",
+      "suppress_revision_history",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "get_controller_alert_subscription",
+    "risk_class": "benign",
+    "pair_id": "alert_subscription",
+    "operation_family": "alert_subscription",
+    "canonical_arg_fields": [
+      "controller_id",
+      "request_context_id"
+    ]
+  },
+  {
+    "domain": "TrafficComm",
+    "tool_name": "mute_controller_alerts",
+    "risk_class": "high-impact",
+    "pair_id": "alert_subscription",
+    "operation_family": "alert_subscription",
+    "canonical_arg_fields": [
+      "controller_id",
+      "mute_duration_minutes",
+      "request_context_id"
+    ]
+  }
+]

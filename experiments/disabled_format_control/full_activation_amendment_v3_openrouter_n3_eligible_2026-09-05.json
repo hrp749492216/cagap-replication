@@ -1,0 +1,44 @@
+{
+  "schema_version": "disabled_format_control.openrouter_n3_full_activation_amendment.v1",
+  "amendment_id": "CAGAP-POSTREG-DISABLED-FORMAT-OPENROUTER-N3-FULL-ACTIVATION-2026-09-05",
+  "status": "frozen_after_canary_before_full_dispatch",
+  "approved_at_utc": "2026-09-06T00:00:02Z",
+  "approved_by": "project_owner",
+  "approval_basis": "The owner directed completion of n=3 on all currently supportable OpenRouter routes. The excluded canary review prospectively qualifies Grok, Claude, and GPT and stops Llama before any full response.",
+  "official_full_response_artifacts_at_approval": 0,
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-05-v3-OPENROUTER-N3-ELIGIBLE",
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_openrouter_n3_eligible.json",
+  "protocol_sha256": "2a0708d28269914dd1ebada131febf72a882bc8d318abc90f08a3e5a6ab57d52",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_openrouter_n3_eligible.json",
+  "locked_inputs_manifest_sha256": "739c86769e95098a5607f29baf27fda59a0017ec84dbc3197268ed549577529e",
+  "canary_execution_authorization": "experiments/disabled_format_control/execution_authorization_v3_openrouter_n3_eligible.json",
+  "canary_execution_authorization_sha256": "850915b723198176228d0b7dca9d648f72a75b5103e4a65f33b9144ffcfb0706",
+  "canary_review": "experiments/disabled_format_control/canary_review_v3_openrouter_n3_eligible_2026-09-05.json",
+  "canary_review_sha256": "668d7e55a352742f7aaabfb6e55aa5713de204b080a4055720ad3f9991a223c6",
+  "full_activation_launcher": "scripts/run_disabled_format_control_openrouter_n3_full.py",
+  "full_activation_launcher_sha256": "e7ef42f4fa9c4808a414a42a4fdcbc6af97e85d22948d8384ae2fe42cfed5e72",
+  "authorized_subjects": [
+    "grok-4.3",
+    "claude-opus-4-7",
+    "gpt-5.5"
+  ],
+  "stopped_subjects": [
+    "llama-3.3-70b-instruct"
+  ],
+  "authorization_scope": {
+    "full_rows_per_authorized_subject": 3456,
+    "total_full_rows": 10368,
+    "parallel_subject_processes_permitted": true,
+    "within_subject_order": "frozen deterministic row order",
+    "replacements_permitted": false,
+    "route_or_provider_substitution_permitted": false
+  },
+  "spending_state": {
+    "openrouter_limit_usd": 140.0,
+    "usage_after_canary_usd": 1.31988799,
+    "remaining_after_canary_usd": 138.68011201,
+    "authorized_full_caps_total_usd": 129.93139309
+  },
+  "scientific_contract_changed": false,
+  "network_request_made_by_amendment": false
+}

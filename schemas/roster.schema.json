@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/roster.schema.json",
+  "title": "Conversation-Action-Gap roster — config/roster.json",
+  "description": "Single-source-of-truth shape for the 10-subject + family-excluded judge pool + 1-extractor roster, native + OpenRouter routing, decoding settings, and pricing. CI must validate config/roster.json against this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "freeze_date",
+    "protocol_id",
+    "default_route",
+    "openrouter_base_url",
+    "openrouter_auth_env",
+    "subjects",
+    "judges",
+    "extractor"
+  ],
+  "properties": {
+    "freeze_date": { "type": "string", "format": "date" },
+    "protocol_id": { "type": "string" },
+    "note": { "type": "string" },
+    "default_route": { "type": "string", "enum": ["native", "openrouter"] },
+    "openrouter_base_url": { "type": "string", "format": "uri" },
+    "openrouter_auth_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+    "subjects": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/subjectEntry" }
+    },
+    "judges": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/judgeEntry" }
+    },
+    "judge_family_exclusion": { "$ref": "#/$defs/judgeFamilyExclusion" },
+    "extractor": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/extractorEntry" }
+    },
+    "validators": {
+      "type": "object",
+      "description": "A4 corpus validators (local-only). Mirrors validator_a / validator_b / validator_c_tiebreaker entries in config/model_freeze.json.",
+      "additionalProperties": { "$ref": "#/$defs/validatorEntry" }
+    },
+    "archived_models": {
+      "type": "object",
+      "description": "Models retained in the roster for provenance only (e.g., rejected pilots). Excluded from active runs.",
+      "additionalProperties": { "$ref": "#/$defs/archivedEntry" }
+    },
+    "decoding": { "type": "object" },
+    "prices_per_1m_tokens_usd": { "type": "object" },
+    "deferred": {
+      "oneOf": [{ "type": "object" }, { "type": "array" }]
+    }
+  },
+  "$defs": {
+    "nativeRoute": {
+      "type": "object",
+      "required": ["endpoint", "url_path", "slug", "auth_env"],
+      "properties": {
+        "endpoint": { "type": "string", "format": "uri" },
+        "url_path": { "type": "string" },
+        "slug": { "type": "string", "minLength": 1 },
+        "auth_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "supports_batch": { "type": "boolean" },
+        "batch_url_path": { "type": "string" },
+        "headers": { "type": "object" }
+      }
+    },
+    "openrouterRoute": {
+      "type": "object",
+      "required": ["slug"],
+      "properties": {
+        "slug": { "type": "string", "minLength": 1 },
+        "pinned_provider": { "type": "string" }
+      }
+    },
+    "ollamaCloudRoute": {
+      "type": "object",
+      "required": ["endpoint", "slug", "auth_env"],
+      "properties": {
+        "endpoint": { "type": "string", "format": "uri" },
+        "url_path": { "type": "string" },
+        "slug": { "type": "string", "minLength": 1, "description": "Ollama Cloud model id, e.g. 'kimi-k2.6:cloud'." },
+        "auth_env": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+        "digest_prefix": { "type": "string", "pattern": "^[0-9a-f]{11,64}$", "description": "Ollama model manifest digest prefix (11+ hex chars). Full digest is 64 hex; truncated forms (typically 12 chars) are recorded for human-readable provenance." },
+        "context_window_tokens": { "type": "integer", "minimum": 1 },
+        "modalities": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["text", "image", "audio", "video"] }
+        },
+        "supports_batch": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "selfHostedRoute": {
+      "type": "object",
+      "required": ["source", "hf_repo", "vote_source_dir_slug"],
+      "properties": {
+        "source": { "type": "string" },
+        "hf_repo": { "type": "string", "minLength": 1 },
+        "hf_repo_url": { "type": "string", "format": "uri" },
+        "predeclared_serving_formats": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "vote_source_dir_slug": { "type": "string", "minLength": 1 },
+        "audit_role": { "type": "string" },
+        "supports_batch": { "type": "boolean" },
+        "fires_when": { "type": "string" }
+      }
+    },
+    "judgeFamilyExclusion": {
+      "type": "object",
+      "required": ["default_panel", "substitute_priority", "rule"],
+      "properties": {
+        "default_panel": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "substitute_priority": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "scope": { "type": "string" },
+        "predicate_rows": { "type": "string" },
+        "rule": { "type": "string" }
+      }
+    },
+    "subjectEntry": {
+      "type": "object",
+      "required": ["display_name", "family", "tier"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "family": { "type": "string" },
+        "tier": {
+          "type": "string",
+          "enum": ["hosted_api", "local_self_hosted"]
+        },
+        "hosted_route_class": {
+          "type": "string",
+          "enum": ["closed_frontier_api", "open_weight_hosted_api"],
+          "description": "Descriptive hosted-route metadata only; not a preregistered H1 or heterogeneity stratum."
+        },
+        "selection_note": { "type": "string" },
+        "native": { "oneOf": [{ "$ref": "#/$defs/nativeRoute" }, { "type": "null" }] },
+        "openrouter": { "oneOf": [{ "$ref": "#/$defs/openrouterRoute" }, { "type": "null" }] },
+        "ollama_cloud": { "oneOf": [{ "$ref": "#/$defs/ollamaCloudRoute" }, { "type": "null" }] },
+        "route_override": {
+          "oneOf": [{ "type": "string", "enum": ["native", "openrouter", "ollama_cloud"] }, { "type": "null" }]
+        },
+        "route_preference": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["native", "ollama_cloud", "openrouter"] },
+          "uniqueItems": true,
+          "minItems": 1,
+          "description": "Ordered list of transports the runner SHOULD attempt. Default if absent: ['native','openrouter']."
+        },
+        "local_config": { "type": "object" }
+      }
+    },
+    "judgeEntry": {
+      "type": "object",
+      "required": ["display_name", "family"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "role": { "type": "string" },
+        "selection_note": { "type": "string" },
+        "family": { "type": "string" },
+        "native": { "oneOf": [{ "$ref": "#/$defs/nativeRoute" }, { "type": "null" }] },
+        "openrouter": { "oneOf": [{ "$ref": "#/$defs/openrouterRoute" }, { "type": "null" }] },
+        "ollama_cloud": { "oneOf": [{ "$ref": "#/$defs/ollamaCloudRoute" }, { "type": "null" }] },
+        "self_hosted": { "oneOf": [{ "$ref": "#/$defs/selfHostedRoute" }, { "type": "null" }] },
+        "route_override": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "route_preference": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["native", "ollama_cloud", "openrouter", "self_hosted"] },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    },
+    "extractorEntry": {
+      "type": "object",
+      "required": ["display_name", "family"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "family": { "type": "string" },
+        "native": { "oneOf": [{ "$ref": "#/$defs/nativeRoute" }, { "type": "null" }] },
+        "openrouter": { "oneOf": [{ "$ref": "#/$defs/openrouterRoute" }, { "type": "null" }] },
+        "ollama_cloud": { "oneOf": [{ "$ref": "#/$defs/ollamaCloudRoute" }, { "type": "null" }] },
+        "route_override": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "route_preference": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["native", "ollama_cloud", "openrouter"] },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      }
+    },
+    "validatorEntry": {
+      "type": "object",
+      "required": ["display_name", "role", "family", "tier", "model_freeze_key"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "role": {
+          "type": "string",
+          "enum": ["validator_a", "validator_b", "validator_c_tiebreaker"]
+        },
+        "family": { "type": "string" },
+        "tier": { "type": "string" },
+        "native": { "oneOf": [{ "$ref": "#/$defs/nativeRoute" }, { "type": "null" }] },
+        "openrouter": { "oneOf": [{ "$ref": "#/$defs/openrouterRoute" }, { "type": "null" }] },
+        "route_override": {
+          "oneOf": [{ "type": "string", "enum": ["native", "openrouter"] }, { "type": "null" }]
+        },
+        "model_freeze_key": { "type": "string", "minLength": 1 }
+      }
+    },
+    "archivedEntry": {
+      "type": "object",
+      "required": ["display_name", "role", "family", "tier", "model_freeze_key", "archive_reason"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "role": { "type": "string" },
+        "family": { "type": "string" },
+        "tier": { "type": "string" },
+        "model_freeze_key": { "type": "string", "minLength": 1 },
+        "archive_reason": { "type": "string" }
+      }
+    }
+  }
+}

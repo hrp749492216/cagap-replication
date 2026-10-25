@@ -1,0 +1,47 @@
+{
+  "schema_version": "disabled_format_control.execution_governance_amendment.v1",
+  "amendment_id": "CAGAP-POSTREG-DISABLED-FORMAT-EXECUTION-GOVERNANCE-2026-09-05",
+  "status": "frozen_before_first_official_dispatch",
+  "approved_at_utc": "2026-09-05T19:22:31Z",
+  "approved_by": "project_owner",
+  "approval_basis": "The project owner confirmed that this is an exploratory study, that no OSF filing is needed, and authorized creation of the replacement activation artifacts.",
+  "registration_status": "post_registration_exploratory",
+  "osf_filing_required": false,
+  "superseded_activation_requirement": "osf_filing_only",
+  "official_response_artifacts_at_approval": 0,
+  "scientific_contract_unchanged": true,
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-03-v3-GROK-GPT-KIMI",
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_grok_gpt_kimi.json",
+  "protocol_sha256": "575c336713cad45f2866d254f4686c6dbca3beaf9009f7cff83ac8de6a0d06e7",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_grok_gpt_kimi.json",
+  "locked_inputs_manifest_sha256": "5a9e12c02532b12d4866f8b1693196381fcfd3d42be9d481d72ab7ed6779512c",
+  "approval_document": "paper/addenda/DISABLED_FORMAT_CONTROL_EXECUTION_GOVERNANCE_2026-09-05.md",
+  "approval_document_sha256": "c800141c5dec5bff88187ed571b940bca6c15824f22ee6853ffcf36e6e1f942c",
+  "activation_launcher": "scripts/run_disabled_format_control_exploratory.py",
+  "activation_launcher_sha256": "a8343b067ef547d38ccbd7f3859c98055548eca2947f25e93e51dd53f8525243",
+  "delegated_frozen_runner": "scripts/run_disabled_format_control.py",
+  "delegated_frozen_runner_sha256": "6d64e7d2ae8666f7c7297bd1bfa64e2d77b2e4fc1dfa0c311549775467bcf58c",
+  "amendment_scope": {
+    "changes": [
+      "replace the unperformed OSF-only activation path with a dated project-owner authorization for this exploratory control",
+      "permit the amendment-pinned launcher to validate the v2 owner receipt before delegating to the frozen runner"
+    ],
+    "unchanged": [
+      "subjects and execution order",
+      "arms and exact format instruction",
+      "routes and decoding",
+      "generated full and canary request bytes",
+      "identities and randomization",
+      "estimands and missingness",
+      "retry and stopping rules",
+      "H1/H2 isolation",
+      "spending limits and canary-first sequence"
+    ]
+  },
+  "historical_artifacts": {
+    "prepared_osf_manifest": "experiments/disabled_format_control/osf_filing_manifest_v3_grok_gpt_kimi.json",
+    "filing_status": "not_filed_preserved_as_history",
+    "legacy_receipt_template": "experiments/disabled_format_control/execution_authorization_v3_grok_gpt_kimi_TEMPLATE.json"
+  },
+  "network_request_made_by_amendment": false
+}

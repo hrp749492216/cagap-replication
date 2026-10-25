@@ -1,0 +1,193 @@
+{
+  "schema_version": "disabled_format_control.openrouter_n3_canary_review.v1",
+  "reviewed_at_utc": "2026-09-05T23:56:29Z",
+  "reviewer": "project_execution_agent",
+  "status": "complete_before_full_authorization",
+  "analysis_inclusion": false,
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_openrouter_n3_eligible.json",
+  "protocol_sha256": "2a0708d28269914dd1ebada131febf72a882bc8d318abc90f08a3e5a6ab57d52",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_openrouter_n3_eligible.json",
+  "locked_inputs_manifest_sha256": "739c86769e95098a5607f29baf27fda59a0017ec84dbc3197268ed549577529e",
+  "canary_execution_authorization": "experiments/disabled_format_control/execution_authorization_v3_openrouter_n3_eligible.json",
+  "canary_execution_authorization_sha256": "850915b723198176228d0b7dca9d648f72a75b5103e4a65f33b9144ffcfb0706",
+  "execution_governance_amendment": "experiments/disabled_format_control/execution_governance_amendment_v3_openrouter_n3_eligible_2026-09-05.json",
+  "execution_governance_amendment_sha256": "8289cd5fe02e52e76d70557dcebe0461df12969440e3db47ed05615161c1ba9e",
+  "review_criteria": [
+    "exact reconciliation to the three locked canary custom_ids per candidate",
+    "analysis_inclusion=false and operational_canary=true",
+    "exact requested and returned model slug",
+    "observed provider identity equals the frozen provider pin",
+    "six visible tool schemas and frozen tool_choice per arm",
+    "no native tool call in either DISABLED arm",
+    "every native tool call names a visible tool and has strict schema-valid JSON arguments",
+    "a FORMAT action JSON uses exactly the top-level keys name and arguments and validates against the named tool schema",
+    "every row has non-null usable content or a native tool call",
+    "every row has an archived raw HTTP capture and matching provider-reported cost"
+  ],
+  "campaign_verdict": "qualified_subjects_only",
+  "passing_subjects": [
+    "grok-4.3",
+    "claude-opus-4-7",
+    "gpt-5.5"
+  ],
+  "stopped_subjects": [
+    "llama-3.3-70b-instruct"
+  ],
+  "subjects": {
+    "llama-3.3-70b-instruct": {
+      "verdict": "stop_before_full",
+      "failure": "DISABLED_FORMAT_JSON attempted an action but violated the frozen format contract: returned top-level keys type/name/parameters instead of exactly name/arguments.",
+      "requested_and_returned_model": "meta-llama/llama-3.3-70b-instruct",
+      "provider_pin": "coreweave/fp16",
+      "observed_provider": "CoreWeave",
+      "rows": 3,
+      "input_sha256": "0587698b8356bddf5eced105634d3a1a992b0feb9cc15ea5b25437bf37b1d970",
+      "response_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/responses/responses_llama-3.3-70b-instruct_openrouter.jsonl",
+      "response_sha256": "e1cecff80b3e9fb60a31564c3f8cf0a34b756725afdea40c562a84798312d408",
+      "submit_manifest_sha256": "faa97942abb4350ca06b5a160ef54c037bcd217b2351a029ac652bfb58d824e9",
+      "metadata_snapshot_sha256": "510e4f2ece9c82fa0c4dbfe8be5aec787ad01e910c51cb2683cf1b070701660d",
+      "reported_cost_usd": 0.00349888,
+      "strict_schema_valid_native_tool_calls": 1,
+      "arm_review": {
+        "TOOL_CONTEMPORANEOUS": {
+          "finish_reason": "tool_calls",
+          "native_tool_calls": 1,
+          "usable": true
+        },
+        "DISABLED_BASELINE": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_FORMAT_JSON": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": false,
+          "format_output_kind": "invalid_action_json"
+        }
+      }
+    },
+    "grok-4.3": {
+      "verdict": "pass_for_full",
+      "requested_and_returned_model": "x-ai/grok-4.3",
+      "provider_pin": "xai/zdr",
+      "observed_provider": "xAI",
+      "rows": 3,
+      "input_sha256": "c228b773c8077097911f9db7bc408506fc0b7bf1f63a411e801799ec469b3a39",
+      "response_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/responses/responses_grok-4.3_openrouter.jsonl",
+      "response_sha256": "f1cd6f676299b9aec12f609b8273f9b182a867c362e66bd0deba3d2496a8027a",
+      "submit_manifest_sha256": "c4c886eb093c0f4630d812c9f76157f4c8d19f4c5fc29bc31197dc0e19eccf15",
+      "metadata_snapshot_sha256": "3975dd38db7c51c2eafe1cb7de800ba9c111daa03f634e6686961903b7fd6cac",
+      "reported_cost_usd": 0.0062247,
+      "strict_schema_valid_native_tool_calls": 1,
+      "arm_review": {
+        "TOOL_CONTEMPORANEOUS": {
+          "finish_reason": "tool_calls",
+          "native_tool_calls": 1,
+          "usable": true
+        },
+        "DISABLED_BASELINE": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_FORMAT_JSON": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true,
+          "format_output_kind": "ordinary_text_or_refusal"
+        }
+      }
+    },
+    "claude-opus-4-7": {
+      "verdict": "pass_for_full",
+      "requested_and_returned_model": "anthropic/claude-opus-4.7",
+      "provider_pin": "anthropic",
+      "observed_provider": "Anthropic",
+      "rows": 3,
+      "input_sha256": "d9653699edd9ee17679e1ac8266a0ca2e24da1fa902927b6031cb584e3aa43d2",
+      "response_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/responses/responses_claude-opus-4-7_openrouter.jsonl",
+      "response_sha256": "4677fe1deba06268b001aff0d6dc973eb3534fc44ff56c14f9e88386b93e0d22",
+      "submit_manifest_sha256": "5537b15a2f8a0d2e425a5c36f8a838a3ae41e1a3a9b870573301fc985da9a9a0",
+      "metadata_snapshot_sha256": "3606809c98286032c17073aa96bec8fa07dd098772162c8cca7a90d80f40b7ec",
+      "reported_cost_usd": 0.06732,
+      "strict_schema_valid_native_tool_calls": 0,
+      "arm_review": {
+        "TOOL_CONTEMPORANEOUS": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_BASELINE": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_FORMAT_JSON": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true,
+          "format_output_kind": "ordinary_text_or_refusal"
+        }
+      }
+    },
+    "gpt-5.5": {
+      "verdict": "pass_for_full",
+      "requested_and_returned_model": "openai/gpt-5.5",
+      "provider_pin": "openai/flex",
+      "observed_provider": "OpenAI",
+      "rows": 3,
+      "input_sha256": "7c6de15792fad14dba8aa084184100d516482eadf35e0c4ab4c367dd71f0688a",
+      "response_path": "outputs/postreg_disabled_format_control_v3_openrouter_n3_eligible/canary/responses/responses_gpt-5.5_openrouter.jsonl",
+      "response_sha256": "0d1d45bd85b65f56e109ff17651b6f5ffeba5199ed9daf33aa5ff295ba0fddbd",
+      "submit_manifest_sha256": "fe15af6f908a277f57a9daccfa33599594d57ff859dd52e837afbf17fc7b6c42",
+      "metadata_snapshot_sha256": "98bc9788324505e361a7737e564a0f56b627e652d86c0b5ec3dfd10eddd67903",
+      "reported_cost_usd": 0.0142375,
+      "strict_schema_valid_native_tool_calls": 0,
+      "arm_review": {
+        "TOOL_CONTEMPORANEOUS": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_BASELINE": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true
+        },
+        "DISABLED_FORMAT_JSON": {
+          "finish_reason": "stop",
+          "native_tool_calls": 0,
+          "content_nonempty": true,
+          "usable": true,
+          "format_output_kind": "ordinary_text_or_refusal"
+        }
+      }
+    }
+  },
+  "spend_reconciliation": {
+    "openrouter_usage_before_official_usd": 1.22860691,
+    "canary_response_reported_cost_usd": 0.09128108,
+    "expected_usage_after_canary_usd": 1.31988799,
+    "observed_usage_after_canary_usd": 1.31988799,
+    "reconciliation_delta_usd": 0,
+    "openrouter_limit_usd": 140,
+    "observed_limit_remaining_usd": 138.68011201
+  },
+  "full_gate": {
+    "verdict": "authorize_only_passing_subjects",
+    "full_rows_authorized_per_passing_subject": 3456,
+    "total_full_rows_authorized": 10368,
+    "llama_full_rows_authorized": 0,
+    "replacements_authorized": false
+  }
+}

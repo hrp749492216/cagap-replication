@@ -1,0 +1,208 @@
+{
+  "notes_from_docx": [
+    "Deepinfra supports logprobs from each model.",
+    "If using Ollama cloud for above, it  is subscription based, so it wont cost extra other than the subscription that is already paid. Ollama cloud has",
+    "Kimi K2.6, GLM 5.1, Minimax 2.7, Mistral large 3-675B, Nemotron-3-super. So these costs can be excluded when those routes are active.",
+    "Minimax 2.7, use async = true for Batch processing.",
+    "COHERE: does not have official pricing page."
+  ],
+  "ollama_cloud_subscription_assumption": {
+    "active_project_exact_or_direct_matches": [
+      "kimi-k2.6",
+      "glm-5.1",
+      "minimax-2.7",
+      "nemotron-super-120b-bf16"
+    ],
+    "ollama_available_but_not_planned_model_keys": [
+      "mistral-large-2512"
+    ],
+    "marginal_api_cost_usd": 0.0,
+    "route_plan_note": "Current plan uses Ollama Cloud via OLLAMA_API_KEY for Kimi K2.6, MiniMax M2.7, GLM 5.1, and Nemotron 3 Super where those routes are active. Mistral Large 3 (2512) remains route-capable through Ollama Cloud metadata but is not costed as an Ollama-covered planned-route model.",
+    "official_cloud_models_source": "https://ollama.com/search?c=cloud&o=newest",
+    "official_pricing_source": "https://ollama.com/pricing",
+    "official_pricing_verified_on": "2026-05-03T19:21:09Z",
+    "subscription_plans": [
+      {
+        "monthly_usd": 0.0,
+        "plan": "Free"
+      },
+      {
+        "annual_usd": 200.0,
+        "monthly_usd": 20.0,
+        "plan": "Pro"
+      },
+      {
+        "monthly_usd": 100.0,
+        "plan": "Max"
+      }
+    ],
+    "source_note_from_docx": "Ollama cloud has Kimi K2.6, GLM 5.1, Minimax 2.7, Mistral large 3-675B, Nemotron-3-super. So these costs can be excluded when those routes are active."
+  },
+  "pricing": [
+    {
+      "batch_api_input_usd_per_1m_tokens": 2.5,
+      "batch_api_output_usd_per_1m_tokens": 15.0,
+      "batch_discount_percent": 50.0,
+      "canonical_model_key": "gpt-5.5",
+      "model_key": "gpt-5.5",
+      "model_source": "GPT 5.5",
+      "provider_key": "openai",
+      "provider_source": "OPENAI",
+      "regular_api_input_usd_per_1m_tokens": 5.0,
+      "regular_api_output_usd_per_1m_tokens": 30.0
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 2.5,
+      "batch_api_output_usd_per_1m_tokens": 12.5,
+      "batch_discount_percent": 50.0,
+      "canonical_model_key": "claude-opus-4-7",
+      "model_key": "claude-opus-4-7",
+      "model_source": "Claude Opus 4.7",
+      "provider_key": "anthropic",
+      "provider_source": "ANTHROPIC",
+      "regular_api_input_usd_per_1m_tokens": 5.0,
+      "regular_api_output_usd_per_1m_tokens": 25.0
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 0.57,
+      "batch_api_output_usd_per_1m_tokens": 2.4,
+      "batch_discount_percent": 40.0,
+      "canonical_model_key": "kimi-k2.6",
+      "model_key": "kimi-k2.6",
+      "model_source": "KIMI K2.6",
+      "provider_key": "moonshot",
+      "provider_source": "MOONSHOT",
+      "regular_api_input_usd_per_1m_tokens": 0.95,
+      "regular_api_output_usd_per_1m_tokens": 4.0
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": null,
+      "batch_api_output_usd_per_1m_tokens": null,
+      "batch_discount_percent": null,
+      "canonical_model_key": "minimax-2.7",
+      "model_key": "minimax-2.7",
+      "model_source": "MINIMAX 2.7",
+      "provider_key": "minimax",
+      "provider_source": "MINIMAX",
+      "regular_api_input_usd_per_1m_tokens": 0.3,
+      "regular_api_output_usd_per_1m_tokens": 1.2
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 1.0,
+      "batch_api_output_usd_per_1m_tokens": 3.0,
+      "batch_discount_percent": 50.0,
+      "canonical_model_key": "mistral-large-2512",
+      "model_key": "mistral-large-2512",
+      "model_source": "Mistral large 2512",
+      "provider_key": "mistral",
+      "provider_source": "MISTRAL",
+      "regular_api_input_usd_per_1m_tokens": 2.0,
+      "regular_api_output_usd_per_1m_tokens": 6.0,
+      "_batch_note": "Re-verified 2026-08-08 against https://mistral.ai/pricing and the live native model catalog. The pricing page explicitly identifies Mistral Large and links to mistral-large-2512 at $2 input / $6 output per 1M tokens with a 50% batch discount, yielding $1 / $3. The linked model card still displays $0.50 / $1.50, so the cost gate deliberately uses the higher billing-page rates. GET /v1/models/mistral-large-2512 confirmed the exact live model and alias mistral-large-latest but exposes no pricing field."
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 2.5,
+      "batch_api_output_usd_per_1m_tokens": 10.0,
+      "batch_discount_percent": 0.0,
+      "canonical_model_key": "command-a-03-2025",
+      "model_key": "command-a-03-2025",
+      "model_source": "COHERE COMMAND A (03-2025)",
+      "provider_key": "cohere",
+      "provider_source": "COHERE",
+      "regular_api_input_usd_per_1m_tokens": 2.5,
+      "regular_api_output_usd_per_1m_tokens": 10.0
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 0.09,
+      "batch_api_output_usd_per_1m_tokens": 0.45,
+      "batch_discount_percent": 0.0,
+      "canonical_model_key": "nemotron-super-120b-bf16",
+      "model_key": "nemotron-super-120b-bf16",
+      "model_source": "NEMOTRON SUPER 120B -bf16",
+      "provider_key": "openrouter-via-deepinfra-bf16",
+      "provider_source": "OPENROUTER via DeepInfra bf16",
+      "regular_api_input_usd_per_1m_tokens": 0.09,
+      "regular_api_output_usd_per_1m_tokens": 0.45
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": 1.0,
+      "batch_api_output_usd_per_1m_tokens": 2.0,
+      "batch_discount_percent": 20.0,
+      "canonical_model_key": "grok-4.3",
+      "model_key": "grok-4.3",
+      "model_source": "Grok 4.3",
+      "provider_key": "xai",
+      "provider_source": "xAI",
+      "regular_api_input_usd_per_1m_tokens": 1.25,
+      "regular_api_output_usd_per_1m_tokens": 2.5,
+      "_batch_note": "Re-verified 2026-08-07 against https://docs.x.ai/developers/pricing and the live xAI model catalog. Grok 4.3 standard short-context rates remain $1.25 input / $2.50 output per 1M tokens. The current Batch API discount is 20%, yielding $1.00 input / $2.00 output; cached batch input is $0.16 per 1M tokens."
+    },
+    {
+      "batch_api_input_usd_per_1m_tokens": null,
+      "batch_api_output_usd_per_1m_tokens": null,
+      "batch_discount_percent": null,
+      "canonical_model_key": "glm-5.1",
+      "model_key": "glm-5.1",
+      "model_source": "GLM 5.1",
+      "provider_key": "zhipu",
+      "provider_source": "ZHIPU",
+      "regular_api_input_usd_per_1m_tokens": 1.4,
+      "regular_api_output_usd_per_1m_tokens": 4.4
+    }
+  ],
+  "project_pricing_coverage": [
+    {
+      "model_key": "claude-opus-4-7",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "grok-4.3",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "gpt-5.5",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "gemini-3.5-flash",
+      "status": "pricing_snapshot_missing"
+    },
+    {
+      "model_key": "kimi-k2.6",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "glm-5.1",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "command-a-03-2025",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "mistral-large-2512",
+      "status": "priced_from_docx"
+    },
+    {
+      "model_key": "minimax-2.7",
+      "status": "priced_from_docx"
+    }
+  ],
+  "schema_version": "api_pricings_native_providers.v2",
+  "source": {
+    "extracted_on": "2026-04-28",
+    "file": "docs/source_materials/api_pricings_native_providers.docx",
+    "sha256": "b3948fb1060b31a5efe4bed70a6423ae2e6f75e5842cf2b97ce48950eb3dd8b2",
+    "table_header_source": [
+      "shou",
+      "MODEL",
+      "REGULAR API INPUT ($ per 1M tokens)",
+      "REGULAR API OUTPUT ($ per 1M tokens)",
+      "BATCH DISCOUNT"
+    ],
+    "title": "API PRICINGS OF NATIVE PROVIDERS"
+  },
+  "units": {
+    "token_prices": "USD per 1,000,000 tokens"
+  }
+}

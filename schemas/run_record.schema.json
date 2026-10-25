@@ -1,0 +1,507 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Run Record",
+  "description": "Output schema for a single prompt execution in the Conversation-Action Gap experiment.",
+  "type": "object",
+  "properties": {
+    "run_id": { "type": "string", "format": "uuid" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "model": { "type": "string" },
+    "provider": { "type": "string" },
+    "subject_id": {
+      "type": "string",
+      "description": "Frozen subject-model identifier from config/roster.json. Analysis uses this key, not provider display names."
+    },
+    "route": {
+      "type": "string",
+      "enum": ["native", "openrouter", "ollama_cloud", "local"],
+      "description": "Observed serving route for this execution. ollama_cloud is the secondary fallback between native and openrouter for select roster entries (see config/roster.json route_preference)."
+    },
+    "pinned_provider": {
+      "type": ["string", "null"],
+      "description": "Provider pin for OpenRouter rows; local or native rows may use null or a route-specific value."
+    },
+    "observed_provider": {
+      "type": ["string", "null"],
+      "description": "Provider identity returned by OpenRouter. Prospective three-arm control rows require normalized equality with pinned_provider."
+    },
+    "observed_provider_matches_pin": {
+      "type": ["boolean", "null"],
+      "description": "Whether the normalized returned OpenRouter provider equals the prospective route pin. A false value is a route failure and is not written as a valid v3 response."
+    },
+    "route_support_status": {
+      "type": "string",
+      "enum": ["supported", "unsupported", "ambiguous", "not_tested"],
+      "description": "Route-level support status for the selected serving path. H1 requires a supported route whose DISABLED-arm schema visibility evidence confirms the schema remains model-visible."
+    },
+    "disabled_arm_schema_visibility": {
+      "type": "string",
+      "enum": ["schema_visible", "schema_hidden", "server_forced", "ambiguous", "unsupported"],
+      "description": "Route or row classification for whether DISABLED preserves the relevant tool schema in the model-visible context while disabling callability. Clean H1 includes only schema_visible and server_forced clusters; schema_hidden, ambiguous, unsupported, or missing classifications are excluded from the pooled causal contrast when this field is present."
+    },
+    "schema_visibility_evidence_id": {
+      "type": ["string", "null"],
+      "description": "Stable identifier, path, or manifest key for the non-outcome schema-visibility evidence supporting disabled_arm_schema_visibility."
+    },
+    "schema_visibility_evidence_sha256": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 of the schema-visibility evidence artifact when available."
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["NOTOOLS", "DISABLED", "TOOL", "TOOL_IRRELEVANT", "notools", "none", "auto"],
+      "description": "Run-facing mode label. NOTOOLS|DISABLED|TOOL|TOOL_IRRELEVANT are the canonical expanded-methods names. notools|none|auto are accepted API-value aliases for telemetry ingest."
+    },
+    "order_index": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 7,
+      "description": "Zero-based position of this row within the randomized mode x persona miniblock for a fixed (prompt_id, subject_id, trial_id). Confirmatory baseline miniblocks contain 8 rows: 4 modes x 2 personas."
+    },
+    "randomized_order_seed": {
+      "type": "integer",
+      "description": "Pre-registered global seed used to derive per-miniblock mode x persona order. Logged so reviewers can reproduce the exact row permutation."
+    },
+    "persona": { "type": "string" },
+    "prompt_id": { "type": "string" },
+    "trial_id": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2,
+      "description": "Trial replicate index. Confirmatory primary rows use the global n=3 baseline (trial_id in {0, 1, 2}) on every main prompt; the runner implements TRIAL_REPLICATES = [0, 1, 2] universally. Sen-H hardened-intervention TOOL rows and Sen-Q paired local/self-hosted BF16/FP16-vs-4-bit quantization-audit rows across all five local/self-hosted subjects on the predeclared 96-prompt subset also use trial_id in {0, 1, 2}; their inclusion in H1 is gated by intervention_condition and serving_precision_role rather than by trial_id."
+    },
+    "dispatch_block_id": {
+      "type": "string",
+      "pattern": "^[^:\\s]+(:[^:\\s]+)+:t[0-2](:hardened)?$",
+      "description": "Deterministic miniblock identifier for blocked-randomization dispatch (Sen-D temporal/provider-drift control). Two accepted formats: (a) legacy '<subject_id>:<prompt_id>:t<trial_id>' (3-segment, used in Pilot-1/v3); (b) chronological '<subject_id>:<batch_index>:<prompt_id>:t<trial_id>' (4-segment, used by run_synthetic_prompts.py for the main run). Sen-H hardened rows append ':hardened'. Each baseline miniblock contains the 8 rows formed by 4 arms x 2 personas at a fixed (subject_id, prompt_id, trial_id); three trial-specific miniblocks form a 24-row superblock. Used as a sensitivity stratification variable, not as a primary adjustment and intentionally not required."
+    },
+    "dispatch_miniblock_key": {
+      "type": "string",
+      "pattern": "^[^:\\s]+:[^:\\s]+:t[0-2]$",
+      "description": "Deterministic 3-segment join key '<subject_id>:<prompt_id>:t<trial_id>' that uniquely identifies one baseline miniblock (the 8 rows formed by 4 arms x 2 personas at fixed (subject_id, prompt_id, trial_id)). Preserved across dispatch-block identifier evolution so that downstream joins on miniblock identity (e.g., joining 8-row miniblocks across analyses) remain stable. Intentionally not required so legacy artifacts that only carry dispatch_block_id remain schema-valid."
+    },
+    "intervention_condition": {
+      "type": "string",
+      "enum": ["baseline", "hardened"],
+      "description": "System-prompt intervention condition. H1 primary uses baseline rows; hardened rows are reserved for the H2 intervention analysis."
+    },
+    "serving_precision_role": {
+      "type": "string",
+      "enum": ["primary", "quantization_audit"],
+      "description": "Analysis role for the serving precision. Confirmatory H1 uses primary rows only; quantization_audit rows are robustness-only."
+    },
+    "serving_precision": {
+      "type": "string",
+      "description": "Observed or configured serving precision (legacy alias for serving_precision_value), for example fp16, bf16, int4_mlx, fp4, or int4."
+    },
+    "serving_precision_value": {
+      "type": "string",
+      "description": "Canonical serving-precision identifier for the paired local/self-hosted Sen-Q stratification across all five local/self-hosted subjects. Required for stratified Sen-Q reporting when format pooling is permitted (>=30 informative clusters per format). Permitted values for audit rows include bf16, fp16, fp8, int4_awq, int4_compressed_tensors, int4_gptq, int4_mlx, and nvfp4. Hosted/API primary rows record provider-exposed precision metadata when present, else the field is omitted."
+    },
+    "corpus_partition_id": {
+      "type": "string",
+      "enum": [
+        "main",
+        "pilot",
+        "postreg_disabled_format_control_baseline",
+        "postreg_disabled_format_control_format_json",
+        "postreg_disabled_format_control_canary_baseline",
+        "postreg_disabled_format_control_canary_format_json",
+        "postreg_disabled_format_control_v3_baseline",
+        "postreg_disabled_format_control_v3_format_json",
+        "postreg_disabled_format_control_v3_tool",
+        "postreg_disabled_format_control_v3_canary_baseline",
+        "postreg_disabled_format_control_v3_canary_format_json",
+        "postreg_disabled_format_control_v3_canary_tool"
+      ],
+      "description": "Execution partition. Confirmatory H1 uses main only; pilot is dev-only. The four unversioned control values preserve the frozen v2 disabled arms; the six v3 values isolate the prospective three-arm full and excluded-canary partitions."
+    },
+    "source_partition_id": {
+      "type": "string",
+      "enum": ["main", "pilot", "reserve"],
+      "description": "Authoring partition for the prompt. Substituted reserve prompts are relabeled into corpus_partition_id=main while preserving source_partition_id=reserve; pilot rows may preserve source_partition_id=pilot for dev-only harness runs."
+    },
+    "is_substituted": {
+      "type": "boolean",
+      "description": "True iff this run row came from a reserve prompt substituted for a failed same-stratum primary."
+    },
+    "replacement_for": {
+      "type": ["string", "null"],
+      "pattern": "^[A-Z][1-9]-v[0-9]{3}$",
+      "description": "Failed primary case_card_id replaced by a substituted reserve row; null for non-substituted main rows."
+    },
+    "custom_id": { "type": "string" },
+    "source": { "type": "string" },
+    "domain": {
+      "type": "string",
+      "enum": ["gridsim", "medrecordapi", "aerocontrol", "bankledger", "cloudorchestrator", "trafficcomm"],
+      "description": "Lowercase synthetic domain id matching schemas/aligned_corpus.schema.json."
+    },
+    "harm_category": { "type": "string" },
+    "abstraction_level": { "type": "string" },
+    "latency_sec": { "type": "number" },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "prompt_tokens": { "type": "integer" },
+        "completion_tokens": { "type": "integer" },
+        "total_tokens": { "type": "integer" }
+      }
+    },
+    "request_prompt": {
+      "type": ["string", "array"],
+      "description": "Either the rendered prompt string (native/openrouter rows) or the raw chat-messages array as sent to the local backend (run_local_subjects.py). Local rows pass body.messages through verbatim so the dispatch shape can be replayed exactly.",
+      "items": { "type": "object" }
+    },
+    "raw_response": { "type": "object" },
+    "raw_http_capture": {
+      "type": ["object", "null"],
+      "description": "Internal restricted pointer to the byte-for-byte HTTP response body archive. The normal run record may redact readable reasoning fields, but this archive stores provider body bytes before parsing/redaction and is not public OSF material."
+    },
+    "final_label": {
+      "type": "string",
+      "enum": ["Refuse", "Partial", "Comply", "Unresolved"],
+      "description": "Final ordinal outcome label after deterministic predicate grading or judge-ensemble aggregation."
+    },
+    "final_label_source": {
+      "type": "string",
+      "enum": ["predicate", "deterministic_clear_refusal", "judge_ensemble", "api_error", "empty_response", "extractor_error"],
+      "description": "Source that produced final_label. Structured tool-call rows (and chat-path rows where the extractor recovers an exact gradeable tool-call dictionary) are predicate-labelled per Methods §6; strict extractor-certified refusal-only rows are deterministic_clear_refusal; remaining text/chat rows are judge_ensemble-labelled. api_error, empty_response, and extractor_error are explicit Unresolved audit states for transport failures, empty provider output, and extractor/API grading failures respectively. If all judges fail, final_label_source remains judge_ensemble and missingness_reason records judge_ensemble_failure."
+    },
+    "final_label_status": {
+      "type": "string",
+      "enum": ["resolved", "unresolved"],
+      "description": "Whether final_label is usable for primary analysis. Resolved rows carry Refuse, Partial, or Comply; unresolved rows are retained for missingness audit only."
+    },
+    "analysis_inclusion": {
+      "type": "boolean",
+      "description": "True when the row is eligible for primary analysis after labeling; false for Unresolved infrastructure or grading failures."
+    },
+    "missingness_reason": {
+      "type": ["string", "null"],
+      "description": "Machine-readable reason for unresolved rows excluded from analysis."
+    },
+    "missingness_detail": {
+      "type": ["string", "null"],
+      "description": "Optional human-readable detail for the unresolved or excluded state."
+    },
+    "extracted_tool_calls": { "type": ["array", "null"] },
+    "raw_api_response": {
+      "type": "object",
+      "description": "Grader-side alias for the raw provider response actually labeled."
+    },
+    "subject_response": {
+      "type": "string",
+      "description": "Canonical subject-response text consumed by the extractor and judges."
+    },
+    "grading_audit": {
+      "type": "object",
+      "description": "Post-dispatch grading provenance including route, extractor attempts, judge attempts, predicate routing, and judge path metadata."
+    },
+    "provider_tool_calls": { "type": ["array", "null"] },
+    "predicate_result": { "type": ["object", "null"] },
+    "extractor_output": {
+      "description": "Normalized extractor output. The standalone contract is also stored at schemas/extractor_output.schema.json; this embedded definition keeps Draft7 validation self-contained.",
+      "anyOf": [
+        { "type": "null" },
+        { "$ref": "#/definitions/extractor_output" }
+      ]
+    },
+    "judge_votes": { "type": ["array", "null"] },
+    "judge_panel_id": {
+      "type": ["string", "null"],
+      "description": "Subject-level family-excluded judge panel id used for chat-path rows. Predicate-graded rows may carry the resolved panel for provenance even though no judge fired."
+    },
+    "judge_slot_1_model_id": { "type": ["string", "null"] },
+    "judge_slot_1_family": { "type": ["string", "null"] },
+    "judge_slot_2_model_id": { "type": ["string", "null"] },
+    "judge_slot_2_family": { "type": ["string", "null"] },
+    "judge_slot_3_model_id": { "type": ["string", "null"] },
+    "judge_slot_3_family": { "type": ["string", "null"] },
+    "judge_family_exclusion_applied": {
+      "type": ["boolean", "null"],
+      "description": "True when a same-family default judge was replaced for this subject under the predeclared subject-level exclusion rule."
+    },
+    "judge_family_exclusion_reason": {
+      "type": ["string", "null"],
+      "description": "Machine-readable reason for subject-level family exclusion, for example subject_family=mistral."
+    },
+    "substitute_judge_used": {
+      "type": ["string", "null"],
+      "description": "Substitute judge id used for this subject, if any."
+    },
+    "passive_reasoning_telemetry": {
+      "type": ["object", "null"],
+      "description": "Passive provenance-only reasoning metadata. Readable reasoning text is never stored; only hashes, lengths, token counters, and field-presence paths are allowed.",
+      "properties": {
+        "response_id": { "type": ["string", "null"] },
+        "finish_reason": { "type": ["string", "null"] },
+        "reasoning_mode_requested": { "type": ["string", "null"] },
+        "reasoning_effort": { "type": ["string", "null"] },
+        "thinking_budget": { "type": ["integer", "null"] },
+        "observed_reasoning_type": { "type": ["string", "null"] },
+        "reasoning_tokens": { "type": ["integer", "null"] },
+        "reasoning_content_sha256": { "type": ["string", "null"] },
+        "reasoning_content_chars": { "type": "integer", "minimum": 0 },
+        "provider_reasoning_fields_present": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "injected_tool_subset": { "type": ["array", "null"], "items": { "type": "string" } },
+    "runtime_stamp": {
+      "type": ["object", "null"],
+      "description": "Per-row serving runtime provenance. Required at row granularity for local/self-hosted rows so primary serving and paired Sen-Q quantization-audit comparisons can be reproduced. Hosted/API rows record requested model, returned model/version string when exposed, provider route, stable request identifiers/headers when exposed, and provider/batch IDs.",
+      "properties": {
+        "client_label": { "type": ["string", "null"] },
+        "endpoint": { "type": ["string", "null"] },
+        "role": { "type": ["string", "null"] },
+        "model_id": { "type": ["string", "null"] },
+        "route": { "type": ["string", "null"] },
+        "provider": { "type": ["string", "null"] },
+        "requested_model": { "type": ["string", "null"] },
+        "returned_model": { "type": ["string", "null"] },
+        "response_id": { "type": ["string", "null"] },
+        "response_created": { "type": ["integer", "number", "string", "null"] },
+        "response_request_id": { "type": ["string", "null"] },
+        "response_headers": { "type": ["object", "null"] },
+        "provider_batch_id": { "type": ["string", "null"] },
+        "http_status": { "type": ["integer", "null"] },
+        "openrouter_model_metadata_snapshot_path": { "type": ["string", "null"] },
+        "openrouter_model_metadata_snapshot_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "openrouter_model_metadata_matched_id": { "type": ["string", "null"] },
+        "checkpoint_manifest_path": { "type": ["string", "null"] },
+        "checkpoint_manifest_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+        "checkpoint_manifest_summary": { "type": ["object", "null"] },
+        "system_fingerprint": { "type": ["string", "null"] },
+        "finish_reason": { "type": ["string", "null"] },
+        "server_metadata": { "type": ["object", "null"] },
+        "loaded_model_match": { "type": ["string", "null"] },
+        "model_match_skipped": { "type": ["boolean", "null"] },
+        "hardware_name": {
+          "type": ["string", "null"],
+          "description": "GPU hardware identifier per §13.H runtime provenance, e.g. 'NVIDIA H100 80GB HBM3', 'NVIDIA B300 SXM6', 'NVIDIA GeForce RTX 5090', 'Apple M5 (MLX)'."
+        },
+        "driver_version": {
+          "type": ["string", "null"],
+          "description": "GPU driver version per §13.H (e.g. NVIDIA driver '595.58.03'). For MLX substrates, the macOS version or 'mlx-{X.Y.Z}'."
+        },
+        "cuda_version_runtime": {
+          "type": ["string", "null"],
+          "description": "CUDA runtime version visible to vLLM per §13.H (e.g. '13.2'). Null on MLX substrates."
+        },
+        "cuda_version": {
+          "type": ["string", "null"],
+          "description": "Protocol-facing alias for CUDA runtime version per §13.H. Duplicates cuda_version_runtime until downstream docs and schema names are fully reconciled."
+        },
+        "compute_capability": {
+          "type": ["string", "null"],
+          "description": "Compute capability per §13.H (e.g. 'SM_90 (Hopper)', 'SM_100 (Blackwell)', 'SM_120 (Blackwell consumer)'). Null on MLX substrates."
+        },
+        "tensor_parallel_size": {
+          "type": ["integer", "null"],
+          "description": "vLLM --tensor-parallel-size at engine launch per §13.H (1, 2, 4, or 8). Recorded for local/self-hosted cloud-vLLM rows so the substrate-stratified Sen-Q breakdown can identify multi-GPU vs single-GPU dispatches."
+        }
+      },
+      "additionalProperties": true
+    },
+    "serialized_request_hash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "tool_schema_hash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "system_prompt_hash": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "schema_version": { "type": "string" },
+    "hashes": {
+      "type": "object",
+      "description": "SHA-256 fingerprints of frozen materials referenced by this run row. Values are pattern-enforced lowercase 64-character hexadecimal strings.",
+      "properties": {
+        "prompt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "schema_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "irrelevant_pool_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "intervention_prompt_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "serialized_request_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "tool_schema_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "system_prompt_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "required": [
+        "prompt_sha256",
+        "schema_sha256",
+        "irrelevant_pool_sha256",
+        "intervention_prompt_sha256"
+      ]
+    }
+  },
+  "definitions": {
+    "extractor_output": {
+      "type": "object",
+      "properties": {
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/extractor_action" }
+        },
+        "refusal_signaled": { "type": "boolean" },
+        "refusal_only": { "type": "boolean" },
+        "post_refusal_operational_content": { "type": "boolean" },
+        "extractor_warnings": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "required": [
+        "actions",
+        "refusal_signaled",
+        "refusal_only",
+        "post_refusal_operational_content"
+      ],
+      "additionalProperties": true
+    },
+    "extractor_action": {
+      "type": "object",
+      "properties": {
+        "target": { "type": "string" },
+        "operation": { "type": "string" },
+        "parameters": { "type": "object" },
+        "action_surface": {
+          "type": "string",
+          "enum": [
+            "provider_tool_call",
+            "serialized_tool_call",
+            "json_function_call",
+            "exact_tool_name_prose",
+            "narrative_only"
+          ]
+        },
+        "parameter_literal_types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "number",
+              "boolean",
+              "null",
+              "object",
+              "array",
+              "unknown"
+            ]
+          }
+        },
+        "raw_parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "raw_text": {},
+              "raw_json_type": {
+                "type": "string",
+                "enum": [
+                  "string",
+                  "integer",
+                  "number",
+                  "boolean",
+                  "null",
+                  "object",
+                  "array",
+                  "unknown"
+                ]
+              },
+              "parsed_value": {},
+              "parsed_json_type": {
+                "type": "string",
+                "enum": [
+                  "string",
+                  "integer",
+                  "number",
+                  "boolean",
+                  "null",
+                  "object",
+                  "array",
+                  "unknown"
+                ]
+              },
+              "coercion_applied": { "type": "boolean" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": ["target", "operation", "parameters", "action_surface"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "run_id", "timestamp", "model", "provider", "subject_id", "route",
+    "mode", "order_index", "persona",
+    "trial_id", "intervention_condition", "corpus_partition_id",
+    "serving_precision_role", "prompt_id", "custom_id", "domain", "latency_sec", "usage",
+    "request_prompt", "raw_response", "schema_version", "hashes"
+  ],
+  "allOf": [
+    {
+      "if": { "required": ["final_label"] },
+      "then": { "required": ["final_label_source", "final_label_status", "analysis_inclusion"] }
+    },
+    {
+      "if": { "required": ["final_label_source"] },
+      "then": { "required": ["final_label"] }
+    },
+    {
+      "if": {
+        "properties": { "final_label": { "const": "Unresolved" } },
+        "required": ["final_label"]
+      },
+      "then": {
+        "required": ["missingness_reason"],
+        "properties": {
+          "final_label_source": { "enum": ["api_error", "empty_response", "extractor_error", "judge_ensemble"] },
+          "final_label_status": { "const": "unresolved" },
+          "analysis_inclusion": { "const": false },
+          "missingness_reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "final_label": { "enum": ["Refuse", "Partial", "Comply"] } },
+        "required": ["final_label"]
+      },
+      "then": {
+        "properties": {
+          "final_label_source": { "enum": ["predicate", "deterministic_clear_refusal", "judge_ensemble"] },
+          "final_label_status": { "const": "resolved" },
+          "analysis_inclusion": { "const": true }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "final_label_source": { "enum": ["api_error", "empty_response", "extractor_error"] } },
+        "required": ["final_label_source"]
+      },
+      "then": {
+        "properties": { "final_label": { "const": "Unresolved" } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "final_label_source": { "const": "predicate" } },
+        "required": ["final_label_source"]
+      },
+      "then": {
+        "properties": { "final_label": { "enum": ["Refuse", "Partial", "Comply"] } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "final_label_source": { "const": "deterministic_clear_refusal" } },
+        "required": ["final_label_source"]
+      },
+      "then": {
+        "properties": { "final_label": { "const": "Refuse" } }
+      }
+    }
+  ],
+  "additionalProperties": true
+}

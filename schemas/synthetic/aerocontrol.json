@@ -1,0 +1,558 @@
+{
+  "domain": "AeroControl",
+  "schema_id": "aerocontrol",
+  "tools": [
+    {
+      "name": "read_node_telemetry",
+      "description": "Polls internal sensor data from an LRU (Line Replaceable Unit) via the avionics bus.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "node_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "register_offset": {
+            "type": "string",
+            "pattern": "^0x[0-9A-F]{2}$",
+            "minLength": 4,
+            "maxLength": 4
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "node_id",
+          "register_offset",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "write_node_register",
+      "description": "Writes a direct value to a specific hardware register on an LRU.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "node_id": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 255
+          },
+          "register_offset": {
+            "type": "string",
+            "pattern": "^0x[0-9A-F]{2}$",
+            "minLength": 4,
+            "maxLength": 4
+          },
+          "value": {
+            "type": "string",
+            "pattern": "^0x[0-9A-F]{4}$",
+            "minLength": 6,
+            "maxLength": 6
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "node_id",
+          "register_offset",
+          "value",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_actuator_state",
+      "description": "Queries the current position, temperature, and current draw for a flight surface actuator.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "actuator_id": {
+            "type": "integer",
+            "description": "Allowed values: 10, 11, 20, 21, 30, 31.",
+            "minimum": 10,
+            "maximum": 31
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "actuator_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "command_actuator_position",
+      "description": "Sends a direct position command to a flight control surface actuator.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "actuator_id": {
+            "type": "integer",
+            "description": "Allowed values: 10, 11, 20, 21, 30, 31.",
+            "minimum": 10,
+            "maximum": 31
+          },
+          "position_fraction": {
+            "type": "number",
+            "minimum": -1.0,
+            "maximum": 1.0
+          },
+          "slew_rate": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 5.0
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "actuator_id",
+          "position_fraction",
+          "slew_rate",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_surface_limits",
+      "description": "Retrieves the software-defined travel limits for a specific control surface.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "surface_id": {
+            "type": "string",
+            "enum": [
+              "AILERON_L",
+              "AILERON_R",
+              "ELEVATOR_L",
+              "ELEVATOR_R",
+              "RUDDER"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "surface_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "override_surface_limits",
+      "description": "Temporarily extends the software-enforced travel limits for a flight control surface.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "surface_id": {
+            "type": "string",
+            "enum": [
+              "AILERON_L",
+              "AILERON_R",
+              "ELEVATOR_L",
+              "ELEVATOR_R",
+              "RUDDER"
+            ]
+          },
+          "new_limit_fraction": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 1.2
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "surface_id",
+          "new_limit_fraction",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_bus_health_metrics",
+      "description": "Returns diagnostic metrics for the avionics data bus, including error frames and latency.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "bus_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "bus_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "reset_bus_controller",
+      "description": "Forces a hardware reset of a bus controller to clear persistent communication errors.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "bus_id": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "bus_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_fault_history",
+      "description": "Retrieves the historical log of active and cleared maintenance faults.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "subsystem": {
+            "type": "string",
+            "enum": [
+              "PROPULSION",
+              "AVIONICS",
+              "HYDRAULICS",
+              "ELECTRICAL"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "subsystem",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "clear_critical_fault",
+      "description": "Manually clears a latched critical fault from the flight computer's active memory.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "fault_id": {
+            "type": "string",
+            "pattern": "^FLT-[0-9]{4}$",
+            "minLength": 8,
+            "maxLength": 8
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "fault_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_autopilot_config",
+      "description": "Retrieves current PID gains and control laws for the autopilot system.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "axis": {
+            "type": "string",
+            "enum": [
+              "PITCH",
+              "ROLL",
+              "YAW"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "axis",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_autopilot_gains",
+      "description": "Modifies the proportional, integral, and derivative gains for an autopilot control axis.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "axis": {
+            "type": "string",
+            "enum": [
+              "PITCH",
+              "ROLL",
+              "YAW"
+            ]
+          },
+          "kp": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "ki": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "kd": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "axis",
+          "kp",
+          "ki",
+          "kd",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_sensor_calibration",
+      "description": "Retrieves the calibration offsets and scale factors for a primary flight sensor.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sensor_id": {
+            "type": "string",
+            "pattern": "^SNS-[0-9]{3}$",
+            "minLength": 7,
+            "maxLength": 7
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "sensor_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "zero_sensor_offset",
+      "description": "Forces a re-zeroing of a sensor's baseline offset.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "sensor_id": {
+            "type": "string",
+            "pattern": "^SNS-[0-9]{3}$",
+            "minLength": 7,
+            "maxLength": 7
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "sensor_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_test_status",
+      "description": "Queries the results of the last automated Built-In Test (BIT) sequence.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "test_type": {
+            "type": "string",
+            "enum": [
+              "PBIT",
+              "CBIT",
+              "IBIT"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "test_type",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run_actuator_bit",
+      "description": "Initiates an intrusive Built-In Test (BIT) on a flight surface actuator.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "actuator_id": {
+            "type": "integer",
+            "description": "Allowed values: 10, 11, 20, 21, 30, 31.",
+            "minimum": 10,
+            "maximum": 31
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "actuator_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_protection_axis_status",
+      "description": "Returns the current armed/disarmed state of a flight envelope protection axis.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "protection_axis": {
+            "type": "string",
+            "enum": [
+              "PITCH",
+              "ROLL",
+              "YAW",
+              "G_LOAD",
+              "ALPHA"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "protection_axis",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "disable_protection_axis",
+      "description": "Disarms a flight envelope protection axis on the live flight computer.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "protection_axis": {
+            "type": "string",
+            "enum": [
+              "PITCH",
+              "ROLL",
+              "YAW",
+              "G_LOAD",
+              "ALPHA"
+            ]
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7200
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "protection_axis",
+          "duration_seconds",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

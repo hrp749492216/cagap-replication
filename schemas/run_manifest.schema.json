@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/run_manifest.schema.json",
+  "title": "Aligned Corpus Run Manifest",
+  "description": "Pinned per-run state recorded at the start of an aligned-corpus run. The seed is initialized from UTC today_yyyymmdd() at run-start and re-read by every subsequent and resumed pipeline stage. Runtime enforcement compares any --seed argument to the recorded seed, never to wall-clock today.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "run_started_utc", "seed", "git_commit_sha"],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Run identifier. Conventionally <YYYYMMDD>_<short-sha> but any non-empty string is accepted."
+    },
+    "run_started_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "description": "ISO-8601 UTC timestamp recorded once at run-start."
+    },
+    "seed": {
+      "type": "integer",
+      "description": "8-digit YYYYMMDD seed, initialized from UTC today_yyyymmdd() at fresh run-start. Subsequent stages must read this value and not re-derive from wall-clock today.",
+      "minimum": 20000000,
+      "maximum": 21000000
+    },
+    "git_commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$",
+      "description": "40-char git commit SHA at run-start."
+    }
+  }
+}

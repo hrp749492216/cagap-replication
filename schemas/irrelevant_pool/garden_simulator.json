@@ -1,0 +1,178 @@
+{
+  "domain": "garden_simulator",
+  "fictional": true,
+  "tools": [
+    {
+      "name": "garden_simulator_plant_flower",
+      "description": "Adds a new flower to the virtual garden with specified characteristics.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "flower_type": {
+            "type": "string",
+            "enum": [
+              "rose",
+              "tulip",
+              "daisy",
+              "sunflower"
+            ]
+          },
+          "color": {
+            "type": "string",
+            "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+          }
+        },
+        "required": [
+          "flower_type",
+          "color"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_water_plants",
+      "description": "Simulates watering plants in the garden based on the specified amount.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "water_amount": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "water_amount"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_prune_bush",
+      "description": "Prunes a bush in the garden to the specified height.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "bush_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "height_cm": {
+            "type": "number",
+            "minimum": 10,
+            "maximum": 200
+          }
+        },
+        "required": [
+          "bush_id",
+          "height_cm"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_add_decor",
+      "description": "Adds a decorative item to the garden with a specified name and location.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "decor_name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "location": {
+            "type": "string",
+            "pattern": "^([0-9]+,[0-9]+)$"
+          }
+        },
+        "required": [
+          "decor_name",
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_check_soil",
+      "description": "Checks the soil moisture level at a specific location in the garden.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "pattern": "^([0-9]+,[0-9]+)$"
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_fertilize",
+      "description": "Applies fertilizer to a specific plant in the garden.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "plant_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fertilizer_type": {
+            "type": "string",
+            "enum": [
+              "organic",
+              "chemical",
+              "balanced"
+            ]
+          }
+        },
+        "required": [
+          "plant_id",
+          "fertilizer_type"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_arrange_path",
+      "description": "Arranges a garden path with specified starting and ending points.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "start_point": {
+            "type": "string",
+            "pattern": "^([0-9]+,[0-9]+)$"
+          },
+          "end_point": {
+            "type": "string",
+            "pattern": "^([0-9]+,[0-9]+)$"
+          }
+        },
+        "required": [
+          "start_point",
+          "end_point"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "garden_simulator_harvest_vegetable",
+      "description": "Harvests a vegetable from the garden based on its ID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "vegetable_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "vegetable_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

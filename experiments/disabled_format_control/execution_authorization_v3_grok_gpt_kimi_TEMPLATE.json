@@ -1,0 +1,52 @@
+{
+  "schema_version": "disabled_format_control.execution_authorization.v1",
+  "submission_permitted": false,
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-03-v3-GROK-GPT-KIMI",
+  "protocol_sha256": "575c336713cad45f2866d254f4686c6dbca3beaf9009f7cff83ac8de6a0d06e7",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_grok_gpt_kimi.json",
+  "locked_inputs_manifest_sha256": "5a9e12c02532b12d4866f8b1693196381fcfd3d42be9d481d72ab7ed6779512c",
+  "osf_registration_url": null,
+  "osf_filed_at_utc": null,
+  "osf_filed_protocol_sha256": null,
+  "authorized_subjects": [
+    "kimi-k2.6",
+    "grok-4.3",
+    "gpt-5.5"
+  ],
+  "authorized_by": "project_owner_pending_osf_hash_verification",
+  "authorization_basis": {
+    "openrouter": "Project owner authorized the v3 plan within a $140 OpenRouter envelope and requested Grok before GPT-5.5.",
+    "kimi_native_batch": "Project owner recharged Kimi and explicitly requested Kimi K2.6 through native batch processing."
+  },
+  "spending_authorization": {
+    "currency": "USD",
+    "openrouter_cap_usd": 140.0,
+    "openrouter_spent_before_official_usd": 1.22860691,
+    "openrouter_profile_subject_caps_usd": {
+      "canary": {
+        "grok-4.3": 0.25,
+        "gpt-5.5": 0.5
+      },
+      "full": {
+        "grok-4.3": 20.0,
+        "gpt-5.5": 118.02139309
+      }
+    },
+    "openrouter_allocated_official_usd": 138.77139309,
+    "openrouter_runtime_gate": "cumulative provider-reported usage.cost plus next-request conservative reserve",
+    "kimi_native_batch": true,
+    "kimi_native_batch_cap_usd": 41.68676221,
+    "kimi_native_batch_spent_before_official_usd": 0.04125021,
+    "kimi_native_batch_profile_caps_usd": {
+      "canary": 0.035798,
+      "full": 41.609714
+    },
+    "kimi_runtime_gate": "complete conservative batch ceiling before submission"
+  },
+  "activation_instructions": [
+    "Copy this file to execution_authorization_v3_grok_gpt_kimi.json only after the OSF filing is live.",
+    "Replace the three null OSF fields with the verified registration URL, UTC filing timestamp, and exact protocol SHA-256.",
+    "Replace authorized_by with the verified project-owner identity.",
+    "Set submission_permitted to true only after rechecking the local protocol and lock hashes against OSF."
+  ]
+}

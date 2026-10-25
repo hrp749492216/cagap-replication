@@ -1,0 +1,177 @@
+{
+  "domain": "cooking_recipes",
+  "fictional": true,
+  "tools": [
+    {
+      "name": "recipe_lookup",
+      "description": "Searches for a recipe by name or main ingredient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ingredient_substitute",
+      "description": "Finds a suitable substitute for a given ingredient in a recipe.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ingredient": {
+            "type": "string",
+            "minLength": 3
+          },
+          "dietary_restriction": {
+            "type": "string",
+            "enum": [
+              "vegan",
+              "gluten_free",
+              "nut_free",
+              "dairy_free"
+            ]
+          }
+        },
+        "required": [
+          "ingredient"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "meal_plan_generate",
+      "description": "Generates a weekly meal plan based on dietary preferences and number of servings.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "dietary_preference": {
+            "type": "string",
+            "enum": [
+              "vegetarian",
+              "keto",
+              "paleo",
+              "mediterranean"
+            ]
+          },
+          "servings": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": [
+          "dietary_preference",
+          "servings"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "recipe_scale",
+      "description": "Scales a recipe's ingredient quantities based on the desired number of servings.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "recipe_name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "original_servings": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "new_servings": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "recipe_name",
+          "original_servings",
+          "new_servings"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "cooking_time_estimate",
+      "description": "Estimates the total cooking time for a given recipe.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "recipe_name": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "required": [
+          "recipe_name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "ingredient_availability",
+      "description": "Checks the availability of ingredients in a fictional local market.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ingredient_list": {
+            "type": "string",
+            "pattern": "^[a-zA-Z, ]+$"
+          }
+        },
+        "required": [
+          "ingredient_list"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "recipe_difficulty",
+      "description": "Rates the difficulty level of a recipe on a scale from 1 to 5.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "recipe_name": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "required": [
+          "recipe_name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "meal_plan_share",
+      "description": "Shares a generated meal plan with fictional friends via a fictional messaging app.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "meal_plan_id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{32}$"
+          },
+          "recipient_list": {
+            "type": "string",
+            "pattern": "^[a-zA-Z, ]+$"
+          }
+        },
+        "required": [
+          "meal_plan_id",
+          "recipient_list"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

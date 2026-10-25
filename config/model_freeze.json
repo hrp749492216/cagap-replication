@@ -1,0 +1,729 @@
+{
+  "freeze_script_version": "1.1",
+  "roster_freeze_date": "2026-05-22",
+  "aligned_corpus_generator": {
+    "active": {
+      "key": "nemotron-3-super-cloud",
+      "model_id": "nemotron-3-super:cloud",
+      "served_model_alias": "nemotron-3-super:120b-a12b-bf16",
+      "model_digest_prefix": "c14fcbcdc70e",
+      "provider": "ollama_cloud",
+      "developer_family": "NVIDIA/Nemotron",
+      "role": "A3_candidate_generator_only",
+      "selection_reason": "Best eligible generator in pre-lock bakeoff (2026-04-25): 100% pass rate (15/15) on 5-cell smoke test, max within-cell similarity 0.73, no subject/judge/extractor lineage conflict. NVIDIA family is absent from the subject/judge/extractor roster.",
+      "cloud_model": true,
+      "local_hash_available": false,
+      "structured_output_enforced": false,
+      "client_side_json_validation": true,
+      "context_window_tokens": 256000,
+      "license": "NVIDIA Software and Model Evaluation License",
+      "ollama_client_version": "0.22.0",
+      "ollama_model_show": "ollama show nemotron-3-super:cloud captured 2026-05-03: Model architecture=nemotron_h_moe; parameters=120000000000; context length=262144; embedding length=4096; quantization=NVFP4. Capabilities: completion, thinking, tools.",
+      "parameters": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "stream": false,
+        "think": false
+      }
+    },
+    "rejected_or_archived": [
+      {
+        "key": "phi4-reasoning-plus-8bit",
+        "reason": "Excluded from the active generator role after diversity audit (136/192 cells near-duplicate, 52/192 all-identical). Root cause: mlx_lm.server seed parameter silently ignored."
+      },
+      {
+        "key": "cogito-2.1-671b-cloud",
+        "reason": "Excluded under conservative base-lineage policy because Cogito v2.1 is a fine-tune of an archived subject-candidate lineage (Ollama metadata: family=deepseek2, architecture=deepseek2, 671B FP8)."
+      },
+      {
+        "key": "mlx-cascade-2-30b-a3b-8bit",
+        "reason": "Eligible backup but lower pass rate than Nemotron-3-Super (87% vs 100%) and same NVIDIA/Nemotron family — preferred to keep family-bakeoff explicit."
+      },
+      {
+        "key": "rnj-1-8b-cloud",
+        "reason": "Excluded after development audit: 67% pass rate. Failed canonical-argument preservation (missing 0x0000, -1000000 verbatim) and style-slot fidelity (direct_tool_invocation slot omitted required tool name). 8B scale insufficient for the structured-output task."
+      }
+    ]
+  },
+  "roster_refs": {
+    "claude-opus-4-7": {
+      "section": "subjects",
+      "role": "subject",
+      "source": "config/roster.json",
+      "display_name": "Claude Opus 4.7",
+      "family": "anthropic",
+      "native_slug": "claude-opus-4-7",
+      "openrouter_slug": "anthropic/claude-opus-4.7",
+      "openrouter_pinned_provider": "anthropic",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "grok-4.3": {
+      "section": "subjects",
+      "role": "subject",
+      "source": "config/roster.json",
+      "display_name": "Grok 4.3",
+      "family": "xai",
+      "native_slug": "grok-4.3",
+      "openrouter_slug": "x-ai/grok-4.3",
+      "openrouter_pinned_provider": "xai",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "gpt-5.5": {
+      "section": "subjects",
+      "role": "subject",
+      "source": "config/roster.json",
+      "display_name": "GPT-5.5",
+      "family": "openai",
+      "native_slug": "gpt-5.5",
+      "openrouter_slug": "openai/gpt-5.5",
+      "openrouter_pinned_provider": "openai",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "kimi-k2.6": {
+      "section": "subjects",
+      "role": "subject",
+      "source": "config/roster.json",
+      "display_name": "Kimi K2.6",
+      "family": "moonshot",
+      "native_slug": "kimi-k2.6",
+      "openrouter_slug": "moonshotai/kimi-k2.6",
+      "openrouter_pinned_provider": "moonshotai/int4",
+      "ollama_cloud_slug": "kimi-k2.6:cloud",
+      "ollama_cloud_digest_prefix": "a90cd0d1590",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "qwen3.6-plus": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "Qwen 3.6-Plus",
+      "family": "alibaba",
+      "native_slug": null,
+      "openrouter_slug": "qwen/qwen3.6-plus",
+      "openrouter_pinned_provider": "alibaba",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null
+    },
+    "deepseek-v4-pro": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "DeepSeek V4-Pro",
+      "family": "deepseek",
+      "native_slug": "deepseek-v4-pro",
+      "openrouter_slug": "deepseek/deepseek-v4-pro",
+      "openrouter_pinned_provider": "deepseek",
+      "ollama_cloud_slug": "deepseek-v4-pro:cloud",
+      "ollama_cloud_digest_prefix": "22bfd5026abd",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "glm-5.1": {
+      "section": "judges",
+      "role": "judge_a",
+      "source": "config/roster.json",
+      "display_name": "GLM 5.1",
+      "family": "zai",
+      "native_slug": "glm-5.1",
+      "openrouter_slug": "z-ai/glm-5.1",
+      "openrouter_pinned_provider": "z-ai",
+      "ollama_cloud_slug": "glm-5.1:cloud",
+      "ollama_cloud_digest_prefix": "59472abf9d0a",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "command-a-03-2025": {
+      "section": "judges",
+      "role": "judge_b",
+      "source": "config/roster.json",
+      "display_name": "Cohere Command A (03-2025)",
+      "family": "cohere",
+      "native_slug": "command-a-03-2025",
+      "openrouter_slug": "cohere/command-a",
+      "openrouter_pinned_provider": "cohere",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "mistral-large-2512": {
+      "section": "judges",
+      "role": "judge_c",
+      "source": "config/roster.json",
+      "display_name": "Mistral Large 3 (2512)",
+      "family": "mistral",
+      "native_slug": "mistral-large-2512",
+      "openrouter_slug": "mistralai/mistral-large-2512",
+      "openrouter_pinned_provider": "mistral",
+      "ollama_cloud_slug": "mistral-large-3:675b-cloud",
+      "ollama_cloud_digest_prefix": "3130fd5a5a1e",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "minimax-2.7": {
+      "section": "extractor",
+      "role": "extractor",
+      "source": "config/roster.json",
+      "display_name": "MiniMax M2.7",
+      "family": "minimax",
+      "native_slug": "MiniMax-M2.7",
+      "openrouter_slug": "minimax/minimax-m2.7",
+      "openrouter_pinned_provider": "minimax/fp8",
+      "ollama_cloud_slug": "minimax-m2.7:cloud",
+      "ollama_cloud_digest_prefix": "06daa293c105",
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "gemini-3.5-flash": {
+      "section": "subjects",
+      "role": "subject",
+      "source": "config/roster.json",
+      "display_name": "Gemini 3.5 Flash",
+      "family": "google",
+      "native_slug": null,
+      "openrouter_slug": "google/gemini-3.5-flash",
+      "openrouter_pinned_provider": "google-ai-studio",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "gpt-5.5-judge": {
+      "section": "judges",
+      "role": "substitute_judge_1",
+      "source": "config/roster.json",
+      "display_name": "GPT-5.5 (substitute judge)",
+      "family": "openai",
+      "native_slug": "gpt-5.5",
+      "openrouter_slug": "openai/gpt-5.5",
+      "openrouter_pinned_provider": "openai",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "claude-opus-4-7-judge": {
+      "section": "judges",
+      "role": "substitute_judge_2",
+      "source": "config/roster.json",
+      "display_name": "Claude Opus 4.7 (substitute judge)",
+      "family": "anthropic",
+      "native_slug": "claude-opus-4-7",
+      "openrouter_slug": "anthropic/claude-opus-4.7",
+      "openrouter_pinned_provider": "anthropic",
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "gpt-oss-120b": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "GPT-OSS-120B",
+      "family": "openai",
+      "native_slug": null,
+      "openrouter_slug": null,
+      "openrouter_pinned_provider": null,
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "minimax-2.7-subject-candidate": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "MiniMax M2.7 subject candidate",
+      "family": "minimax",
+      "native_slug": null,
+      "openrouter_slug": null,
+      "openrouter_pinned_provider": null,
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "glm-5.1-subject-candidate": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "GLM 5.1 subject candidate",
+      "family": "zai",
+      "native_slug": null,
+      "openrouter_slug": null,
+      "openrouter_pinned_provider": null,
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "qwen3.5-subject-candidate": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "Qwen 3.5 subject candidate",
+      "family": "alibaba",
+      "native_slug": null,
+      "openrouter_slug": null,
+      "openrouter_pinned_provider": null,
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    },
+    "deepseek-3.2-subject-candidate": {
+      "section": "archived_models",
+      "role": "excluded_subject_candidate",
+      "source": "config/roster.json",
+      "display_name": "DeepSeek 3.2 subject candidate",
+      "family": "deepseek",
+      "native_slug": null,
+      "openrouter_slug": null,
+      "openrouter_pinned_provider": null,
+      "ollama_cloud_slug": null,
+      "ollama_cloud_digest_prefix": null,
+      "local_hash_available": false,
+      "freeze_mode": "api_roster_reference"
+    }
+  },
+  "models": {
+    "llama-3.3-70b-instruct": {
+      "role": "subject",
+      "display_name": "Llama 3.3-70B Instruct",
+      "hf_repo": "meta-llama/Llama-3.3-70B-Instruct",
+      "hf_commit_sha_resolved": "6f6073b423013f6a7d4d9f39144961bfbfbc386b",
+      "download_hash_policy": "HF repo and commit SHA are locked for OSF. The bf16, int8_mlx, and int4_mlx blocks are M5 fallback substrates; their tokenizer.json, tokenizer_config.json, and full local model-file SHA-256 manifests are computed immediately after main-run download (only if and when the M5 fallback substrate is exercised) and archived with the run manifest before rows from that substrate are accepted. The primary local/self-hosted route (cloud_vllm_awq_int4) carries its own hf_repo and hf_commit_sha_resolved.",
+      "post_download_manifest_required": true,
+      "bf16": {},
+      "int8_mlx": {},
+      "int4_mlx": {},
+      "cloud_vllm_awq_int4": {
+        "hf_repo": "ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4",
+        "engine": "vllm",
+        "vllm_version": "0.19.1",
+        "quantization_arg": "awq_marlin",
+        "tool_call_parser": "llama3_json",
+        "predeclared": true,
+        "predeclared_at": "2026-05-07",
+        "note": "AWQ W4A16 INT4 served via cloud-GPU vLLM. Validated in the local substrate check with 96/96 audit cells clean. Used as a predeclared 4-bit local deployment path for Sen-Q.",
+        "hf_commit_sha_resolved": "a3c28ea93c041acfaadb85401ad6493749a5aa04",
+        "hf_commit_sha_resolved_at_utc": "2026-05-08T11:30:00Z",
+        "hf_commit_sha_resolution_method": "huggingface.co/api/models/<repo>/revision/main"
+      }
+    },
+    "gemma-4-31b-it": {
+      "role": "subject",
+      "display_name": "Gemma 4 31B IT",
+      "hf_repo": "google/gemma-4-31B-it",
+      "hf_commit_sha_resolved": "145dc2508c480a64b47242f160d286cff94a2343",
+      "bf16": {
+        "model.safetensors.index.json": "d4aff3b976d69c123a29d1c085d7ba4de1ac3f4ca1726a7f81e1b11462a64ea2",
+        "config.json": "e967dd38bc5cfd38bd09a995a7bf4a754075df2b46aba68f7fbb5a791e6d8dd1",
+        "tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "tokenizer_config.json": "90c3a3ba5bf53818383a58e1a776cbcacd2a038d4812eaa373e1522f2d06f3df",
+        "generation_config.json": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      "int8_mlx": {
+        "model.safetensors.index.json": "be6491b58db1476c86c89cde314fb9d8536f92fd6d34db13cbc638e29afe92a3",
+        "config.json": "f5b01d9d1081c9a5972a0409d31d825bd01ba5df9f307b3a0b5b03dfbcc75f97",
+        "tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "tokenizer_config.json": "90c3a3ba5bf53818383a58e1a776cbcacd2a038d4812eaa373e1522f2d06f3df",
+        "generation_config.json": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      "int4_mlx": {
+        "model.safetensors.index.json": "a9ca8373aacc37ab9d7f16ff4bbb392c055e1b51b0fec6258cbfc578056c5fef",
+        "config.json": "f24fd0f1114e77bc4b3ffb539292702aa63806eed63669d2ada9d549705f51e2",
+        "tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "tokenizer_config.json": "90c3a3ba5bf53818383a58e1a776cbcacd2a038d4812eaa373e1522f2d06f3df",
+        "generation_config.json": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de"
+      },
+      "cloud_vllm_nvfp4": {
+        "hf_repo": "nvidia/Gemma-4-31B-IT-NVFP4",
+        "engine": "vllm",
+        "vllm_version": "0.19.1",
+        "quantization_arg": "auto-detect (config.json::quantization_config = compressed-tensors NVFP4)",
+        "tool_call_parser": "gemma4",
+        "predeclared": true,
+        "predeclared_at": "2026-05-07",
+        "note": "NVFP4 (Blackwell-native 4-bit floating point) served via cloud-GPU vLLM. Validated in the local substrate check with 96/96 audit cells clean. Not pooled with INT4; NVFP4 is a separate 4-bit deployment path.",
+        "hf_commit_sha_resolved": "e5ef03afa233c35cb000323ff098d4291e1dd07c",
+        "hf_commit_sha_resolved_at_utc": "2026-05-08T11:30:00Z",
+        "hf_commit_sha_resolution_method": "huggingface.co/api/models/<repo>/revision/main"
+      },
+      "cloud_vllm_awq_int4": {
+        "hf_repo": "QuantTrio/gemma-4-31B-it-AWQ",
+        "hf_commit_sha_resolved": "200d06ee83eb49a03c6e3120dbf7b09191eb1539",
+        "engine": "vllm",
+        "vllm_version": "0.19.1",
+        "quantization_arg": "--quantization awq_marlin",
+        "quant_method": "awq",
+        "bits": 4,
+        "group_size": 64,
+        "tool_call_parser": "gemma4",
+        "predeclared": true,
+        "predeclared_at": "2026-05-08",
+        "design_record": "substrate-conditional 4-bit alternative to NVFP4",
+        "permitted_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "note": "INT4 AWQ is predeclared as a substrate-conditional alternative to NVFP4 when Blackwell hardware is unavailable. awq_marlin loader runs on Ampere+ (SM_80+) and consumer Blackwell. A pre-dispatch smoke gate is mandatory before main-run dispatch on this format. This path is not pooled with NVFP4 or compressed-tensors INT4; these are three distinct deployment paths."
+      },
+      "cloud_vllm_compressed_tensors_int4": {
+        "hf_repo": "cyankiwi/gemma-4-31B-it-AWQ-4bit",
+        "hf_commit_sha_resolved": "853ac120bc4d1cd4aa7ae66a412f76a35c4aca4f",
+        "engine": "vllm",
+        "vllm_version": "0.19.1",
+        "quantization_arg": "auto-detect (config.json::quantization_config = compressed-tensors)",
+        "quant_method": "compressed-tensors",
+        "format": "pack-quantized",
+        "tool_call_parser": "gemma4",
+        "predeclared": true,
+        "predeclared_at": "2026-05-08",
+        "design_record": "substrate-conditional 4-bit alternative to NVFP4",
+        "permitted_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "note": "compressed-tensors INT4 (AWQ-quantized weights, pack-quantized format) uses the same loader family as the existing Qwen 3.6 35B-A3B AWQ-4bit path. It is predeclared as a substrate-conditional alternative to NVFP4 when Blackwell hardware is unavailable. A pre-dispatch smoke gate is mandatory before main-run dispatch on this format. This path is not pooled with NVFP4 or AWQ Marlin INT4."
+      }
+    },
+    "qwen3.6-35b-a3b": {
+      "role": "subject",
+      "display_name": "Qwen 3.6 35B-A3B",
+      "hf_repo": "Qwen/Qwen3.6-35B-A3B",
+      "hf_commit_sha_resolved": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+      "download_hash_policy": "HF repo and commit SHA are locked for OSF. The bf16, int8_mlx, and int4_mlx blocks are M5 fallback substrates; their tokenizer.json, tokenizer_config.json, and full local model-file SHA-256 manifests are computed immediately after main-run download (only if and when the M5 fallback substrate is exercised) and archived with the run manifest before rows from that substrate are accepted. The primary local/self-hosted route (cloud_vllm_awq_int4) carries its own hf_repo and hf_commit_sha_resolved.",
+      "post_download_manifest_required": true,
+      "bf16": {},
+      "int8_mlx": {},
+      "int4_mlx": {},
+      "cloud_vllm_awq_int4": {
+        "hf_repo": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit",
+        "engine": "vllm",
+        "vllm_version": "0.19.1",
+        "quantization_arg": "auto-detect (config.json::quantization_config = compressed-tensors)",
+        "tool_call_parser": "qwen3xml",
+        "predeclared": true,
+        "predeclared_at": "2026-05-07",
+        "note": "AWQ W4A16 INT4 served via cloud-GPU vLLM. Validated in the local substrate check with 96/96 audit cells clean. Tool-call parser is locked to qwen3xml to match Qwen 3.6's XML tool-call emission format.",
+        "hf_commit_sha_resolved": "7a1c0c26c56ee56f98bfdb77124acf5b239eabf3",
+        "hf_commit_sha_resolved_at_utc": "2026-05-08T11:30:00Z",
+        "hf_commit_sha_resolution_method": "huggingface.co/api/models/<repo>/revision/main"
+      }
+    },
+    "phi4-reasoning-plus-8bit": {
+      "role": "excluded_generator_candidate",
+      "display_name": "Phi-4-reasoning-plus-8bit (MLX int8)",
+      "hf_repo": "mlx-community/Phi-4-reasoning-plus-8bit",
+      "hf_commit_sha_resolved": "d6aa450e70954fefa689845062567f0bc6240f1c",
+      "fingerprints": {
+        "model.safetensors.index.json": "dec871a013e4a5e3215fc732b46b995898522b6ea3d346615619994f1ea363cc",
+        "config.json": "136e75d42dc5c7ce647834947bdb092b6f4211a9aa8b6825ece1b9a2baf75459",
+        "tokenizer.json": "98fe258b0c1e42a10a9c3b5692ba081d40c177da924800c4f034ad940f794ff9",
+        "tokenizer_config.json": "44cfcdddd4a037ef37cc426c4c26c3ed6f494f1d82dda3e1f73ff9efccfa0878",
+        "special_tokens_map.json": "f1709cc2511788dd182569aa4071b845ac5df22a9424712dd7e456783be74be3"
+      }
+    },
+    "granite-3.3-8b-instruct-8bit": {
+      "role": "validator_a",
+      "display_name": "Granite 3.3 8B Instruct (MLX int8)",
+      "hf_repo": "mlx-community/granite-3.3-8b-instruct-8bit",
+      "hf_commit_sha_resolved": "265b90718032d76d98f71715f389fdd597db55b4",
+      "fingerprints": {
+        "model.safetensors.index.json": "259816682ffc86fcfbcc0199824df8cec7d49a7cc5fed47df248d7d81852630f",
+        "config.json": "37f5f370bfe51aa4c14f1f269117dc6f3ce841e327a912c1b146d65e64018422",
+        "tokenizer.json": "91168e938f05796aa6dcca7e485e4b30ab52785320c7a6391ecef86e6c84681e",
+        "tokenizer_config.json": "042af89a5a0e0a183ebd104a875b1bf4435a091b19f2b62aaa58af1c5ea97600",
+        "special_tokens_map.json": "21ce694081bb9ae1bd4bc64549e72e0799ebb74705e6b650e3585d85b71ebdc1"
+      },
+      "bf16_reference": {
+        "purpose": "audit-only full-precision reference for bounding quantization-induced score drift on a stratified candidate subset (2026-04-26).",
+        "hf_repo": "ibm-granite/granite-3.3-8b-instruct",
+        "hf_commit_sha_resolved": "51dd4bc2ade4059a6bd87649d68aa11e4fb2529b",
+        "hf_last_modified": "2025-05-12T06:39:42Z",
+        "weights_size_gb_approx": 15,
+        "max_position_embeddings": 131072,
+        "torch_dtype": "bfloat16",
+        "fingerprints": {
+          "model.safetensors.index.json": "c3a88218300666c35343b129857d4e8583ee1b15bf68d90ab976f51744560379",
+          "config.json": "1313edf0d39dcf7ed35a072d341ec11b516c12acc4267cfb6d248c6bdcdddcb7",
+          "tokenizer.json": "91168e938f05796aa6dcca7e485e4b30ab52785320c7a6391ecef86e6c84681e",
+          "tokenizer_config.json": "f65a6a5a911424c85f157c40cfbdf06e025814c755480ba2e998d7fba1178664",
+          "special_tokens_map.json": "21ce694081bb9ae1bd4bc64549e72e0799ebb74705e6b650e3585d85b71ebdc1",
+          "generation_config.json": "9c95e80167f08fbeb1feba239e0749507c25d18ffab43ffa10887821eed21c38",
+          "added_tokens.json": "bb33d55934aa82d29cc62f3d19cdbc60f315763f6ccee21bdfd8b3bde2f33d3b"
+        }
+      }
+    },
+    "olmo-2-13b-instruct-8bit": {
+      "role": "validator_c_tiebreaker",
+      "display_name": "OLMo 2 13B Instruct (MLX int8)",
+      "protocol_reference": "paper/Study_Design.md",
+      "enabled": true,
+      "hf_repo": "mlx-community/OLMo-2-1124-13B-Instruct-8bit",
+      "hf_commit_sha_resolved": "fa30532fb000395e1e4a70fa86e23af52a681fce",
+      "runtime": "mlx",
+      "precision": "int8",
+      "decoding": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 512,
+        "json_only": true
+      },
+      "fires_when": "frozen candidate has exactly one of Validator A or Validator B satisfying validator_pass and has no A/B harm flag",
+      "does_not_fire_when": [
+        "candidate already passes both A and B",
+        "candidate is rejected by both A and B",
+        "candidate is harm-flagged by A or B",
+        "candidate is outside the frozen candidate pool"
+      ],
+      "harm_flag_override": "FORBIDDEN",
+      "tier0_precedence": true,
+      "tier1_used_only_for_empty_cells": true,
+      "candidate_pool_modification_after_c": "FORBIDDEN",
+      "fingerprints": {
+        "model.safetensors.index.json": "7fc1036e39b4fb6934fc66907ed1b51b6c3f68da766bc5a547293ec5f0dc05ce",
+        "config.json": "09ea0b6da584a2490116d6543a928195eb934f6edab025df5c1d275f970f0173",
+        "tokenizer.json": "4c588bc7f08b59ed429ba1804e0cb4ff05516b0cf6962edc019026e971cde0de",
+        "tokenizer_config.json": "1f08d4a67dd1b22cd88a0fc2e55ee4930c61cd5c41ab0c11686fe5fba69283ac",
+        "special_tokens_map.json": "78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2"
+      },
+      "bf16_reference": {
+        "purpose": "audit-only full-precision reference for bounding quantization-induced score drift on a stratified candidate subset (2026-04-26).",
+        "hf_repo": "allenai/OLMo-2-1124-13B-Instruct",
+        "hf_commit_sha_resolved": "3a5c85baefbb1896a54d56fe2e76c0395627ddf4",
+        "hf_last_modified": "2025-01-06T01:02:18Z",
+        "weights_size_gb_approx": 26,
+        "max_position_embeddings": 4096,
+        "torch_dtype": "bfloat16",
+        "fingerprints": {
+          "model.safetensors.index.json": "67d38b3bc216f28f72677fd86eca949c0717dec9a62c97f41f3d42528e3e25ba",
+          "config.json": "10b1de896314ca2dbf5aeda0035113dbeaa34e086f2a29bb4944596a15f4861e",
+          "tokenizer.json": "73fd5254624f39a88e3faac6a8e11300fc3c735ed37880d4f4f08db898eaecca",
+          "tokenizer_config.json": "50c412c57d832057a3d5db42064c741f751e570f7c8788f037bfb0d2dd6e5f49",
+          "special_tokens_map.json": "78afb564e81264029b25f9caf24bda2521d5bdaeff5cd3fdbc01d3da2e8ce2f2",
+          "generation_config.json": "73e7f06e4ea172c6edeb1a44cab4a603e76962a85ea7ef3245769ba46ca23a30"
+        }
+      }
+    },
+    "phi-4-8bit": {
+      "role": "validator_b",
+      "display_name": "Phi-4 14B Instruct (MLX int8)",
+      "protocol_reference": "paper/Study_Design.md",
+      "enabled": true,
+      "upstream_model": "microsoft/phi-4",
+      "upstream_model_note": "base Phi-4, NOT phi-4-reasoning-plus. Validator role is deterministic single-output rubric classification, not chain-of-thought reasoning.",
+      "hf_repo": "mlx-community/phi-4-8bit",
+      "hf_commit_sha_resolved": "7a40ce2189ec31997a0f9bb949d60206f90527c8",
+      "upstream_hf_repo": "microsoft/phi-4",
+      "upstream_hf_commit_sha_resolved": "932b33c0ec9ca189badeb22480721a8de9d0e006",
+      "lab": "Microsoft",
+      "license": "MIT",
+      "precision": "int8",
+      "runtime": "mlx",
+      "size_billion_params": 14,
+      "weights_size_gb_approx": 15.6,
+      "blobs_actual_path": "~/.cache/huggingface/hub/models--mlx-community--phi-4-8bit/blobs",
+      "decoding": {
+        "temperature": 0.0,
+        "do_sample": false,
+        "max_new_tokens": 512,
+        "json_only": true
+      },
+      "fingerprints": {
+        "model.safetensors.index.json": "dec871a013e4a5e3215fc732b46b995898522b6ea3d346615619994f1ea363cc",
+        "config.json": "bff10a156ade41cc80a32dc63e9e465970d0ef0576be8b41c85d6562aa2452e3",
+        "tokenizer.json": "c612e57b2763204798271c0cdc14a373a565e6a371f1bfbd44e385a8391c9884",
+        "tokenizer_config.json": "9491440715ae486d8eba4cf91fea5ef32bca92f2aa6ea55976b6aba762897c6b",
+        "special_tokens_map.json": "7ab1bb39a61cece348c8d6c4bd258bfb7268a2dac5dcab4e3efe7204631234c1",
+        "merges.txt": "b6fe424e334903f7fb84d3a106d9730455f4744b9fe3c21ee136d97a00e72502",
+        "vocab.json": "741943243bd0035a8082ef0ccc09ef62e7ce7ec2f2f053aeedd808dba1c2ffc5",
+        "model-00001-of-00003.safetensors": "1fa0eb9b8ef0a1e6e36044481309843fde04e7b6b7a374c3814c1e9ef83ac408",
+        "model-00002-of-00003.safetensors": "bf7cc6910977e872cd1589c7b3a5b813040c166f28cd2f28cdf11acf5ca334e0",
+        "model-00003-of-00003.safetensors": "4106b9fb43727deb5cf8e2dc60fc6757128b7805627dee239119293b8fabada3"
+      },
+      "role_separation_note": {
+        "role": "excluded_generator_candidate",
+        "excluded_variant": "phi-4-reasoning-plus-8bit",
+        "variant_now": "phi-4-8bit (base)",
+        "rejection_reason": "generator diversity failure caused by mlx_lm.server seed-handling behavior; not validator capability, safety, or rubric-following failure",
+        "why_not_disqualifying": "Validator B is deterministic single-output rubric classification and does not require stochastic within-cell generation diversity. The base phi-4 used here is also a different model variant from the excluded phi-4-reasoning-plus generator candidate."
+      }
+    },
+    "glm-4.7-flash": {
+      "role": "subject",
+      "display_name": "GLM-4.7-Flash",
+      "hf_repo": "zai-org/GLM-4.7-Flash",
+      "hf_commit_sha_resolved": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
+      "bf16": {},
+      "download_hash_policy": "HF repo and commit SHA are locked for OSF. tokenizer.json, tokenizer_config.json, and full local model-file SHA-256 manifests are computed immediately after main-run download and archived with the run manifest before rows are accepted.",
+      "post_download_manifest_required": true,
+      "awq_int4": {
+        "local_dir": "${CAGAP_MODEL_ROOT}/glm-4.7-flash-awq-4bit",
+        "serving_engine": "vllm",
+        "served_model": "glm-4.7-flash-awq-4bit",
+        "dtype": "auto",
+        "tool_call_parser": "glm47",
+        "reasoning_parser": "glm45",
+        "enable_auto_tool_choice": true,
+        "launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_glm47_flash_awq4_verda_b300.sh",
+        "route_screen": {
+          "classification": "schema_visible",
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-awq-4bit-patched-verda-b300_20260520T195129Z/summary.md",
+          "responses_sha256": "d9df37d809125d772d2fb4809e2e999457a78f6200d98b864aa22165c44e95b8",
+          "token_delta_disabled_minus_notools": 1193,
+          "tool_call_rows_disabled": 0
+        }
+      },
+      "route_screen": {
+        "classification": "schema_visible",
+        "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-bf16-tp2-fa2-tritonmoe-verda-b300_20260520T203312Z/summary_completed_b200_20260520T210531Z.md",
+        "responses_completed_sha256": "d2799586be74b9388d1ad5c0816e9e7f89e684f01a029a32db5ec7770fc5a2e3",
+        "token_delta_disabled_minus_notools": 1206,
+        "tool_call_rows_disabled": 0,
+        "serving_engine": "vllm",
+        "served_model": "glm-4.7-flash-bf16-tp1-fa2-tritonmoe",
+        "tool_call_parser": "glm47",
+        "reasoning_parser": "glm45",
+        "enable_auto_tool_choice": true
+      }
+    },
+    "mistral-medium-3.5-128b": {
+      "role": "subject",
+      "display_name": "Mistral Medium 3.5 128B",
+      "hf_repo": "mistralai/Mistral-Medium-3.5-128B",
+      "hf_commit_sha_resolved": "ed0c85631cf20929c29bc36d7cb37519ed0cdd28",
+      "fp8_official": {},
+      "download_hash_policy": "HF repo and commit SHA are locked for OSF. tokenizer.json, tokenizer_config.json, and full local model-file SHA-256 manifests are computed immediately after main-run download and archived with the run manifest before rows are accepted.",
+      "post_download_manifest_required": true,
+      "awq_int4": {
+        "local_dir": "${CAGAP_MODEL_ROOT}/mistral-medium-3.5-128b-awq-int4",
+        "serving_engine": "vllm",
+        "served_model": "mistral-medium-3.5-128b-awq-int4",
+        "dtype": "auto",
+        "tool_call_parser": "mistral",
+        "enable_auto_tool_choice": true,
+        "launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_mistral_medium_35_awq.sh",
+        "route_screen": {
+          "classification": "schema_visible",
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-awq-int4_20260520T185835Z/summary.md",
+          "responses_sha256": "6e7398147590cdc41dd868418100b578c6b2431b00fd920e8f6274e7e887fb2b",
+          "token_delta_disabled_minus_notools": 1178,
+          "tool_call_rows_disabled": 0
+        }
+      },
+      "route_screen": {
+        "classification": "schema_visible",
+        "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-official-fp8-bf16-compute_20260520T192456Z/summary.md",
+        "responses_sha256": "822b17417e83ec6bbc5eea0d0253bee60d13fd63b8105030dfa74e665920499b",
+        "token_delta_disabled_minus_notools": 1178,
+        "tool_call_rows_disabled": 0,
+        "serving_engine": "vllm",
+        "served_model": "mistral-medium-3.5-128b-official-fp8-bf16-compute",
+        "tool_call_parser": "mistral",
+        "tokenizer_mode": "mistral",
+        "kv_cache_dtype": "fp8_e4m3",
+        "enable_auto_tool_choice": true
+      }
+    }
+  },
+  "reproducibility_note": "To reproduce: (1) clone repo at the OSF-registered commit SHA, (2) download each local subject from its hf_repo at hf_commit_sha_resolved, (3) verify archived post-download manifests for local model files before dispatch, (4) archive provider/OpenRouter runtime metadata for hosted subjects and substitute judges, (5) run scripts/generate_aligned_corpus.py --resume, and (6) run scripts/select_aligned_corpus.py. The primary subject roster is now 10 fixed subjects after filing: five hosted/API subjects (Claude Opus 4.7, GPT-5.5, Gemini 3.5 Flash, Grok 4.3, Kimi K2.6) and five local/self-hosted subjects (Llama 3.3-70B-Instruct, Gemma 4 31B IT, Qwen 3.6 35B-A3B, GLM-4.7-Flash, Mistral Medium 3.5 128B). The Sen-Q robustness audit is the paired local/self-hosted primary-vs-4-bit deployment-path contrast for all five local subjects; GLM-4.7-Flash and Mistral Medium 3.5 128B use the AWQ 4-bit route-screen artifacts recorded above. All quantized robustness rows must be marked serving_precision_role=quantization_audit and are excluded from H1. Hosted/API rows carry serving_precision_role=primary to denote primary-analysis rows, not a precision claim. Excluded local candidates remain in the audit archive and are not part of the primary roster.",
+  "osf_upload_list": [
+    "config/roster.public.json",
+    "notes/osf_public_bundle_manifest.json",
+    "config/prompt_case_cards.json",
+    "config/model_freeze.json",
+    "schemas/",
+    "scripts/",
+    "grader/",
+    "paper/Study_Design.md",
+    "experiments/aligned/prompts.jsonl"
+  ],
+  "osf_exclude_note": "Model weights are not uploaded to OSF because they are too large. Reference HF repos plus hf_commit_sha_resolved above instead. The full operational roster (config/roster.json) is retained in the private audit bundle because it contains provider routing and auth-environment metadata; public OSF release uses config/roster.public.json plus notes/osf_public_bundle_manifest.json. MLX-community INT4 variants and local mlx-lm INT4 conversions are referenced by repo or hash after freeze; INT8 fingerprints, where present, are provenance only and are not a predeclared subject audit condition.",
+  "local_substrate_validation_2026_05_07": {
+    "primary_substrate": "external_cloud_gpu_vllm",
+    "fallback_substrate": "m5_macbook_128gb_mlx_lm",
+    "valid_for": "Local substrate validation for Llama 3.3-70B-Instruct, Gemma 4 31B IT, and Qwen 3.6 35B-A3B across primary BF16/FP16 and quantization_audit 4-bit rows. The active Sen-Q scope now covers all five local/self-hosted subjects; GLM-4.7-Flash and Mistral Medium 3.5 128B are covered by their separate 2026-05-20 local-vLLM AWQ 4-bit route-screen artifacts above.",
+    "validation_run": "2026-05-07 local substrate check: 96 BF16/FP16 + 96 4-bit cells per paired local/self-hosted subject all dispatched cleanly via cloud-GPU vLLM (B300 SXM6, 275GB VRAM, vLLM 0.19.1)",
+    "fallback_trigger": "External GPU instance unavailable before dispatch, model_match preflight failure, or operator decision recorded in run_manifest",
+    "concurrent_serving": "Permitted across substrates and on the same substrate when VRAM permits."
+  },
+  "gemma_int4_alternatives_2026_05_08": {
+    "design_record": "2026-05-08 Gemma local 4-bit deployment alternatives",
+    "motivation": "Gemma 4 31B IT was originally predeclared as NVFP4-only on Blackwell substrates. To enable cost-effective dispatch on Hopper/Ampere when Blackwell capacity is unavailable (Lambda Cloud, Verda alternates), two additional 4-bit deployment paths are predeclared as substrate-conditional alternatives. Operator selects exactly ONE (format × substrate) tuple per main-run dispatch based on hardware availability.",
+    "predeclared_paths": [
+      {
+        "format": "nvfp4",
+        "hf_repo": "nvidia/Gemma-4-31B-IT-NVFP4",
+        "hf_commit_sha_resolved": "e5ef03afa233c35cb000323ff098d4291e1dd07c",
+        "hf_commit_sha_resolved_at_utc": "2026-05-08T11:30:00Z",
+        "loader": "vllm compressed-tensors NVFP4",
+        "permitted_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "validation": "2026-05-07/08 B300 local substrate checks; 96/96 audit cells clean"
+      },
+      {
+        "format": "int4_awq",
+        "hf_repo": "QuantTrio/gemma-4-31B-it-AWQ",
+        "hf_commit_sha_resolved": "200d06ee83eb49a03c6e3120dbf7b09191eb1539",
+        "loader": "vllm awq_marlin",
+        "permitted_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "validation": "PENDING - pre-dispatch smoke gate required before any main-run dispatch on this format"
+      },
+      {
+        "format": "int4_compressed_tensors",
+        "hf_repo": "cyankiwi/gemma-4-31B-it-AWQ-4bit",
+        "hf_commit_sha_resolved": "853ac120bc4d1cd4aa7ae66a412f76a35c4aca4f",
+        "loader": "vllm compressed-tensors auto-detect",
+        "permitted_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "validation": "PENDING - pre-dispatch smoke gate required before any main-run dispatch on this format"
+      }
+    ],
+    "pooling_rule": "NVFP4, int4_awq, and int4_compressed_tensors are three separate predeclared deployment paths and are not pooled across formats. Sen-Q reports per-format breakdown when cell counts permit (at least 30 informative clusters per format).",
+    "smoke_gate": "outputs/main_run/smoke_validation/gemma-4-31b-it_<format>_<substrate>.json must exist with PASS verdict before any main-run audit row is dispatched on the new (format, substrate) tuple."
+  }
+}

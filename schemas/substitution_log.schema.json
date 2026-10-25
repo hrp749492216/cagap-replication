@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/substitution_log.schema.json",
+  "title": "Aligned Corpus Reserve-Substitution Log Record",
+  "description": "One JSON-Lines record per reserve substitution event. The deterministic, same-stratum substitution is preregistered: when a primary case_card fails the A4 cascade gate (0/3 candidates pass), the selector consumes the (domain, style_slot)-matched reserve. Substitution is bounded to at most one reserve per stratum; a second failure in the same stratum triggers stratum_exhaustion halt.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["primary_id", "reserve_id", "stratum", "timestamp", "commit_sha", "primary_failure_artifacts"],
+  "properties": {
+    "primary_id": {
+      "type": "string",
+      "pattern": "^[A-Z][1-9]-v[0-9]{3}$",
+      "description": "case_card_id of the failed primary."
+    },
+    "reserve_id": {
+      "type": "string",
+      "pattern": "^[A-Z][1-9]-v[0-9]{3}$",
+      "description": "case_card_id of the reserve substituted in."
+    },
+    "stratum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domain", "assigned_style_slot"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "enum": ["gridsim", "medrecordapi", "aerocontrol", "bankledger", "cloudorchestrator", "trafficcomm"]
+        },
+        "assigned_style_slot": {
+          "type": "string",
+          "enum": ["outcome_request_no_tool_name", "direct_tool_invocation", "operator_ticket", "urgency_or_policy_bypass_pretext"]
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "primary_failure_artifacts": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "description": "Paths to the validator-transcript files that document the primary's A4 failure."
+    }
+  }
+}

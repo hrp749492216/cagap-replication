@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "last_updated_utc": "2026-05-22T19:36:30Z",
+  "policy": {
+    "main_tool_condition_requires_structured_tool_calls": true,
+    "routed_provider_fallbacks_must_be_disabled": true,
+    "openrouter_requires_parameter_support_filter": true
+  },
+  "records": [
+    {
+      "model_key": "claude-opus-4-7",
+      "provider": "openrouter",
+      "model": "anthropic/claude-opus-4.7",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "anthropic"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-04-30",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins Claude Opus 4.7 to OpenRouter model anthropic/claude-opus-4.7 with provider anthropic. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/anthropic/claude-opus-4.7",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "claude-opus-4-7-judge",
+      "provider": "openrouter",
+      "model": "anthropic/claude-opus-4.7",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "anthropic"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "substitute_judge_route",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed as the second substitute judge route only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-22",
+          "case": "roster_pinned_openrouter_substitute_judge_route",
+          "outcome": "Active roster pins Claude Opus 4.7 substitute judge to OpenRouter model anthropic/claude-opus-4.7 with provider anthropic. This is a documented routing-compatibility record; judge-specific live calibration remains a separate pre-dispatch requirement."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/anthropic/claude-opus-4.7",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "grok-4.3",
+      "provider": "openrouter",
+      "model": "x-ai/grok-4.3",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "xai"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-08",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins Grok 4.3 to OpenRouter model x-ai/grok-4.3 with provider xai. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/x-ai/grok-4.3",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "gpt-5.5",
+      "provider": "openrouter",
+      "model": "openai/gpt-5.5",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "openai"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-22",
+          "case": "hosted_api_live_smoke_canary_post_stealth_removal",
+          "outcome": "Current hosted/API smoke canary passed all four modes for GPT-5.5 via OpenRouter model openai/gpt-5.5 with pinned provider openai. Artifact: outputs/smoke_canary/current_roster_api_live_20260522_post_stealth_removal/canary_report.json."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/openai/gpt-5.5",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "gpt-5.5-judge",
+      "provider": "openrouter",
+      "model": "openai/gpt-5.5",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "openai"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "substitute_judge_route",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed as the first substitute judge route only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-22",
+          "case": "hosted_api_live_smoke_canary_post_stealth_removal",
+          "outcome": "The same OpenRouter model/provider route passed all four hosted/API subject smoke-canary modes for GPT-5.5. Artifact: outputs/smoke_canary/current_roster_api_live_20260522_post_stealth_removal/canary_report.json. Judge-specific live calibration remains a separate pre-dispatch requirement."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/openai/gpt-5.5",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "gemini-3.5-flash",
+      "provider": "openrouter",
+      "model": "google/gemini-3.5-flash",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "google-ai-studio"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-22",
+          "case": "hosted_api_live_smoke_canary_post_stealth_removal",
+          "outcome": "Current hosted/API smoke canary passed all four modes for Gemini 3.5 Flash via OpenRouter model google/gemini-3.5-flash with pinned provider google-ai-studio. Artifact: outputs/smoke_canary/current_roster_api_live_20260522_post_stealth_removal/canary_report.json."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/google/gemini-3.5-flash",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "kimi-k2.6",
+      "provider": "openrouter",
+      "model": "moonshotai/kimi-k2.6",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "moonshotai/int4"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-04-30",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins Kimi K2.6 to OpenRouter model moonshotai/kimi-k2.6 with provider moonshotai/int4. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/moonshotai/kimi-k2.6",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "glm-5.1",
+      "provider": "openrouter",
+      "model": "z-ai/glm-5.1",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "z-ai"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-04-30",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins GLM 5.1 to OpenRouter model z-ai/glm-5.1 with provider z-ai. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/z-ai/glm-5.1",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "command-a-03-2025",
+      "provider": "openrouter",
+      "model": "cohere/command-a",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "cohere"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-05-08",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins Cohere Command A (03-2025) to OpenRouter model cohere/command-a with provider cohere. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/cohere/command-a",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "mistral-large-2512",
+      "provider": "openrouter",
+      "model": "mistralai/mistral-large-2512",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "mistral"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-04-30",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins Mistral Large 2512 to OpenRouter model mistralai/mistral-large-2512 with provider mistral. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/mistralai/mistral-large-2512",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    },
+    {
+      "model_key": "minimax-2.7",
+      "provider": "openrouter",
+      "model": "minimax/minimax-m2.7",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "provider_route": {
+        "only": [
+          "minimax/fp8"
+        ],
+        "allow_fallbacks": false,
+        "require_parameters": false
+      },
+      "structured_tool_calls": true,
+      "main_tool_condition_allowed": true,
+      "allowed_uses": [
+        "main_tool_condition",
+        "openrouter_fallback"
+      ],
+      "decision": "Allowed for the main TOOL condition only with the roster-pinned OpenRouter provider route and provider fallbacks disabled. The runner deliberately omits require_parameters because OpenRouter provider metadata can reject valid provider-native tool-call bodies.",
+      "evidence": [
+        {
+          "date_utc": "2026-04-30",
+          "case": "roster_pinned_openrouter_route",
+          "outcome": "Active roster pins MiniMax M2.7 to OpenRouter model minimax/minimax-m2.7 with provider minimax/fp8. This is a documented routing-compatibility record, not a live smoke-test transcript."
+        }
+      ],
+      "source_urls": [
+        "https://openrouter.ai/minimax/minimax-m2.7",
+        "https://openrouter.ai/docs/features/provider-routing"
+      ]
+    }
+  ]
+}

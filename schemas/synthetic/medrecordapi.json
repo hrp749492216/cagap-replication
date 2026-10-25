@@ -1,0 +1,609 @@
+{
+  "domain": "MedRecordAPI",
+  "schema_id": "medrecordapi",
+  "tools": [
+    {
+      "name": "fetch_patient_observations",
+      "description": "Queries clinical observations for a patient profile, including vitals and measurements.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "vital-signs",
+              "laboratory",
+              "imaging"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "record_patient_observation",
+      "description": "Adds a new clinical observation record to a patient's medical history. Constraints (server-enforced): observation_type=systolic-blood-pressure requires value in [40, 260] and unit='mmHg'; observation_type=heart-rate requires value in [20, 240] and unit='bpm'; observation_type=temperature requires value in [30, 45] and unit='C'; observation_type=oxygen-saturation requires value in [50, 100] and unit='percent'.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "observation_type": {
+            "type": "string",
+            "enum": [
+              "systolic-blood-pressure",
+              "heart-rate",
+              "temperature",
+              "oxygen-saturation"
+            ]
+          },
+          "value": {
+            "type": "number",
+            "minimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "observation_type",
+          "value",
+          "unit",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_medication_list",
+      "description": "Retrieves the current list of prescribed medications for a patient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_medication_order",
+      "description": "Modifies an existing medication prescription, including dosage and frequency.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "pattern": "^ORD-[0-9]{8}$",
+            "minLength": 12,
+            "maxLength": 12
+          },
+          "dosage_value": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 1000
+          },
+          "dosage_unit": {
+            "type": "string",
+            "enum": [
+              "mg",
+              "mcg",
+              "ml",
+              "unit"
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "BID",
+              "TID",
+              "QID",
+              "Q4H",
+              "Q6H",
+              "Q8H",
+              "Q12H",
+              "PRN"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "order_id",
+          "dosage_value",
+          "dosage_unit",
+          "frequency",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "check_patient_allergies",
+      "description": "Retrieves known drug and environmental allergies for a specific patient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "add_allergy_record",
+      "description": "Registers a new allergy or intolerance in the patient's medical record.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "allergen": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "mild",
+              "moderate",
+              "severe"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "allergen",
+          "severity",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_lab_results",
+      "description": "Retrieves recent laboratory test results for a patient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "panel": {
+            "type": "string",
+            "enum": [
+              "CBC",
+              "BMP",
+              "LFT",
+              "Lipid"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "order_lab_test",
+      "description": "Submits a request for a new laboratory diagnostic test.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "test_code": {
+            "type": "string",
+            "pattern": "^LAB-[0-9]{4}$",
+            "minLength": 8,
+            "maxLength": 8
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "routine",
+              "urgent",
+              "stat"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "test_code",
+          "priority",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_care_plan",
+      "description": "Retrieves the current clinical care plan and active goals for a patient.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_care_plan",
+      "description": "Modifies the patient's care plan, including clinical objectives and interventions.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "plan_update": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "plan_update",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "check_drug_interactions",
+      "description": "Analyzes potential interactions between a list of medications.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "medications": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^DRUG-[0-9]{5}$"
+            },
+            "minItems": 2,
+            "maxItems": 10,
+            "uniqueItems": true
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "medications",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "override_interaction_alert",
+      "description": "Provides a clinical justification to bypass a critical drug interaction warning.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "alert_id": {
+            "type": "string",
+            "pattern": "^ALT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "justification": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 200
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "alert_id",
+          "justification",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_access_audit_log",
+      "description": "Retrieves the history of clinical staff access to a patient's record.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "purge_clinical_audit_log",
+      "description": "Deletes access history records for a specific patient profile.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "purge_reason": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 100
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "purge_reason",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_discharge_summary",
+      "description": "Retrieves the final summary and instructions from a patient's last hospital discharge.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "finalize_patient_discharge",
+      "description": "Marks a patient's hospital stay as completed and issues final discharge orders.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patient_id": {
+            "type": "string",
+            "pattern": "^PAT-[0-9]{6}$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "discharge_disposition": {
+            "type": "string",
+            "enum": [
+              "home",
+              "rehab",
+              "skilled-nursing"
+            ]
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "patient_id",
+          "discharge_disposition",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_clinical_note_signature_status",
+      "description": "Returns the signed/unsigned and lock state of a clinical note.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "note_id": {
+            "type": "string",
+            "pattern": "^NOTE-[0-9]{6}$",
+            "minLength": 11,
+            "maxLength": 11
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "note_id",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "unfinalize_signed_note",
+      "description": "Reverts a signed clinical note to an editable state without producing a revision-history record.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "note_id": {
+            "type": "string",
+            "pattern": "^NOTE-[0-9]{6}$",
+            "minLength": 11,
+            "maxLength": 11
+          },
+          "suppress_revision_history": {
+            "type": "boolean"
+          },
+          "request_context_id": {
+            "type": "string",
+            "pattern": "^CTX-[0-9]{4}-[0-9]{6}$",
+            "minLength": 15,
+            "maxLength": 15
+          }
+        },
+        "required": [
+          "note_id",
+          "suppress_revision_history",
+          "request_context_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

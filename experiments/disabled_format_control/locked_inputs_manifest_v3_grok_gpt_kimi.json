@@ -1,0 +1,163 @@
+{
+  "schema_version": "disabled_format_control.locked_inputs.v3",
+  "status": "locked_before_osf_and_first_official_dispatch",
+  "locked_at_utc": "2026-09-03T19:15:20Z",
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_grok_gpt_kimi.json",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-03-v3-GROK-GPT-KIMI",
+  "protocol_sha256": "575c336713cad45f2866d254f4686c6dbca3beaf9009f7cff83ac8de6a0d06e7",
+  "population": {
+    "subjects": [
+      "kimi-k2.6",
+      "grok-4.3",
+      "gpt-5.5"
+    ],
+    "execution_order": [
+      "kimi-k2.6",
+      "grok-4.3",
+      "gpt-5.5"
+    ],
+    "analysis_sets_per_arm": 3456,
+    "full_rows": 10368,
+    "excluded_canary_rows": 9
+  },
+  "determinism": {
+    "independent_generations": 2,
+    "request_files_byte_identical": true,
+    "manifest_semantics_identical": true,
+    "manifest_timestamp_excluded_from_byte_comparison": true
+  },
+  "full": {
+    "profile": "full",
+    "analysis_inclusion": true,
+    "batches_dir": "outputs/postreg_disabled_format_control_v3_grok_gpt_kimi/batches",
+    "manifest_path": "outputs/postreg_disabled_format_control_v3_grok_gpt_kimi/batches/disabled_format_control_manifest.json",
+    "manifest_sha256": "c9db50e555a81f22f00a8473ed7f19a53df1defdb96ee549eead22c1d0e29789",
+    "row_count": 10368,
+    "per_subject_rows": {
+      "kimi-k2.6": 3456,
+      "grok-4.3": 3456,
+      "gpt-5.5": 3456
+    },
+    "arm_counts": {
+      "DISABLED_BASELINE": 3456,
+      "DISABLED_FORMAT_JSON": 3456,
+      "TOOL_CONTEMPORANEOUS": 3456
+    },
+    "route_counts": {
+      "native": 3456,
+      "openrouter": 6912
+    },
+    "output_files": {
+      "input_kimi-k2.6.jsonl": {
+        "rows": 3456,
+        "sha256": "c9d68ece94801edf4b0f7efcb30a9acdae0f398cec143a364c0f655b66271ba3"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 3456,
+        "sha256": "1bcedd6267a774e282e26009d6b8f9fe996971c4e1ad3b8122bb84a08555d87d"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 3456,
+        "sha256": "399ab82adf80f78eebbd45e662328b3b3c34381e6426a01cb3cd500c32b46b78"
+      }
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "method": "conservative UTF-8-byte input-token ceiling plus configured maximum output tokens",
+      "kimi-k2.6": 41.609714,
+      "grok-4.3": 52.281607,
+      "gpt-5.5": 245.870415,
+      "total": 339.761736,
+      "openrouter_note": "The whole-shard OpenRouter maxima are reporting bounds. Synchronous dispatch instead enforces receipt-bound runtime caps after every durable response while reserving the next worst-case request.",
+      "kimi_note": "The Kimi full allocation must meet this whole-batch bound before native batch creation."
+    }
+  },
+  "canary": {
+    "profile": "canary",
+    "analysis_inclusion": false,
+    "batches_dir": "outputs/postreg_disabled_format_control_v3_grok_gpt_kimi/canary/batches",
+    "manifest_path": "outputs/postreg_disabled_format_control_v3_grok_gpt_kimi/canary/batches/disabled_format_control_manifest.json",
+    "manifest_sha256": "ad949134dd4a826da8173e0da73e636dd03ba3574bc1ad36897874469e47fd0a",
+    "row_count": 9,
+    "per_subject_rows": {
+      "kimi-k2.6": 3,
+      "grok-4.3": 3,
+      "gpt-5.5": 3
+    },
+    "arm_counts": {
+      "DISABLED_BASELINE": 3,
+      "DISABLED_FORMAT_JSON": 3,
+      "TOOL_CONTEMPORANEOUS": 3
+    },
+    "route_counts": {
+      "native": 3,
+      "openrouter": 6
+    },
+    "output_files": {
+      "input_kimi-k2.6.jsonl": {
+        "rows": 3,
+        "sha256": "f1c4992e0f84bb60bdda3e5cfd077860fc2bd1140a2e9077a00c06a4115cadc4"
+      },
+      "input_grok-4.3.jsonl": {
+        "rows": 3,
+        "sha256": "73bbbee21a046b95df668d594e2d201eb605664760ada1b02ad8c8571324c322"
+      },
+      "input_gpt-5.5.jsonl": {
+        "rows": 3,
+        "sha256": "5c984f6ad14fc178f2b1d9458fd03bf387391704839f3515de347bb8fa5dc999"
+      }
+    },
+    "estimated_api_cost_upper_bound_usd": {
+      "method": "conservative UTF-8-byte input-token ceiling plus configured maximum output tokens",
+      "kimi-k2.6": 0.035798,
+      "grok-4.3": 0.044345,
+      "gpt-5.5": 0.213355,
+      "total": 0.293498
+    }
+  },
+  "spending_plan": {
+    "openrouter": {
+      "authorized_total_usd": 140.0,
+      "spent_before_official_usd": 1.22860691,
+      "remaining_before_official_usd": 138.77139309,
+      "profile_subject_runtime_caps_usd": {
+        "canary": {
+          "grok-4.3": 0.25,
+          "gpt-5.5": 0.5
+        },
+        "full": {
+          "grok-4.3": 20.0,
+          "gpt-5.5": 118.02139309
+        }
+      },
+      "allocated_total_usd": 138.77139309,
+      "planning_estimate_full_usd": {
+        "low_from_exact_format_pilots": 22.9378104,
+        "upper_proxy_using_historical_gpt_openrouter": 40.65504765,
+        "method": "Scale observed per-row Grok/GPT diagnostic costs to 3,456 rows; upper proxy replaces GPT pilot rate with its historical OpenRouter subject-run rate."
+      }
+    },
+    "kimi_native_batch": {
+      "spent_before_official_usd": 0.04125021,
+      "profile_whole_batch_caps_usd": {
+        "canary": 0.035798,
+        "full": 41.609714
+      },
+      "total_cap_including_diagnostic_usd": 41.68676221,
+      "planning_estimate_full_usd": 5.94003024,
+      "planning_estimate_method": "Scale the excluded 24-row native-batch token cost to 3,456 rows."
+    }
+  },
+  "pricing_snapshots": {
+    "config/api_pricings_native_providers.json": "cd3c293269416e0ed960b4827245ec6782d58cbd4beff3c641d476127b8c6436",
+    "config/openrouter_pricing_current.json": "6c1eb34c2c9bbcd1d9b168d24f4ccca34f6a6eed603daf1ef9f87af1bdd37502"
+  },
+  "execution_state": {
+    "submission_status": "not_submitted",
+    "official_canary_started": false,
+    "official_full_run_started": false,
+    "official_responses_present": false,
+    "official_labels_present": false,
+    "official_analysis_present": false,
+    "next_gate": "File the exact protocol/addendum/lock packet to OSF and create the hash-bound execution authorization receipt."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "calibration_prompt_ids",
+  "selection_rule": "Deterministic balanced half-sample derived from scripts.corpus_design.build_design_cells(config/prompt_case_cards.json). For each (domain, style_slot) group, sort by base_tool_id, action_variant, case_card_id, style_slot and select every other design cell. This yields 16 prompt cells per domain and 24 cells per style slot for a 192-cell balanced design. Under the global n = 3 design (preregistration §6.3, design-phase item dated 2026-04-30), this manifest is the predeclared substrate for two pre-registered secondary sensitivities only: Sen-H (hardened-intervention TOOL sub-arm, intervention_condition='hardened', n=3 hardened-TOOL trials per cell) and Sen-Q (paired local/self-hosted BF16-vs-INT4 quantization audit). Baseline n=3 repetition applies to all 192 main prompts.",
+  "source_case_cards_path": "config/prompt_case_cards.json",
+  "target_prompt_count": 96,
+  "sensitivity_roles": {
+    "sen_h": "Hardened-intervention TOOL sub-arm on this 96-prompt subset only. Excluded from H1 by intervention_condition filter; analyzed as the H2-secondary system-prompt-hardening sensitivity.",
+    "sen_q": "Paired local/self-hosted BF16-vs-INT4 quantization audit on this 96-prompt subset only. INT4 audit rows carry serving_precision_role='quantization_audit' and are excluded from H1 by that filter."
+  }
+}

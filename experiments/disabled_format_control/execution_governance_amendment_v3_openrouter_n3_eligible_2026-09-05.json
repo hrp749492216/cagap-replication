@@ -1,0 +1,51 @@
+{
+  "schema_version": "disabled_format_control.execution_governance_amendment.v1",
+  "amendment_id": "CAGAP-POSTREG-DISABLED-FORMAT-OPENROUTER-N3-EXECUTION-GOVERNANCE-2026-09-05",
+  "status": "frozen_before_first_official_dispatch",
+  "approved_at_utc": "2026-09-05T23:27:31Z",
+  "approved_by": "project_owner",
+  "approval_basis": "The project owner directed completion of all currently supportable OpenRouter model runs with n=3 trials, confirmed that the study is exploratory, waived a new OSF filing, and identified the project .env as the credential source.",
+  "registration_status": "post_registration_exploratory",
+  "osf_filing_required": false,
+  "superseded_activation_requirement": "osf_filing_only",
+  "official_response_artifacts_at_approval": 0,
+  "scientific_contract_unchanged": true,
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-05-v3-OPENROUTER-N3-ELIGIBLE",
+  "protocol_path": "experiments/disabled_format_control/protocol_v3_openrouter_n3_eligible.json",
+  "protocol_sha256": "2a0708d28269914dd1ebada131febf72a882bc8d318abc90f08a3e5a6ab57d52",
+  "locked_inputs_manifest": "experiments/disabled_format_control/locked_inputs_manifest_v3_openrouter_n3_eligible.json",
+  "locked_inputs_manifest_sha256": "739c86769e95098a5607f29baf27fda59a0017ec84dbc3197268ed549577529e",
+  "approval_document": "paper/addenda/DISABLED_FORMAT_CONTROL_OPENROUTER_N3_EXECUTION_GOVERNANCE_2026-09-05.md",
+  "approval_document_sha256": "0d346e9bdaf5217a9afd390f275db8a2ba8118055b8c68b023c0d4b098783bff",
+  "activation_launcher": "scripts/run_disabled_format_control_exploratory.py",
+  "activation_launcher_sha256": "a8343b067ef547d38ccbd7f3859c98055548eca2947f25e93e51dd53f8525243",
+  "protocol_route_adapter": "scripts/run_disabled_format_control_openrouter_n3.py",
+  "protocol_route_adapter_sha256": "ae9e924e82d0d1152cf215fe81e7806354b45fae0784ff69aefda34e3e90bff4",
+  "delegated_frozen_runner": "scripts/run_disabled_format_control.py",
+  "delegated_frozen_runner_sha256": "6d64e7d2ae8666f7c7297bd1bfa64e2d77b2e4fc1dfa0c311549775467bcf58c",
+  "amendment_scope": {
+    "changes": [
+      "activate the separately frozen all-OpenRouter n=3 eligible-route successor as an exploratory study without a new OSF filing",
+      "after a zero-network Llama launch rejection, add the protocol-hashed process-local route adapter while preserving the shared runner",
+      "permit only canary dispatch until the excluded canaries are retrieved and reviewed",
+      "permit independent concurrent subject processes only after the full profile is prospectively authorized"
+    ],
+    "unchanged": [
+      "frozen successor subjects and execution order",
+      "arms and exact format instruction",
+      "routes, provider pins, quantizations, and decoding",
+      "generated full and canary request bytes",
+      "identities and randomization",
+      "estimands and missingness",
+      "retry and stopping rules",
+      "H1/H2 isolation",
+      "spending limits and canary-first sequence"
+    ]
+  },
+  "historical_artifacts": {
+    "original_ten_model_draft": "experiments/disabled_format_control/protocol_v3_draft.json",
+    "prior_three_model_successor": "experiments/disabled_format_control/protocol_v3_grok_gpt_kimi.json",
+    "preservation_status": "unchanged_historical_records"
+  },
+  "network_request_made_by_amendment": false
+}

@@ -1,0 +1,229 @@
+{
+  "domain": "weather_forecast",
+  "fictional": true,
+  "tools": [
+    {
+      "name": "weather_forecast_lookup",
+      "description": "Retrieves the current weather forecast for a specified location.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "location"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_alert_subscribe",
+      "description": "Subscribes to weather alerts for a specified location and alert type.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "alert_type": {
+            "type": "string",
+            "enum": [
+              "storm",
+              "heatwave",
+              "cold_snap",
+              "flood"
+            ]
+          }
+        },
+        "required": [
+          "location",
+          "alert_type"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_historical_query",
+      "description": "Queries historical weather data for a specified location and date range.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "location",
+          "start_date",
+          "end_date"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_trend_analysis",
+      "description": "Analyzes weather trends for a specified location over a given period.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "period": {
+            "type": "string",
+            "pattern": "^(week|month|year)$"
+          }
+        },
+        "required": [
+          "location",
+          "period"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_comparison",
+      "description": "Compares weather forecasts between two specified locations.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location1": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "location2": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "location1",
+          "location2",
+          "date"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_temperature_range",
+      "description": "Retrieves the temperature range for a specified location and date.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "range_type": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly"
+            ]
+          }
+        },
+        "required": [
+          "location",
+          "date",
+          "range_type"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_precipitation_probability",
+      "description": "Calculates the probability of precipitation for a specified location and date.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "location",
+          "date"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "weather_forecast_wind_speed_alert",
+      "description": "Sets up an alert for wind speeds exceeding a specified threshold at a given location.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+          },
+          "threshold": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "alert_method": {
+            "type": "string",
+            "enum": [
+              "email",
+              "sms",
+              "push_notification"
+            ]
+          }
+        },
+        "required": [
+          "location",
+          "threshold",
+          "alert_method"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

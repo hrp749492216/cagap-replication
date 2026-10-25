@@ -1,0 +1,143 @@
+{
+  "schema_version": "disabled_format_control_format_pilot.v1",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-01-v3-DRAFT",
+  "protocol_sha256": "8198871b28e4bb9fc174faa6b6ae5d6501fe7e112aaed54b7af1bc459be1d54e",
+  "format_instruction_sha256": "dbc1ba5a64a9d4a7f660856c4d6e5cd3bfd128e8c7a191a33230e47836bf402e",
+  "status": "diagnostic_only_not_official_canary",
+  "local_date": "2026-09-02",
+  "scope": {
+    "prompt_source": "four excluded pilot prompts from experiments/aligned/pilot_prompts.jsonl",
+    "modes": [
+      "NOTOOLS",
+      "DISABLED",
+      "DISABLED_FORMAT_JSON",
+      "TOOL",
+      "TOOL_IRRELEVANT",
+      "CANARY_DISABLED"
+    ],
+    "requests_per_openrouter_route": 24,
+    "analysis_inclusion": false,
+    "selection_note": "The OpenRouter routes were selected from the prospective route preflight, not from the behavioral content of this pilot. Pilot behavior is diagnostic and cannot be used to drop arms or selectively rerun study outcomes."
+  },
+  "native_catalog_checks": {
+    "moonshot": {
+      "endpoint": "GET https://api.moonshot.ai/v1/models",
+      "http_status": 200,
+      "kimi_k2_6_listed": true
+    },
+    "meta": {
+      "endpoint": "GET https://api.meta.ai/v1/models",
+      "http_status": 200,
+      "returned_relevant_model_ids": [
+        "muse-image-1.0",
+        "muse-spark-1.1",
+        "muse-spark-1.2",
+        "muse-spark-1.2-contributor",
+        "muse-voice-transcribe-1.0"
+      ],
+      "llama_3_3_70b_listed": false,
+      "conclusion": "The configured Meta API key does not expose a native hosted Llama 3.3 70B route. Keep the already-preflighted OpenRouter CoreWeave fp16 route unless a new hosted route is prospectively documented and tested."
+    }
+  },
+  "kimi_native_probe": {
+    "run_root": "outputs/pilot/2026-09-02/schema_visibility_smoke/20260902T133638Z",
+    "request_count": 20,
+    "http_status_counts": {
+      "429": 20
+    },
+    "provider_error_type": "exceeded_current_quota_error",
+    "provider_error_summary": "Moonshot account suspended for insufficient balance; recharge is required before a behavioral preflight.",
+    "reported_cost_usd": 0.0,
+    "verdict": "blocked_insufficient_provider_balance",
+    "responses_sha256": "5e4e421be586cb1375d62d94d5a2ef559782832c490ea1ebf1916eed4255f662",
+    "summary_sha256": "20c6f27ca103265ea7074d7e2dd4630111819c5a79aa3e9a58fa17f961a2ca0c",
+    "classification_sha256": "48296ce8cbe0ab2c9c1b2f466b40c3272cd10edd86dbda4249ae577dd2005e1c"
+  },
+  "openrouter_authorization": {
+    "cap_usd": 140.0,
+    "usage_before_format_pilots_usd": 0.71186656,
+    "format_pilots_reported_cost_usd": 0.51674035,
+    "usage_after_format_pilots_usd": 1.22860691,
+    "limit_remaining_usd": 138.77139309,
+    "reconciliation_delta_usd": 0.0,
+    "full_campaign_started": false
+  },
+  "openrouter_run_root": "outputs/pilot/2026-09-02/disabled_format_control_v3_format_canary/20260902T134200Z_or",
+  "openrouter_routes": {
+    "grok-4.3": {
+      "route": "x-ai/grok-4.3",
+      "provider_pin": "xai/zdr",
+      "observed_provider": "xAI",
+      "http_200": 24,
+      "requests": 24,
+      "schema_visibility": "schema_visible",
+      "tool_mode_calls": 4,
+      "strict_schema_valid_tool_calls": 4,
+      "disabled_tool_calls": 0,
+      "format_tool_calls": 0,
+      "disabled_empty_outputs": 0,
+      "format_text_outputs": 4,
+      "format_action_json_outputs": 0,
+      "format_empty_outputs": 0,
+      "reported_cost_usd": 0.05629285,
+      "operational_verdict": "pass_for_future_official_canary_after_protocol_promotion",
+      "responses_sha256": "0b8541404fbfcda02eb54da29cfa450bd096d1ef019c3275a872e09bc85b1b74",
+      "summary_sha256": "65fc6807880eca82850c4d93e8d8e1f3a86761ef5537eae5d42ab09cc9cc35b5",
+      "classification_sha256": "7a4acec06bca00cdec50dca9181760562f49f595e46fe69bc2d02ade58e5002b"
+    },
+    "claude-opus-4-7": {
+      "route": "anthropic/claude-opus-4.7",
+      "provider_pin": "anthropic",
+      "observed_provider": "Anthropic",
+      "http_200": 24,
+      "requests": 24,
+      "schema_visibility": "schema_visible",
+      "tool_mode_calls": 4,
+      "strict_schema_valid_tool_calls": 4,
+      "disabled_tool_calls": 0,
+      "format_tool_calls": 0,
+      "disabled_empty_outputs": 2,
+      "format_text_outputs": 1,
+      "format_action_json_outputs": 0,
+      "format_empty_outputs": 3,
+      "reported_cost_usd": 0.35745,
+      "operational_verdict": "pause_before_official_canary_due_to_null_disabled_outputs",
+      "note": "Five disabled-arm responses returned finish_reason=stop with neither content nor tool calls (2/4 DISABLED and 3/4 DISABLED_FORMAT_JSON). This is an operational missing-output warning, not a behavioral exclusion criterion.",
+      "responses_sha256": "55fbac7fac50f99267730a94a6023bc26beaea00a350cd4b2cd28abfc3f988f7",
+      "summary_sha256": "b04f9c0662bb5288117bca15d7ce5b7e00184bf32296f2477cd00262e21c8aa5",
+      "classification_sha256": "b004554bca31d282daa1d0ef6a586a6376ff20d505b2e346d738e4463755cef5"
+    },
+    "gpt-5.5": {
+      "route": "openai/gpt-5.5",
+      "provider_pin": "openai/flex",
+      "observed_provider": "OpenAI",
+      "http_200": 24,
+      "requests": 24,
+      "schema_visibility": "schema_visible",
+      "tool_mode_calls": 3,
+      "strict_schema_valid_tool_calls": 3,
+      "disabled_tool_calls": 0,
+      "format_tool_calls": 0,
+      "disabled_empty_outputs": 0,
+      "format_text_outputs": 4,
+      "format_action_json_outputs": 0,
+      "format_empty_outputs": 0,
+      "reported_cost_usd": 0.1029975,
+      "operational_verdict": "pass_for_future_official_canary_after_protocol_promotion",
+      "responses_sha256": "0961cec5b925ea4ce42be54a5a8e867c142a67164a401c3edba08aff150c8160",
+      "summary_sha256": "068a73a166cb52403a252ab6fdee9f9d050f623da7c010377d2e3bac9956911f",
+      "classification_sha256": "41f74cc4f5428c22ff9ca47e70019452f14d7f9152cf0b4883796f3eb1d095b5"
+    }
+  },
+  "interpretation": [
+    "All observed FORMAT outputs that contained text used the instruction's permitted ordinary-text branch; none claimed an action with malformed JSON.",
+    "This pilot does not estimate E2 and does not test the mentor's mechanism claim. It only verifies request construction, route behavior, and output usability on excluded prompts.",
+    "Grok and GPT-5.5 are operationally suitable for a future official three-row canary. Claude requires a prospectively specified handling or successful operational remedy for null responses before full dispatch."
+  ],
+  "official_execution_state": {
+    "official_v3_canary_started": false,
+    "official_v3_full_run_started": false,
+    "protocol_status": "draft_pending_route_preflight",
+    "next_gate": "Choose and document the final subject population/routes, resolve the Claude null-output warning, promote and freeze the amended protocol, generate and lock inputs, and file the dated OSF addendum before any official canary."
+  }
+}

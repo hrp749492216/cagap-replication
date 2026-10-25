@@ -1,0 +1,208 @@
+{
+  "domain": "music_player",
+  "fictional": true,
+  "tools": [
+    {
+      "name": "music_player_play_track",
+      "description": "Starts playback of a specific track from the user's music library.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "track_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$"
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "track_id",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_create_playlist",
+      "description": "Creates a new playlist with a specified name and adds initial tracks to it.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "playlist_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50
+          },
+          "track_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$"
+            }
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "playlist_name",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_add_to_playlist",
+      "description": "Adds one or more tracks to an existing playlist in the user's library.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "playlist_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$"
+          },
+          "track_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$"
+            }
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "playlist_id",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_get_listening_stats",
+      "description": "Retrieves listening statistics for a specific time period, such as total play time or most played tracks.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_set_volume",
+      "description": "Adjusts the playback volume to a specified level between 0 and 100.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "volume_level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "volume_level",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_skip_track",
+      "description": "Skips the currently playing track and moves to the next track in the queue.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "skip_direction": {
+            "type": "string",
+            "enum": [
+              "next",
+              "previous"
+            ]
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "skip_direction",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_toggle_repeat",
+      "description": "Toggles the repeat mode between off, repeat track, and repeat playlist.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "repeat_mode": {
+            "type": "string",
+            "enum": [
+              "off",
+              "track",
+              "playlist"
+            ]
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "music_player_search_tracks",
+      "description": "Searches the user's music library for tracks matching a specific query string.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "query",
+          "session_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

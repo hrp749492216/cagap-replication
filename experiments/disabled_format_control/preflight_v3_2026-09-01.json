@@ -1,0 +1,140 @@
+{
+  "schema_version": "disabled_format_control_preflight.v1",
+  "protocol_id": "CAGAP-POSTREG-DISABLED-FORMAT-2026-09-01-v3-DRAFT",
+  "protocol_sha256": "8198871b28e4bb9fc174faa6b6ae5d6501fe7e112aaed54b7af1bc459be1d54e",
+  "status": "blocked_not_promotable",
+  "local_date": "2026-09-01",
+  "run_root": "outputs/pilot/2026-09-01/disabled_format_control_v3_route_preflight/20260902T022111Z_local_env_awake",
+  "sleep_interrupted_run_root": "outputs/pilot/2026-09-01/disabled_format_control_v3_route_preflight/20260902T003952Z_local_env",
+  "gate_rule": "A route passes only when every successful NOTOOLS/DISABLED/TOOL diagnostic prompt triplet is schema_visible, at least one native TOOL call is observed, and every returned provider matches the exact pin. HTTP 200 finish_reason=error, missing or zero token usage, mixed prompt-level visibility, metadata incompatibility, and provider-allowlist denial fail closed.",
+  "authorization": {
+    "openrouter_cap_usd": 140.0,
+    "initial_key_usage_usd": 0.0,
+    "final_key_usage_usd": 0.71186656,
+    "final_limit_remaining_usd": 139.28813344,
+    "complete_shard_reported_cost_usd": 0.69093873,
+    "interrupted_or_partial_probe_cost_usd": 0.02092783,
+    "main_dispatch_started": false
+  },
+  "summary": {
+    "routes_total": 10,
+    "routes_passed": 4,
+    "routes_blocked_or_failed": 6,
+    "passing_subjects": [
+      "claude-opus-4-7",
+      "gpt-5.5",
+      "grok-4.3",
+      "llama-3.3-70b-instruct"
+    ],
+    "provider_allowlist_blocked_subjects": [
+      "gemma-4-31b-it",
+      "glm-4.7-flash",
+      "kimi-k2.6",
+      "qwen3.6-35b-a3b"
+    ],
+    "scientific_gate_failed_subjects": [
+      "gemini-3.5-flash",
+      "mistral-medium-3.5-128b"
+    ]
+  },
+  "routes": {
+    "claude-opus-4-7": {
+      "final_pin": "anthropic",
+      "verdict": "pass",
+      "classification": "schema_visible",
+      "native_tool_calls_observed": 3,
+      "provider_observed": "Anthropic",
+      "reported_cost_usd": 0.303125,
+      "summary_sha256": "4577b5330698b5cd9d486d22dd04bcea7808151ada169c1b59313c71f8d90658",
+      "classification_sha256": "b28f3f0153c6ec34730ffd81791cfc1787ef3497b72afd14b73d65c11b1fd321"
+    },
+    "gemini-3.5-flash": {
+      "final_pin": "google-ai-studio/flex",
+      "verdict": "fail_model_error",
+      "classification": "unsupported",
+      "reason": "Both direct-invocation NOTOOLS and DISABLED probes returned native MALFORMED_FUNCTION_CALL with finish_reason=error and zero usage. Standard Google AI Studio reproduced the failure.",
+      "reported_cost_usd": 0.0393015,
+      "summary_sha256": "bf069d3a77d8c2faba235e2e85298d9db0ac2389e5956db9237e284723fee38e",
+      "classification_sha256": "92fb17ad3cf9bae53d65e93015b0e979733a0a86b838c095d93d22b6d419abfe",
+      "alternative_classification_sha256": "bf191645d16bf655a5a0695854b7a2cd3b682a10e31dbe72ee3f709196a9b147"
+    },
+    "gemma-4-31b-it": {
+      "final_pin": "venice/bf16",
+      "verdict": "blocked_provider_allowlist",
+      "classification": "unsupported",
+      "reason": "Venice is denied by the account privacy allowlist. Novita bf16 was non-operational; allowed DeepInfra Turbo fp4 omitted tools and tool_choice from supported_parameters.",
+      "reported_cost_usd": 0.0,
+      "summary_sha256": "e47b5accc9fafbb1cc48efba91d76ea670f4693ad86032f20d35a67342fd1dc0",
+      "classification_sha256": "b2216463699bc89c4b2c12eb6a7cb35c8a64388faf02945ba4dd0f17c7b26818"
+    },
+    "glm-4.7-flash": {
+      "final_pin": "venice/fp8",
+      "verdict": "blocked_provider_allowlist_after_candidate_failure",
+      "classification": "unsupported",
+      "reason": "The original DeepInfra bf16 route was schema_hidden on all four prompts. Prospectively selected Venice fp8 is denied by the account privacy allowlist.",
+      "reported_cost_usd": 0.00527522,
+      "selected_route_classification_sha256": "a74cd84f6142539468f02ff07da70a03e0b2ab8814026314e5fac916853a5b0b",
+      "rejected_route_classification_sha256": "bb1257a9eb81a79bbf0631fa506a39ac7a15ab9c22f45ef9662a63884fe25200"
+    },
+    "gpt-5.5": {
+      "final_pin": "openai/flex",
+      "verdict": "pass",
+      "classification": "schema_visible",
+      "native_tool_calls_observed": 4,
+      "provider_observed": "OpenAI",
+      "reported_cost_usd": 0.081885,
+      "summary_sha256": "2e97ed9b0c1d207a172ecf0b295a8e50b51530fa90ee5d8209b627e59c77bcd1",
+      "classification_sha256": "949c8c7d9807c5335f0b2db0a22852a2b6bbb21ceca527315e08525eb79509dd"
+    },
+    "grok-4.3": {
+      "final_pin": "xai/zdr",
+      "verdict": "pass",
+      "classification": "schema_visible",
+      "native_tool_calls_observed": 4,
+      "provider_observed": "xAI",
+      "reported_cost_usd": 0.0444605,
+      "summary_sha256": "014587e3669f4dce1f32d4ee99c80739a8294db55f2f953dea7143f179436757",
+      "classification_sha256": "572e271cb42d249e0cbb8a97026f4c46ce573a1be6f6154d637def995931388e"
+    },
+    "kimi-k2.6": {
+      "final_pin": "moonshotai/int4",
+      "verdict": "blocked_provider_allowlist_after_candidate_failures",
+      "classification": "unsupported",
+      "reason": "MoonshotAI is denied by the account privacy allowlist. Allowed DeepInfra fp4 was schema_hidden in a bounded probe; Novita was mixed_visibility with three hidden prompt triplets and one visible.",
+      "reported_complete_shard_cost_usd": 0.04498584,
+      "preferred_route_classification_sha256": "08cc68ba02b8e686acf3a00cdab216c332aa962010f4e6852599b8474af9dd8f",
+      "novita_classification_sha256": "48f8616927b84b553ec32c07fa4e42b5b1360dc566217c6c1505fa36873c9abe",
+      "note": "The complete Novita summary rows are durable, but its raw-response JSONL is empty because the first write-through implementation did not persist; this failed route is not eligible as promotion evidence. Per-record append persistence was fixed and verified afterward."
+    },
+    "llama-3.3-70b-instruct": {
+      "final_pin": "coreweave/fp16",
+      "verdict": "pass",
+      "classification": "schema_visible",
+      "native_tool_calls_observed": 4,
+      "provider_observed": "CoreWeave",
+      "reported_cost_usd": 0.01940217,
+      "summary_sha256": "e63de516c2b03f6a344d57669ff8423e0097de58d3e1b5081a15de96f33b8b26",
+      "classification_sha256": "1e6f8459bf9edcad6f99a36536eeb4dbae06d9d9c5afb92a6d3df443c9a85eeb"
+    },
+    "mistral-medium-3.5-128b": {
+      "final_pin": "mistral/zdr",
+      "verdict": "fail_schema_hidden",
+      "classification": "schema_hidden",
+      "reason": "All four DISABLED probes were token-identical to NOTOOLS while TOOL added the schema and produced native calls. Standard Mistral reproduced schema hiding and also returned one TOOL 503.",
+      "reported_cost_usd": 0.0387885,
+      "summary_sha256": "836dfca437d7280ed417f30773fe3958375a06ca5e30b17129bf2f70b6ffcf15",
+      "classification_sha256": "c307dbd3af6c6436815fc2ed9c1ec569c68db5d9e2059040040148117ad01958",
+      "alternative_classification_sha256": "8e17b73c28a148d49a4bf9415fbd7bccebc2cc30b7b64ffade5f7cd0c28d3f10"
+    },
+    "qwen3.6-35b-a3b": {
+      "final_pin": "venice/fp8",
+      "verdict": "blocked_provider_allowlist",
+      "classification": "unsupported",
+      "reason": "Venice is denied by the account privacy allowlist. The only account-allowed candidate, CoreWeave fp8, omitted tools and tool_choice from supported_parameters.",
+      "reported_cost_usd": 0.0,
+      "summary_sha256": "0b3e14d7b79b8bb558124f687b58ea429f0a17ff966ea8996e3ec159e03777fb",
+      "classification_sha256": "4dfdb106d003ea10ac856e6d03d159126f97dbf77867ff5239bd7bff2ee79958"
+    }
+  },
+  "next_gate": "Do not promote, generate, file, canary, or dispatch. Enable the prospectively selected Venice and MoonshotAI providers if their data-policy terms are acceptable, then rerun Gemma, GLM, Kimi, and Qwen. Separately choose a prospective scientific remedy for Gemini and Mistral (route/interface amendment or population exclusion) before further paid work."
+}

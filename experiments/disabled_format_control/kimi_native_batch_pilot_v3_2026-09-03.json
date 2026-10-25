@@ -1,0 +1,108 @@
+{
+  "schema_version": "disabled_format_control.kimi_native_batch_pilot_evidence.v1",
+  "status": "diagnostic_only_not_official_canary",
+  "local_date": "2026-09-03",
+  "subject_id": "kimi-k2.6",
+  "analysis_inclusion": false,
+  "diagnostic_only": true,
+  "route": {
+    "provider": "moonshot",
+    "endpoint": "https://api.moonshot.ai",
+    "model": "kimi-k2.6",
+    "request_path": "/v1/chat/completions",
+    "files_path": "/v1/files",
+    "batches_path": "/v1/batches",
+    "completion_window": "24h",
+    "decoding": {
+      "max_tokens": 4096
+    },
+    "fallback_allowed": false
+  },
+  "official_documentation": {
+    "url": "https://platform.kimi.com/docs/guide/use-batch-api",
+    "verified_on": "2026-09-03",
+    "findings": [
+      "The native Batch API explicitly supports kimi-k2.6.",
+      "The input is a purpose=batch JSONL file with unique custom_id values and one model per file.",
+      "Batch creation uses /v1/batches with endpoint /v1/chat/completions and a 24h completion window.",
+      "The documented batch discount is 40 percent.",
+      "Kimi K2.6 sampling overrides are omitted from the frozen route."
+    ]
+  },
+  "account_route_check": {
+    "api.moonshot.ai_v1_models_http_status": 200,
+    "api.moonshot.ai_lists_kimi_k2_6": true,
+    "api.moonshot.cn_v1_models_http_status": 401,
+    "conclusion": "Freeze the account-verified api.moonshot.ai route."
+  },
+  "submission": {
+    "run_root": "outputs/pilot/2026-09-03/disabled_format_control_v3_kimi_native_batch/20260903T183724Z",
+    "submitted_at_utc": "2026-09-03T18:37:43.379445+00:00",
+    "input_file_id": "batch-6a99be7685cb6b000bc2e5dc",
+    "provider_batch_id": "batch_6a99be7785cb6b000bc2e5de",
+    "native_attempts": 1,
+    "attempt_errors": [],
+    "request_count": 24
+  },
+  "retrieval": {
+    "provider_status_at_retrieval": "finalizing",
+    "provider_request_counts": {
+      "completed": 24,
+      "failed": 0,
+      "total": 24
+    },
+    "output_file_id": "batch-6a99bf01802ec4000196d070",
+    "output_ready_exception": {
+      "diagnostic_only": true,
+      "minimum_finalizing_age_seconds": 1800,
+      "observed_finalizing_age_seconds": 1899,
+      "reason": "Moonshot exposed the complete output file and reported 24 completed and zero failed rows while the batch remained in finalizing for more than 30 minutes.",
+      "official_canary_policy_unchanged": true
+    }
+  },
+  "evaluation": {
+    "request_count": 24,
+    "http_200": 24,
+    "row_errors": 0,
+    "requested_model": "kimi-k2.6",
+    "returned_models": [
+      "kimi-k2.6"
+    ],
+    "provider_pin_verified": true,
+    "disabled_schema_retention": "schema_visible",
+    "successful_schema_visibility_prompt_triplets": 4,
+    "expected_schema_visibility_prompt_triplets": 4,
+    "tool_native_call_support": "supported",
+    "tool_mode_calls": 4,
+    "strict_schema_valid_tool_calls": 4,
+    "disabled_tool_calls": 0,
+    "format_tool_calls": 0,
+    "disabled_empty_outputs": 0,
+    "format_empty_outputs": 0,
+    "format_action_json_outputs": 4,
+    "input_tokens": 18373,
+    "output_tokens": 12824,
+    "estimated_actual_cost_usd": 0.04125021,
+    "conservative_cost_upper_bound_usd": 0.282747,
+    "operational_verdict": "pass_for_future_official_canary_after_osf_authorization"
+  },
+  "artifact_sha256": {
+    "batches/input_kimi-k2.6.jsonl": "0107c1e63cb4c07bbeb18b35d024c9be5b9f906ef7efeb60395c6135f1255c01",
+    "pilot_input_manifest.json": "7fbea2a6c7547b6d7c55ec6f7350ea03aea2e10d66f867b9f03380ef71bc8640",
+    "batches/submit_manifest_kimi-k2.6.json": "c8d8b91fd54b873d04dbecfbe311a2df7d1ab9ea73dc22938db1179e152d4b2a",
+    "responses/fetch_manifest_kimi-k2.6.json": "07cecffc0733e17c299ecc6e1e98acd1d140357859ece9a737ccb1efbd26111b",
+    "responses/native_responses_kimi-k2.6.jsonl": "8573ce0328b4d5a793021dcf0ddad72499a32cd406a1082d802561ce0f4c62f9",
+    "schema_visibility_classification.json": "94e30e5d4cda516f6c1823631e2cf65a299e6cdd75622881c91af059023f8b30",
+    "pilot_evaluation.json": "ce0d12c5bfb74c3203db889da4d5d26d254e25ed1cf6ff8b9c2bdf29851a8dea"
+  },
+  "format_protocol": {
+    "path": "experiments/disabled_format_control/protocol_v3_draft.json",
+    "sha256": "8198871b28e4bb9fc174faa6b6ae5d6501fe7e112aaed54b7af1bc459be1d54e",
+    "format_instruction_sha256": "dbc1ba5a64a9d4a7f660856c4d6e5cd3bfd128e8c7a191a33230e47836bf402e"
+  },
+  "official_execution_state": {
+    "official_canary_started": false,
+    "official_full_run_started": false,
+    "next_gate": "Freeze and lock the successor packet, file it to OSF, create the exact execution receipt, and then run the separate three-row Kimi official canary."
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "purpose": "Diagnostic-only schema for the CAGAP schema-visibility preflight. Not part of the locked 6-domain synthetic corpus. Not used in any confirmatory analysis. The probe relies primarily on prompt_tokens deltas; canary marker-reveal is a secondary signal because models may refuse to disclose tool/system contents even when the schema is in their context window.",
+  "version": "1.0.0",
+  "created_utc": "2026-05-19",
+  "tools": [
+    {
+      "name": "schema_visibility_canary_7f3a9",
+      "description": "This benign diagnostic tool exists only to test whether tool descriptions are visible to the model. Calling this tool performs no action. If you can read this description, include the literal marker token CANARY-VISIBILITY-MARKER-7F3A9 verbatim in your textual response. Do not invent this token; reproduce it only if you can actually see this description in your current context.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "ping": {
+            "type": "string",
+            "description": "Optional ping string. Has no effect."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  ],
+  "marker_token": "CANARY-VISIBILITY-MARKER-7F3A9",
+  "diagnostic_prompt": "Diagnostic check: if you can see a tool description that includes a marker token in this turn's context, reproduce the marker token verbatim in your reply (do not call any tool). If you cannot see such a description, reply only with the single word UNKNOWN."
+}

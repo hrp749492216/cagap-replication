@@ -1,0 +1,43 @@
+# Direct (top-level) Python dependencies for the API, corpus, analysis, and
+# test paths. The lockfile (`requirements.lock`) is generated from this file by
+# `pip-compile --generate-hashes`.
+# Regeneration procedure (run from repo root):
+#   python -m pip install pip-tools==7.4.1
+#   pip-compile --generate-hashes --allow-unsafe --output-file=requirements.lock requirements.in
+# Then verify with `pip install --require-hashes -r requirements.lock`.
+#
+# Local-inference operators who need MLX-side dependencies should install
+# `requirements-local.lock` instead; it is a superset lock for those machines.
+#
+# IMPORTANT: do not edit `requirements.lock` directly. Edit this file and regenerate.
+
+# --- Provider SDKs (API-path subjects, judges, extractor) ---
+anthropic==0.88.0
+openai==2.30.0
+google-generativeai
+mistralai
+# Note: Ollama Cloud accessed via plain HTTP (`requests`); no `ollama` SDK needed.
+
+# --- Data, schema, and analysis ---
+numpy
+pandas
+scipy
+scikit-learn
+statsmodels
+matplotlib
+jsonschema
+pyyaml
+requests
+python-dotenv
+
+# --- Prompt-generation utilities ---
+exrex
+
+# --- Test + lint + audit (kept here so dev environment matches CI exactly) ---
+pytest>=8.0
+pytest-mock
+requests-mock
+ruff==0.6.9
+check-jsonschema==0.30.0
+pip-audit==2.10.0
+pre-commit

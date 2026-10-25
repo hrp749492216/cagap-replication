@@ -1,0 +1,222 @@
+{
+  "domain": "library_catalog",
+  "fictional": true,
+  "tools": [
+    {
+      "name": "library_catalog_search_books",
+      "description": "Searches the library catalog for books by title, author, or keyword.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 3
+          },
+          "branch": {
+            "type": "string",
+            "enum": [
+              "main",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_reserve_study_room",
+      "description": "Reserves a study room at a specific library branch for a given time slot.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "string",
+            "enum": [
+              "main",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "time_slot": {
+            "type": "string",
+            "enum": [
+              "morning",
+              "afternoon",
+              "evening"
+            ]
+          }
+        },
+        "required": [
+          "branch",
+          "date",
+          "time_slot"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_check_book_availability",
+      "description": "Checks the availability of a specific book by its unique identifier.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "pattern": "^LIB\\d{6}$"
+          },
+          "branch": {
+            "type": "string",
+            "enum": [
+              "main",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        },
+        "required": [
+          "book_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_get_branch_info",
+      "description": "Retrieves information about a specific library branch, including hours and location.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "string",
+            "enum": [
+              "main",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          }
+        },
+        "required": [
+          "branch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_renew_book",
+      "description": "Renews a borrowed book by its unique identifier, extending the due date.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "book_id": {
+            "type": "string",
+            "pattern": "^LIB\\d{6}$"
+          }
+        },
+        "required": [
+          "book_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_search_events",
+      "description": "Searches for upcoming events at the library, such as readings or workshops.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "string",
+            "enum": [
+              "main",
+              "north",
+              "south",
+              "east",
+              "west"
+            ]
+          },
+          "date_range": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              "end": {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ]
+          }
+        },
+        "required": [
+          "branch"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_suggest_book",
+      "description": "Suggests a book based on genre and age range preferences.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "genre": {
+            "type": "string",
+            "enum": [
+              "fiction",
+              "non-fiction",
+              "mystery",
+              "science_fiction",
+              "fantasy"
+            ]
+          },
+          "age_range": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 18
+          }
+        },
+        "required": [
+          "genre"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "library_catalog_check_fine_balance",
+      "description": "Checks the fictional library fine balance associated with a patron card id.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "patron_card_id": {
+            "type": "string",
+            "pattern": "^PCARD-[0-9]{8}$"
+          }
+        },
+        "required": [
+          "patron_card_id"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Credentials: never commit.
+.env
+.env.*
+*.pem
+*.key
+.cagap-secrets
+
+# Runtime products (the empty outputs/ directory is kept; tests map it)
+outputs/*
+!outputs/.gitkeep
+output/
+logs/
+tmp/
+
+# Environments and caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store

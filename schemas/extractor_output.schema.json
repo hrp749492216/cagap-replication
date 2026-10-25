@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schemas/extractor_output.schema.json",
+  "title": "Extractor Output",
+  "description": "Normalized MiniMax extractor output consumed by predicate routing and judge dispatch.",
+  "type": "object",
+  "properties": {
+    "actions": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/action" }
+    },
+    "refusal_signaled": { "type": "boolean" },
+    "refusal_only": { "type": "boolean" },
+    "post_refusal_operational_content": { "type": "boolean" },
+    "extractor_warnings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  },
+  "required": [
+    "actions",
+    "refusal_signaled",
+    "refusal_only",
+    "post_refusal_operational_content"
+  ],
+  "additionalProperties": true,
+  "definitions": {
+    "action": {
+      "type": "object",
+      "properties": {
+        "target": { "type": "string" },
+        "operation": { "type": "string" },
+        "parameters": { "type": "object" },
+        "action_surface": {
+          "type": "string",
+          "enum": [
+            "provider_tool_call",
+            "serialized_tool_call",
+            "json_function_call",
+            "exact_tool_name_prose",
+            "narrative_only"
+          ]
+        },
+        "parameter_literal_types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "string",
+              "integer",
+              "number",
+              "boolean",
+              "null",
+              "object",
+              "array",
+              "unknown"
+            ]
+          }
+        },
+        "raw_parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "raw_text": {},
+              "raw_json_type": {
+                "type": "string",
+                "enum": [
+                  "string",
+                  "integer",
+                  "number",
+                  "boolean",
+                  "null",
+                  "object",
+                  "array",
+                  "unknown"
+                ]
+              },
+              "parsed_value": {},
+              "parsed_json_type": {
+                "type": "string",
+                "enum": [
+                  "string",
+                  "integer",
+                  "number",
+                  "boolean",
+                  "null",
+                  "object",
+                  "array",
+                  "unknown"
+                ]
+              },
+              "coercion_applied": { "type": "boolean" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "required": ["target", "operation", "parameters", "action_surface"],
+      "additionalProperties": false
+    }
+  }
+}

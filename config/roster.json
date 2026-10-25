@@ -1,0 +1,1210 @@
+{
+  "freeze_date": "2026-05-22",
+  "protocol_id": "cagap-ten-subject-family-excluded-judges-2026-05-22",
+  "note": "Single source of truth for the 10-subject main-run roster: 5 hosted/API subjects (Claude Opus 4.7, GPT-5.5, Gemini 3.5 Flash, Grok 4.3, Kimi K2.6) and 5 local/self-hosted subjects (Llama 3.3-70B-Instruct, Gemma 4 31B IT, Qwen 3.6 35B-A3B, GLM-4.7-Flash, Mistral Medium 3.5 128B). The primary estimand remains the within-subject TOOL versus DISABLED contrast; DISABLED means schemas remain model-visible while relevant tool calls are disabled. Hosted/API versus local/self-hosted is a pre-registered descriptive heterogeneity stratum, not a causal serving-context comparison. Sen-Q is the paired local/self-hosted primary-vs-4-bit deployment-path audit on the predeclared 96-prompt subset and covers all five local subjects, including GLM-4.7-Flash and Mistral Medium 3.5 128B. Quantization-audit rows carry serving_precision_role=quantization_audit and are excluded from H1. Chat-path judging uses subject-level family exclusion: default judges are GLM 5.1, Cohere Command A, and Mistral Large 3; a same-family judge is replaced for the entire subject by GPT-5.5 judge, then Claude Opus 4.7 judge if needed. Predicate-graded structured rows do not route to substitute judges. Rejected candidates and route-failure reasons are retained under archived_models.",
+  "default_route": "native",
+  "openrouter_base_url": "https://openrouter.ai/api/v1",
+  "openrouter_auth_env": "OPENROUTER_API_KEY",
+  "subjects": {
+    "claude-opus-4-7": {
+      "display_name": "Claude Opus 4.7",
+      "family": "anthropic",
+      "tier": "hosted_api",
+      "hosted_route_class": "closed_frontier_api",
+      "native": {
+        "endpoint": "https://api.anthropic.com",
+        "url_path": "/v1/messages",
+        "slug": "claude-opus-4-7",
+        "auth_env": "ANTHROPIC_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/messages/batches",
+        "batch_discount": 0.5,
+        "headers": {
+          "anthropic-version": "2023-06-01"
+        },
+        "schema_visibility_audit": {
+          "route_label": "claude-opus-4-7::native",
+          "disabled_arm_schema_visibility": "schema_visible",
+          "route_support_status": "supported",
+          "evidence_id": "outputs/pilot/2026-05-19/schema_visibility_smoke/20260519T223440Z/schema_visibility_classification.json",
+          "evidence_sha256": "120c66ab61e8d811530b128b5b176fd16fa056025205ed6d12390e3b001cb260"
+        }
+      },
+      "openrouter": {
+        "slug": "anthropic/claude-opus-4.7",
+        "pinned_provider": "anthropic"
+      },
+      "route_override": null
+    },
+    "gpt-5.5": {
+      "display_name": "GPT-5.5",
+      "family": "openai",
+      "tier": "hosted_api",
+      "hosted_route_class": "closed_frontier_api",
+      "selection_note": "Hosted/API subject selected on the OpenRouter route after route audit; native GPT-5.5 was unsupported for the DISABLED schema-visibility arm in outputs/pilot/2026-05-19/schema_visibility_smoke/20260519T223440Z, while gpt-5.5::openrouter preserved model-visible schema.",
+      "native": {
+        "endpoint": "https://api.openai.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "gpt-5.5",
+        "auth_env": "OPENAI_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/batches",
+        "batch_input_files_path": "/v1/files",
+        "batch_discount": 0.5
+      },
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "pinned_provider": "openai",
+        "schema_visibility_audit": {
+          "route_label": "gpt-5.5::openrouter",
+          "disabled_arm_schema_visibility": "schema_visible",
+          "route_support_status": "supported",
+          "evidence_id": "outputs/pilot/2026-05-19/schema_visibility_smoke/20260519T223440Z/schema_visibility_classification.json",
+          "evidence_sha256": "120c66ab61e8d811530b128b5b176fd16fa056025205ed6d12390e3b001cb260"
+        }
+      },
+      "route_override": "openrouter"
+    },
+    "gemini-3.5-flash": {
+      "display_name": "Gemini 3.5 Flash",
+      "family": "google",
+      "tier": "hosted_api",
+      "hosted_route_class": "closed_frontier_api",
+      "selection_note": "Hosted/API subject selected after route audit. OpenRouter model id google/gemini-3.5-flash with pinned provider google-ai-studio is locked as the runtime route; archived canary evidence lives at outputs/pilot/2026-05-20/schema_visibility_smoke/gemini35_flash_20260520T004107Z. Cite the returned model id and route metadata rather than relying on press/product naming.",
+      "native": null,
+      "openrouter": {
+        "slug": "google/gemini-3.5-flash",
+        "pinned_provider": "google-ai-studio",
+        "schema_visibility_audit": {
+          "route_label": "gemini-3.5-flash::openrouter::google-ai-studio",
+          "disabled_arm_schema_visibility": "schema_visible",
+          "route_support_status": "supported",
+          "evidence_id": "outputs/pilot/2026-05-20/schema_visibility_smoke/gemini35_flash_20260520T004107Z/classification.json",
+          "evidence_sha256": "ccc6dae95c9a83ee53a0334ccdabff8b169b083e14db3b8458876ff577b60962"
+        }
+      },
+      "route_override": "openrouter"
+    },
+    "grok-4.3": {
+      "display_name": "Grok 4.3",
+      "family": "xai",
+      "tier": "hosted_api",
+      "hosted_route_class": "closed_frontier_api",
+      "selection_note": "xAI Grok 4.3 \u2014 hosted/API subject. Native batch supported through the HTTP Batch API: upload JSONL to /v1/files, create/poll/fetch via /v1/batches. Friendly slug `grok-4.3` accepted by both batch and online surfaces. Reasoning levels {none, low, medium, high} configurable. Tool/function calling supported. Promotion of xAI to the subject family is paired with the predeclared family-excluded judge-routing rule.",
+      "native": {
+        "endpoint": "https://api.x.ai",
+        "url_path": "/v1/chat/completions",
+        "slug": "grok-4.3",
+        "batch_slug": "grok-4.3",
+        "auth_env": "X_API_KEY",
+        "supports_batch": true,
+        "batch_transport": "xai-http",
+        "batch_url_path": "/v1/batches",
+        "batch_input_files_path": "/v1/files",
+        "batch_results_path": "/v1/batches/{batch_id}/results",
+        "batch_state_path": "/v1/batches/{batch_id}",
+        "batch_discount": 0.5,
+        "batch_completion_sla_hours": 24,
+        "batch_max_file_mb": 200,
+        "batch_max_requests_per_file": 50000,
+        "batch_note": "HTTP Batch API transport: upload a JSONL request file to /v1/files with purpose=batch, create the batch at /v1/batches using input_file_id, poll /v1/batches/{batch_id}, and fetch /v1/batches/{batch_id}/results. Per xAI docs.x.ai/operator verification on 2026-05-23, grok-4.3 friendly slug is accepted at both batch and online surfaces and the planned bulk dispatch uses the user-verified 50% batch-discount case.",
+        "schema_visibility_audit": {
+          "route_label": "grok-4.3::native",
+          "disabled_arm_schema_visibility": "schema_visible",
+          "route_support_status": "supported",
+          "evidence_id": "outputs/pilot/2026-05-19/schema_visibility_smoke/20260519T223440Z/schema_visibility_classification.json",
+          "evidence_sha256": "120c66ab61e8d811530b128b5b176fd16fa056025205ed6d12390e3b001cb260"
+        }
+      },
+      "openrouter": {
+        "slug": "x-ai/grok-4.3",
+        "pinned_provider": "xai"
+      },
+      "route_override": null
+    },
+    "kimi-k2.6": {
+      "display_name": "Kimi K2.6",
+      "family": "moonshot",
+      "tier": "hosted_api",
+      "hosted_route_class": "open_weight_hosted_api",
+      "selection_note": "Open-weight ~1T-MoE hosted/API subject (Modified MIT, HF moonshotai/Kimi-K2.6), selected as an agentic-post-trained model for the conversation-action gap panel. Tool_call_id format `functions.{name}:{idx}` differs from OpenAI's opaque ids; downstream extractor parser must accept this when wired. With thinking enabled, `tool_choice` only accepts `auto` or `none` (compatible with all four study arms).",
+      "native": {
+        "endpoint": "https://api.moonshot.ai",
+        "url_path": "/v1/chat/completions",
+        "slug": "kimi-k2.6",
+        "auth_env": "MOONSHOT_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/batches",
+        "batch_input_files_path": "/v1/files",
+        "batch_discount": 0.4,
+        "batch_note": "OpenAI-compatible Batch API (purpose=batch JSONL, /v1/batches). 40% discount per provider pricing reference.",
+        "schema_visibility_audit": {
+          "route_label": "kimi-k2.6::native",
+          "disabled_arm_schema_visibility": "schema_visible",
+          "route_support_status": "supported",
+          "evidence_id": "outputs/pilot/2026-05-19/schema_visibility_smoke/20260519T230041Z/schema_visibility_classification.json",
+          "evidence_sha256": "9324da132aa6efcf3576850254311f3432a9d2dd012c381a2f2698956e85a453"
+        }
+      },
+      "openrouter": {
+        "slug": "moonshotai/kimi-k2.6",
+        "pinned_provider": "moonshotai/int4"
+      },
+      "route_override": null,
+      "ollama_cloud": {
+        "endpoint": "https://ollama.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "kimi-k2.6:cloud",
+        "auth_env": "OLLAMA_API_KEY",
+        "digest_prefix": "a90cd0d1590",
+        "context_window_tokens": 256000,
+        "modalities": [
+          "text",
+          "image"
+        ],
+        "supports_batch": false,
+        "note": "Ollama Cloud secondary route for Kimi K2.6. Auth via OLLAMA_API_KEY."
+      },
+      "route_preference": [
+        "native",
+        "ollama_cloud",
+        "openrouter"
+      ]
+    },
+    "llama-3.3-70b-instruct": {
+      "display_name": "Llama 3.3-70B Instruct",
+      "family": "meta",
+      "tier": "local_self_hosted",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "local_config": {
+        "hf_repo": "meta-llama/Llama-3.3-70B-Instruct",
+        "hf_commit_sha": "6f6073b423013f6a7d4d9f39144961bfbfbc386b",
+        "size_billion_params": 70.0,
+        "local_dir": "${CAGAP_MODEL_ROOT}/llama3.3-70b-instruct",
+        "tool_call_transport": "openai_compatible_local_server",
+        "structured_tool_calls_required": true,
+        "precision_primary": "fp16",
+        "precision_primary_location": "external_gpu",
+        "precision_primary_runtime": "vllm_float16",
+        "precision_primary_note": "BF16/FP16 reference served on a self-managed external GPU instance via vLLM. The checkpoint is downloaded from https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct at hf_commit_sha before inference. No M5 MLX fallback is permitted for primary precision because BF16/FP16 weights exceed the 128 GB unified-memory budget. Record served dtype, GPU type, tensor parallelism, context window, per-file Hugging Face LFS SHA-256 metadata, and the post-download local SHA-256 manifest before dispatch.",
+        "precision_sensitivity": "int4_awq",
+        "precision_sensitivity_source": "ibnzterrell/Meta-Llama-3.3-70B-Instruct-AWQ-INT4",
+        "precision_sensitivity_location": "external_gpu",
+        "precision_sensitivity_runtime": "vllm_awq",
+        "precision_sensitivity_note": "AWQ INT4 (W4A16) checkpoint served primarily on the same external cloud-GPU substrate as the BF16/FP16 reference (Lambda.ai or Verda.com; H100 / H200 / B200 / B300 / RTX PRO 6000 / A100 80GB; ~35GB resident, fits a single 80GB GPU). The permitted M5 MacBook 128 GB fallback is a local MLX 4-bit conversion from the same frozen HF source and may be used only after route-semantics smoke validation. This source is emitted as a quantization-audit row for the same subject with serving_precision_role=quantization_audit, excluded from H1.",
+        "external_fallback_precisions": [
+          "fp16",
+          "int4_awq",
+          "int4_mlx",
+          "int4_gptq",
+          "fp8"
+        ],
+        "external_fallback_note": "Cloud-GPU vLLM is the primary substrate for both BF16/FP16 and INT4 paths on Llama 3.3-70B-Instruct. BF16/FP16 (~140 GB) exceeds the M5 128 GB unified-memory budget, so primary-precision M5 fallback is not permitted. The INT4 audit uses AWQ W4A16 on a single 80GB GPU when external GPU is available; if external GPU is unavailable, a local M5 MLX 4-bit fallback is permitted after smoke validation and checksum freeze. If AWQ availability falls through externally, GPTQ INT4 is the secondary external-GPU path; FP8 is reported as a separate predeclared 4-bit-equivalent path and not pooled with INT4.",
+        "quantize_framework": "vllm_awq_or_mlx_lm",
+        "mlx_lm_version": "0.31.3",
+        "mlx_core_version": "0.31.2",
+        "tokenizer_sha256": "6b9e4e7fb171f92fd137b777cc2714bf87d11576700a1dcd7a399e7bbe39537b",
+        "chat_template_hash": "5c756ad6048c884974a331963ae3c3e1624b548a11174dadda02a69041c87352",
+        "license": "Llama-3.3 Community License",
+        "inference_backend": "vllm",
+        "vllm_version": "0.19.1",
+        "vllm_dtype": "float16",
+        "vllm_backend_note": "Cloud-GPU vLLM is the primary substrate for BF16/FP16 reference and INT4 audit on Llama 3.3-70B-Instruct. M5 MLX fallback is not permitted for BF16/FP16, but is permitted for the 4-bit Sen-Q audit after smoke validation. Substrate per row recorded in served_model_location. Cloud provider pinned to Lambda.ai or Verda.com depending on availability.",
+        "schema_visibility_canary": {
+          "classification_artifact": "outputs/pilot/2026-05-19/schema_visibility_smoke/verda_llama_bf16_20260519T235759Z/classification.json",
+          "classification_sha256": "f943ac1b3dbc80f51c3ef178cea5da08f6ffde2292ad53138cc8d4ce0449b2fe",
+          "disabled_tool_call_rows": 0,
+          "disabled_token_delta_vs_notools": 1536.0,
+          "tool_rows_with_tool_calls": 10,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "precision_primary_fallback_location": null,
+        "precision_primary_fallback_runtime": null,
+        "precision_primary_fallback_source": null,
+        "precision_primary_fallback_trigger": null,
+        "precision_primary_no_fallback_reason": "Llama 3.3-70B-Instruct BF16 weights (~140GB) exceed the M5 MacBook 128 GB unified memory budget. No M5 MLX fallback substrate is permitted for this subject.",
+        "precision_sensitivity_fallback_location": "m5_macbook_128gb",
+        "precision_sensitivity_fallback_runtime": "mlx_lm",
+        "precision_sensitivity_fallback_source": "local_mlx_4bit_conversion_from_meta-llama/Llama-3.3-70B-Instruct",
+        "precision_sensitivity_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_fallback_gate": "Must pass the same non-outcome route diagnostics as the external 4-bit path before any Sen-Q dispatch.",
+        "precision_pool_exclusion": "Excluded from M5 primary-precision fallback because BF16/FP16 weights exceed the 128 GB unified-memory budget. The 4-bit Sen-Q audit does allow M5 MLX fallback after route-semantics smoke validation and checksum freeze.",
+        "precision_primary_format_pool": [
+          "bf16",
+          "fp16"
+        ],
+        "precision_sensitivity_format_pool": [
+          "int4_awq",
+          "int4_mlx"
+        ],
+        "precision_sensitivity_substrate_pool": [
+          "external_gpu_b300",
+          "external_gpu_b200",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "m5_macbook_128gb"
+        ],
+        "precision_sensitivity_substrate_format_compatibility": {
+          "external_gpu_b300": [
+            "int4_awq"
+          ],
+          "external_gpu_b200": [
+            "int4_awq"
+          ],
+          "external_gpu_h100": [
+            "int4_awq"
+          ],
+          "external_gpu_h200": [
+            "int4_awq"
+          ],
+          "external_gpu_a100": [
+            "int4_awq"
+          ],
+          "external_gpu_rtx_pro_6000": [
+            "int4_awq"
+          ],
+          "m5_macbook_128gb": [
+            "int4_mlx"
+          ]
+        }
+      }
+    },
+    "gemma-4-31b-it": {
+      "display_name": "Gemma 4 31B IT",
+      "family": "google",
+      "tier": "local_self_hosted",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "local_config": {
+        "hf_repo": "google/gemma-4-31B-it",
+        "hf_commit_sha": "145dc2508c480a64b47242f160d286cff94a2343",
+        "size_billion_params": 31.0,
+        "local_dir": "${CAGAP_MODEL_ROOT}/gemma4-31b-it",
+      "tool_call_transport": "openai_compatible_local_server",
+        "structured_tool_calls_required": true,
+        "precision_primary": "bf16",
+        "precision_primary_location": "external_gpu",
+        "precision_primary_runtime": "vllm_bf16",
+        "precision_primary_note": "BF16 reference served primarily on a self-managed external GPU instance via vLLM. If the GPU instance is unavailable before dispatch, the permitted fallback is local MLX on the M5 MacBook 128 GB (mlx-community/gemma-4-31B-it-bf16; ~62GB resident, fits 128GB unified). Substrate per row recorded in local_config.precision_primary_location and runtime_stamp.",
+        "precision_sensitivity": "nvfp4_vllm",
+        "precision_sensitivity_source": "nvidia/Gemma-4-31B-IT-NVFP4",
+        "precision_sensitivity_location": "external_gpu",
+        "precision_sensitivity_runtime": "vllm_nvfp4",
+        "precision_sensitivity_note": "NVFP4 (4-bit floating point, Blackwell-native) served primarily via vLLM on cloud GPU; source: nvidia/Gemma-4-31B-IT-NVFP4. If the GPU instance is unavailable before dispatch, the permitted fallback is local MLX on the M5 MacBook 128 GB (mlx-community/gemma-4-31B-it-4bit). Both substrates emit a quantization-audit row with serving_precision_role=quantization_audit, excluded from H1.",
+        "external_fallback_precisions": [
+          "bf16",
+          "int4",
+          "fp4"
+        ],
+        "external_fallback_note": "External cloud-GPU vLLM is the primary substrate for the Gemma 4 31B IT BF16 reference and the NVFP4 audit. Local MLX on the M5 MacBook 128 GB is the permitted fallback substrate for both precision roles when the GPU instance is unavailable, model_match preflight fails, or operator chooses to fall back. Substrate per row recorded in local_config.precision_primary_location / precision_sensitivity_location.",
+        "quantize_framework": "mlx-lm",
+        "mlx_lm_version": "0.31.3",
+        "mlx_core_version": "0.31.2",
+        "tokenizer_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+        "chat_template_hash": "90c3a3ba5bf53818383a58e1a776cbcacd2a038d4812eaa373e1522f2d06f3df",
+        "license": "Apache-2.0",
+        "inference_backend": "vllm",
+        "vllm_version": "0.19.1",
+        "vllm_dtype": "bfloat16",
+        "vllm_backend_note": "External cloud-GPU vLLM is the primary substrate for both BF16 reference and NVFP4 audit on this subject. Local MLX on the M5 MacBook 128 GB is the permitted fallback for both precision roles.",
+        "schema_visibility_canary": {
+          "classification_artifact": "outputs/pilot/2026-05-19/schema_visibility_smoke/verda_gemma_bf16_20260519T234739Z/classification.json",
+          "classification_sha256": "9539c239160a1d08049035fb435ede767bd14c96d4a138656747913d65b76541",
+          "disabled_tool_call_rows": 0,
+          "disabled_token_delta_vs_notools": 674.0,
+          "tool_rows_with_tool_calls": 10,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "precision_primary_fallback_location": "m5_macbook_128gb",
+        "precision_primary_fallback_runtime": "mlx_lm",
+        "precision_primary_fallback_source": "mlx-community/gemma-4-31B-it-bf16",
+        "precision_primary_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_fallback_location": "m5_macbook_128gb",
+        "precision_sensitivity_fallback_runtime": "mlx_lm",
+        "precision_sensitivity_fallback_source": "mlx-community/gemma-4-31B-it-4bit",
+        "precision_sensitivity_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_format_pool": [
+          "nvfp4",
+          "int4_awq",
+          "int4_compressed_tensors",
+          "int4_mlx"
+        ],
+        "precision_sensitivity_substrate_pool": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120",
+          "m5_macbook_128gb"
+        ],
+        "precision_sensitivity_substrate_format_compatibility": {
+          "external_gpu_b200": [
+            "nvfp4",
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_b300": [
+            "nvfp4",
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_h100": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_h200": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_a100": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_rtx_pro_6000": [
+            "nvfp4",
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "local_rtx5090_blackwell_sm120": [
+            "nvfp4",
+            "int4_awq"
+          ],
+          "m5_macbook_128gb": [
+            "int4_mlx"
+          ]
+        },
+        "precision_sensitivity_pool_record": "2026-05-07 local precision deployment-path pool",
+        "precision_sensitivity_pool_note": "The audit-role format and substrate pools include NVFP4, AWQ INT4, compressed-tensors INT4, MLX INT4, and the listed compatible substrates. RTX 5090 (consumer Blackwell SM_120, 32 GB) is included as a peer substrate for the 4-bit audit only (BF16 reference exceeds 32 GB). Pre-dispatch smoke is required for any unvalidated (substrate, format) combination.",
+        "precision_primary_format_pool": [
+          "bf16",
+          "fp16",
+          "fp8"
+        ],
+        "precision_primary_format_pool_note": "bf16 and fp16 are permitted without smoke; fp8 is permitted only after a pre-dispatch smoke confirms finish_reason and parser parity versus the bf16 baseline. Latency is recorded descriptively and never gates inclusion. fp8 cells pool with bf16/fp16 in the primary class after correctness smoke validation.",
+        "precision_sensitivity_int4_awq_source": "QuantTrio/gemma-4-31B-it-AWQ",
+        "precision_sensitivity_int4_awq_commit_sha": "200d06ee83eb49a03c6e3120dbf7b09191eb1539",
+        "precision_sensitivity_int4_awq_runtime": "vllm_awq_marlin",
+        "precision_sensitivity_int4_awq_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "precision_sensitivity_int4_awq_note": "Predeclared INT4 AWQ checkpoint. Classic AWQ (quant_method=awq, bits=4, group_size=64, version=gemm). vLLM loader: --quantization awq_marlin --tool-call-parser gemma4 --enable-auto-tool-choice. Permits Ampere+ substrates so cloud GPU runs do not require Blackwell. Pre-dispatch smoke gate is mandatory for any unvalidated (substrate, format) combination.",
+        "precision_sensitivity_int4_compressed_tensors_source": "cyankiwi/gemma-4-31B-it-AWQ-4bit",
+        "precision_sensitivity_int4_compressed_tensors_commit_sha": "853ac120bc4d1cd4aa7ae66a412f76a35c4aca4f",
+        "precision_sensitivity_int4_compressed_tensors_runtime": "vllm_compressed_tensors",
+        "precision_sensitivity_int4_compressed_tensors_substrates": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120"
+        ],
+        "precision_sensitivity_int4_compressed_tensors_note": "Predeclared compressed-tensors INT4 checkpoint. quant_method=compressed-tensors, format=pack-quantized; same loader family as the existing Qwen 3.6 35B-A3B AWQ-4bit path. Predeclared as a substrate-conditional alternative to NVFP4 when Blackwell hardware is unavailable. NVFP4 / int4_awq / int4_compressed_tensors remain three distinct predeclared deployment paths and are not pooled across formats.",
+        "precision_sensitivity_alternative_record": "2026-05-08 substrate-conditional 4-bit alternatives. Operator selects exactly one (subject \u00d7 format \u00d7 substrate) tuple per dispatch based on hardware availability. Tuple is recorded per row in serving_precision_value + served_model_location; format is not pooled across rows. Sen-Q reports the per-format breakdown when cell counts permit (\u2265 30 informative clusters per format)."
+      }
+    },
+    "qwen3.6-35b-a3b": {
+      "display_name": "Qwen 3.6 35B-A3B",
+      "family": "alibaba",
+      "tier": "local_self_hosted",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "local_config": {
+        "hf_repo": "Qwen/Qwen3.6-35B-A3B",
+        "hf_commit_sha": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+        "size_billion_params": 35.0,
+        "local_dir": "${CAGAP_MODEL_ROOT}/qwen3.6-35b-a3b/bf16",
+        "selection_note": "Qwen 3.6 35B-A3B is a locked local/self-hosted Qwen subject with a primary BF16 path and a predeclared 4-bit Sen-Q audit path. The BF16 checkpoint source is https://huggingface.co/Qwen/Qwen3.6-35B-A3B.",
+        "tool_call_transport": "openai_compatible_local_server",
+        "structured_tool_calls_required": true,
+        "precision_primary": "bf16",
+        "precision_primary_location": "external_gpu",
+        "precision_primary_runtime": "vllm_bf16",
+        "precision_primary_fallback_location": "m5_macbook_128gb",
+        "precision_primary_fallback_runtime": "mlx_lm",
+        "precision_primary_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_primary_note": "BF16 reference served primarily on a self-managed external GPU instance via vLLM (Qwen/Qwen3.6-35B-A3B at hf_commit_sha). If the GPU instance is unavailable before dispatch, the permitted fallback is local MLX on the M5 MacBook 128 GB (mlx-community/Qwen3.6-35B-A3B-bf16; ~70GB resident, fits 128GB unified). Substrate per row recorded in local_config.precision_primary_location and runtime_stamp.",
+        "precision_sensitivity": "awq_int4_vllm",
+        "precision_sensitivity_source": "cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit",
+        "precision_sensitivity_location": "external_gpu",
+        "precision_sensitivity_runtime": "vllm_awq",
+        "precision_sensitivity_note": "AWQ W4A16 INT4 served primarily via vLLM on cloud GPU; source: cyankiwi/Qwen3.6-35B-A3B-AWQ-4bit. If the GPU instance is unavailable before dispatch, the permitted fallback is local MLX on the M5 MacBook 128 GB (mlx-community/Qwen3.6-35B-A3B-4bit). Both substrates emit a quantization-audit row with serving_precision_role=quantization_audit, excluded from H1.",
+        "external_fallback_precisions": [
+          "bf16",
+          "int4",
+          "fp4"
+        ],
+        "external_fallback_note": "External cloud-GPU vLLM is the primary substrate for the Qwen 3.6 35B-A3B BF16 reference and the AWQ INT4 audit. Local MLX on the M5 MacBook 128 GB is the permitted fallback substrate for both precision roles when the GPU instance is unavailable, model_match preflight fails, or operator chooses to fall back. Substrate per row recorded in local_config.precision_primary_location / precision_sensitivity_location.",
+        "quantize_script": "scripts/quantize_qwen36_int4.py",
+        "quantize_framework": "mlx-lm",
+        "mlx_lm_version": "0.31.3",
+        "mlx_core_version": "0.31.2",
+        "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+        "chat_template_hash": "5186f0defcd7f232382c7f0aebcd2252d073bb921ab240e407b7ae8745d2b29b",
+        "license": "Apache-2.0",
+        "inference_backend": "vllm",
+        "vllm_version": "0.19.1",
+        "vllm_dtype": "bfloat16",
+        "vllm_backend_note": "External cloud-GPU vLLM is the planned substrate for both BF16 reference and AWQ INT4 audit on this subject. Local MLX on the M5 MacBook 128 GB is the permitted fallback for both precision roles after route-diagnostic smoke validation.",
+        "schema_visibility_canary": {
+          "classification_artifact": "outputs/pilot/2026-05-19/schema_visibility_smoke/verda_qwen_bf16_20260519T233902Z/classification.json",
+          "classification_sha256": "1017ea94c2db8265fdf4b624a2cf1d0de885166d7502d2b08c2120e66001be9d",
+          "disabled_tool_call_rows": 0,
+          "disabled_token_delta_vs_notools": 1401.0,
+          "tool_rows_with_tool_calls": 10,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "precision_primary_fallback_source": "mlx-community/Qwen3.6-35B-A3B-bf16",
+        "precision_sensitivity_fallback_location": "m5_macbook_128gb",
+        "precision_sensitivity_fallback_runtime": "mlx_lm",
+        "precision_sensitivity_fallback_source": "mlx-community/Qwen3.6-35B-A3B-4bit",
+        "precision_sensitivity_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_format_pool": [
+          "int4_awq",
+          "int4_compressed_tensors",
+          "nvfp4",
+          "int4_mlx"
+        ],
+        "precision_sensitivity_substrate_pool": [
+          "external_gpu_b200",
+          "external_gpu_b300",
+          "external_gpu_h100",
+          "external_gpu_h200",
+          "external_gpu_a100",
+          "external_gpu_rtx_pro_6000",
+          "local_rtx5090_blackwell_sm120",
+          "m5_macbook_128gb"
+        ],
+        "precision_sensitivity_substrate_format_compatibility": {
+          "external_gpu_b200": [
+            "int4_awq",
+            "int4_compressed_tensors",
+            "nvfp4"
+          ],
+          "external_gpu_b300": [
+            "int4_awq",
+            "int4_compressed_tensors",
+            "nvfp4"
+          ],
+          "external_gpu_h100": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_h200": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_a100": [
+            "int4_awq",
+            "int4_compressed_tensors"
+          ],
+          "external_gpu_rtx_pro_6000": [
+            "int4_awq",
+            "int4_compressed_tensors",
+            "nvfp4"
+          ],
+          "local_rtx5090_blackwell_sm120": [
+            "int4_awq",
+            "nvfp4"
+          ],
+          "m5_macbook_128gb": [
+            "int4_mlx"
+          ]
+        },
+        "precision_sensitivity_pool_record": "2026-05-07 local precision deployment-path pool",
+        "precision_sensitivity_pool_note": "The audit-role format and substrate pools include AWQ INT4, MLX INT4, and the listed compatible substrates. RTX 5090 (consumer Blackwell SM_120, 32 GB) is included as a peer substrate for the 4-bit audit only (BF16 reference exceeds 32 GB). Pre-dispatch smoke is required for any unvalidated (substrate, format) combination.",
+        "precision_primary_format_pool": [
+          "bf16",
+          "fp16",
+          "fp8"
+        ],
+        "precision_primary_format_pool_note": "bf16 and fp16 are permitted primary-precision formats. fp8 is permitted only after a pre-dispatch smoke confirms finish_reason and parser parity against the bf16 baseline. Latency is recorded descriptively and never gates inclusion. fp8 cells pool with bf16/fp16 in the primary class only after correctness smoke validation."
+      }
+    },
+    "glm-4.7-flash": {
+      "display_name": "GLM-4.7-Flash",
+      "family": "zai",
+      "tier": "local_self_hosted",
+      "selection_note": "Local/self-hosted addition selected by non-outcome route screening. Verda/Lambda canary lambda_glm-4.7-flash-bf16-tp2-fa2-tritonmoe-verda-b300_20260520T203312Z produced a schema-visible classification after B200 completion repair: 55/55 evaluable cells returned HTTP 200; five planned cells were censored by GPU instance eviction and are not treated as route failures. Valid DISABLED rows had zero native tool-call rows, and valid TOOL rows showed native tool-call support.",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "local_config": {
+        "hf_repo": "zai-org/GLM-4.7-Flash",
+        "hf_commit_sha": "7dd20894a642a0aa287e9827cb1a1f7f91386b67",
+        "size_billion_params": 31.0,
+        "active_billion_params": 3.0,
+        "local_dir": "${CAGAP_MODEL_ROOT}/glm-4.7-flash-bf16",
+        "tool_call_transport": "openai_compatible_local_server",
+        "structured_tool_calls_required": true,
+        "precision_primary": "bf16",
+        "tokenizer_sha256": "DEFERRED_TO_MAIN_RUN_DOWNLOAD",
+        "chat_template_hash": "DEFERRED_TO_MAIN_RUN_DOWNLOAD",
+        "download_hash_policy": "The HF repo and commit SHA are locked for OSF. tokenizer.json, tokenizer_config.json, and the full local model-file SHA-256 manifest are computed immediately after main-run download and attached to the run manifest before any rows from this subject are accepted.",
+        "post_download_manifest_required": true,
+        "precision_primary_location": "external_gpu",
+        "precision_primary_runtime": "vllm_bf16",
+        "precision_primary_note": "Primary H1 route served primarily on external GPU via vLLM. Because the 31B BF16 checkpoint fits the M5 MacBook 128 GB memory budget, an M5 MLX BF16/FP16 fallback is permitted after route-semantics smoke validation. Paired Sen-Q quantization-audit rows use the predeclared AWQ/MLX 4-bit routes below and are excluded from H1.",
+        "precision_primary_fallback_location": "m5_macbook_128gb",
+        "precision_primary_fallback_runtime": "mlx_lm",
+        "precision_primary_fallback_source": "local_mlx_bf16_or_fp16_conversion_from_zai-org/GLM-4.7-Flash",
+        "precision_primary_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_primary_fallback_gate": "Must pass the same non-outcome route diagnostics as the external primary path before any primary-serving dispatch.",
+        "precision_sensitivity": "int4_awq",
+        "precision_sensitivity_source": "${CAGAP_MODEL_ROOT}/glm-4.7-flash-awq-4bit",
+        "precision_sensitivity_location": "external_gpu",
+        "precision_sensitivity_runtime": "vllm_awq",
+        "precision_sensitivity_note": "Sen-Q 4-bit AWQ deployment path served primarily by local vLLM. The permitted M5 MacBook 128 GB fallback is a local MLX 4-bit conversion from the same frozen HF source and may be used only after route-semantics smoke validation. Launch reference: outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_glm47_flash_awq4_verda_b300.sh. Audit rows carry serving_precision_role=quantization_audit and are excluded from H1.",
+        "precision_sensitivity_format_pool": [
+          "int4_awq",
+          "int4_mlx"
+        ],
+        "precision_sensitivity_substrate_pool": [
+          "external_gpu_b300",
+          "external_gpu_b200",
+          "m5_macbook_128gb"
+        ],
+        "precision_sensitivity_substrate_format_compatibility": {
+          "external_gpu_b300": [
+            "int4_awq"
+          ],
+          "external_gpu_b200": [
+            "int4_awq"
+          ],
+          "m5_macbook_128gb": [
+            "int4_mlx"
+          ]
+        },
+        "precision_sensitivity_fallback_location": "m5_macbook_128gb",
+        "precision_sensitivity_fallback_runtime": "mlx_lm",
+        "precision_sensitivity_fallback_source": "local_mlx_4bit_conversion_from_zai-org/GLM-4.7-Flash",
+        "precision_sensitivity_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_fallback_gate": "Must pass the same non-outcome route diagnostics as the external 4-bit path before any Sen-Q dispatch.",
+        "precision_sensitivity_launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_glm47_flash_awq4_verda_b300.sh",
+        "precision_sensitivity_schema_visibility_canary": {
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-awq-4bit-patched-verda-b300_20260520T195129Z/summary.md",
+          "classification_artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-awq-4bit-patched-verda-b300_20260520T195129Z/classification.json",
+          "classification_sha256": "1b555197cb4385b448b79ecb8dae5f0104216f04723faef9a7ef26e064fcccd8",
+          "responses_sha256": "d9df37d809125d772d2fb4809e2e999457a78f6200d98b864aa22165c44e95b8",
+          "disabled_tool_call_rows": 0,
+          "tool_rows_with_tool_calls": 10,
+          "disabled_token_delta_vs_notools": 1193.0,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "inference_backend": "vllm",
+        "vllm_version": "0.21.1rc1.dev147+ga10d69116 or later route-audited main/nightly build",
+        "vllm_dtype": "bfloat16",
+        "vllm_tool_call_parser": "glm47",
+        "vllm_reasoning_parser": "glm45",
+        "vllm_launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_glm47_flash_bf16_tp2_fa2_tritonmoe_verda_b300.sh",
+        "schema_visibility_canary": {
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-bf16-tp2-fa2-tritonmoe-verda-b300_20260520T203312Z/summary_completed_b200_20260520T210531Z.md",
+          "classification_artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_glm-4.7-flash-bf16-tp2-fa2-tritonmoe-verda-b300_20260520T203312Z/classification_completed_b200_20260520T210531Z.json",
+          "classification_sha256": "bad020ea6241f1f58a5b17ab3ae2e53d4d512a1749d307edde9f48fc102616b8",
+          "responses_sha256": "d2799586be74b9388d1ad5c0816e9e7f89e684f01a029a32db5ec7770fc5a2e3",
+          "disabled_tool_call_rows": 0,
+          "tool_rows_with_tool_calls": 10,
+          "disabled_token_delta_vs_notools": 1206.0,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "license": "MIT"
+      }
+    },
+    "mistral-medium-3.5-128b": {
+      "display_name": "Mistral Medium 3.5 128B",
+      "family": "mistral",
+      "tier": "local_self_hosted",
+      "selection_note": "Local/self-hosted addition selected by non-outcome route screening. Official FP8/BF16-compute route canary lambda_mistral-medium-3.5-128b-official-fp8-bf16-compute_20260520T192456Z completed 60 requests with DISABLED token delta 1178 and zero DISABLED tool-call rows. Because the default judge panel includes Mistral Large 3, this subject must use the family-excluded judge panel.",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "local_config": {
+        "hf_repo": "mistralai/Mistral-Medium-3.5-128B",
+        "hf_commit_sha": "ed0c85631cf20929c29bc36d7cb37519ed0cdd28",
+        "size_billion_params": 127.704,
+        "size_display_note": "Display name follows the upstream 128B model-family label; size_billion_params records the exact audited parameter count.",
+        "local_dir": "${CAGAP_MODEL_ROOT}/mistral-medium-3.5-128b-bf16",
+        "tool_call_transport": "openai_compatible_local_server",
+        "structured_tool_calls_required": true,
+        "precision_primary": "fp8_weights_bf16_compute",
+        "tokenizer_sha256": "DEFERRED_TO_MAIN_RUN_DOWNLOAD",
+        "chat_template_hash": "DEFERRED_TO_MAIN_RUN_DOWNLOAD",
+        "download_hash_policy": "The HF repo and commit SHA are locked for OSF. tokenizer.json, tokenizer_config.json, and the full local model-file SHA-256 manifest are computed immediately after main-run download and attached to the run manifest before any rows from this subject are accepted.",
+        "post_download_manifest_required": true,
+        "precision_primary_location": "external_gpu",
+        "precision_primary_runtime": "vllm_fp8_bf16_compute",
+        "precision_primary_note": "Primary H1 route served on external GPU using official FP8 weights with BF16 compute. M5 MacBook 128 GB fallback is not permitted for primary precision because BF16/FP16 Mistral Medium 3.5 128B exceeds the unified-memory budget and the official primary route is external-GPU vLLM.",
+        "precision_primary_fallback_location": null,
+        "precision_primary_fallback_runtime": null,
+        "precision_primary_fallback_source": null,
+        "precision_primary_fallback_trigger": null,
+        "precision_primary_no_fallback_reason": "Mistral Medium 3.5 128B BF16/FP16 primary precision exceeds the M5 MacBook 128 GB unified-memory budget; the primary route remains external-GPU vLLM.",
+        "precision_sensitivity": "int4_awq",
+        "precision_sensitivity_source": "${CAGAP_MODEL_ROOT}/mistral-medium-3.5-128b-awq-int4",
+        "precision_sensitivity_location": "external_gpu",
+        "precision_sensitivity_runtime": "vllm_awq",
+        "precision_sensitivity_note": "Sen-Q 4-bit AWQ deployment path served primarily by local vLLM. The permitted M5 MacBook 128 GB fallback is a local MLX 4-bit conversion from the same frozen HF source and may be used only after route-semantics smoke validation. Launch reference: outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_mistral_medium_35_awq.sh. Audit rows carry serving_precision_role=quantization_audit and are excluded from H1.",
+        "precision_sensitivity_format_pool": [
+          "int4_awq",
+          "int4_mlx"
+        ],
+        "precision_sensitivity_substrate_pool": [
+          "external_gpu_b300",
+          "external_gpu_b200",
+          "m5_macbook_128gb"
+        ],
+        "precision_sensitivity_substrate_format_compatibility": {
+          "external_gpu_b300": [
+            "int4_awq"
+          ],
+          "external_gpu_b200": [
+            "int4_awq"
+          ],
+          "m5_macbook_128gb": [
+            "int4_mlx"
+          ]
+        },
+        "precision_sensitivity_fallback_location": "m5_macbook_128gb",
+        "precision_sensitivity_fallback_runtime": "mlx_lm",
+        "precision_sensitivity_fallback_source": "local_mlx_4bit_conversion_from_mistralai/Mistral-Medium-3.5-128B",
+        "precision_sensitivity_fallback_trigger": "external_gpu_unavailable_before_dispatch",
+        "precision_sensitivity_fallback_gate": "Must pass the same non-outcome route diagnostics as the external 4-bit path before any Sen-Q dispatch.",
+        "precision_sensitivity_launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_mistral_medium_35_awq.sh",
+        "precision_sensitivity_schema_visibility_canary": {
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-awq-int4_20260520T185835Z/summary.md",
+          "classification_artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-awq-int4_20260520T185835Z/classification.json",
+          "classification_sha256": "ec25a4f43878037e512a5ed28481a4d116b0688469fbc892b7bb399bcfc1013d",
+          "responses_sha256": "6e7398147590cdc41dd868418100b578c6b2431b00fd920e8f6274e7e887fb2b",
+          "disabled_tool_call_rows": 0,
+          "tool_rows_with_tool_calls": 10,
+          "disabled_token_delta_vs_notools": 1178.0,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "inference_backend": "vllm",
+        "vllm_version": "0.21.1rc1.dev147+ga10d69116 or later route-audited main/nightly build",
+        "vllm_dtype": "bfloat16",
+        "vllm_tool_call_parser": "mistral",
+        "vllm_reasoning_effort": "none",
+        "vllm_launch_reference": "outputs/pilot/2026-05-20/schema_visibility_smoke/imported_run_notes/serve_mistral_medium_35_official_fp8_disable_custom_ar.sh",
+        "schema_visibility_canary": {
+          "artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-official-fp8-bf16-compute_20260520T192456Z/summary.md",
+          "classification_artifact": "outputs/pilot/2026-05-20/schema_visibility_smoke/lambda_mistral-medium-3.5-128b-official-fp8-bf16-compute_20260520T192456Z/classification.json",
+          "classification_sha256": "123f877f18b125452f38c7ca84c3761acbaf867ad6da3c9211611cd1d63d8392",
+          "responses_sha256": "822b17417e83ec6bbc5eea0d0253bee60d13fd63b8105030dfa74e665920499b",
+          "disabled_tool_call_rows": 0,
+          "tool_rows_with_tool_calls": 10,
+          "disabled_token_delta_vs_notools": 1178.0,
+          "classification": "schema_visible",
+          "route_support_status": "supported"
+        },
+        "license": "Mistral Research License / model-card license: other"
+      }
+    }
+  },
+  "judges": {
+    "glm-5.1": {
+      "display_name": "GLM 5.1",
+      "role": "judge_a",
+      "family": "zai",
+      "selection_note": "Default judge-slot model from the Z.ai/GLM family. Because GLM-4.7-Flash is now a subject, this judge is excluded for GLM-family subjects under the subject-level family-excluded routing rule and replaced by the first eligible substitute. MIT-licensed open weights (754B, HF zai-org/GLM-5.1). Native tool calling, OpenAI-compatible API. The current judge-reliability rule keeps GLM 5.1 as judge_a with zai-direct primary routing, max_attempts=3 for invalid judge completions, and max_tokens=2048. The bridge-labeling gate computes pairwise agreement versus the active judge slots before confirmatory dispatch.",
+      "native": {
+        "endpoint": "https://api.z.ai",
+        "url_path": "/api/coding/paas/v4/chat/completions",
+        "slug": "glm-5.1",
+        "auth_env": "ZAI_API_KEY",
+        "supports_batch": false,
+        "batch_note": "z.ai Batch endpoint not verified at swap time. GLM judge dispatch uses zai-direct online requests for the whole partition when ZAI_API_KEY/GLM_API_KEY is available; fallback route selection is partition-level/operator-level, not row-by-row."
+      },
+      "openrouter": {
+        "slug": "z-ai/glm-5.1",
+        "pinned_provider": "z-ai"
+      },
+      "route_override": null,
+      "ollama_cloud": {
+        "endpoint": "https://ollama.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "glm-5.1:cloud",
+        "auth_env": "OLLAMA_API_KEY",
+        "digest_prefix": "59472abf9d0a",
+        "context_window_tokens": 198000,
+        "modalities": [
+          "text"
+        ],
+        "supports_batch": false,
+        "note": "Ollama Cloud secondary route for GLM 5.1 judge. Auth via OLLAMA_API_KEY. Use only as a whole-partition fallback if zai-direct is unavailable before dispatch, never only for rows where zai-direct returned an invalid completion."
+      },
+      "route_preference": [
+        "native",
+        "ollama_cloud",
+        "openrouter"
+      ]
+    },
+    "command-a-03-2025": {
+      "display_name": "Cohere Command A (03-2025)",
+      "role": "judge_b",
+      "family": "cohere",
+      "selection_note": "Cohere Command A (release 03-2025) \u2014 default judge_b slot. Cohere is currently disjoint from the subject families, but panel membership is still resolved through the subject-level family-excluded routing rule. Online /v2/chat dispatch: chat-inference batch is undocumented in Cohere v2 (POST /v2/batches accepts input_dataset_id but no published JSONL chat schema \u2014 `chat-finetune-input` dataset type is for SFT not inference), so the judge runs through tenacity-throttled concurrent online requests.",
+      "native": {
+        "endpoint": "https://api.cohere.com",
+        "url_path": "/v2/chat",
+        "slug": "command-a-03-2025",
+        "auth_env": "COHERE_API_KEY",
+        "supports_batch": false,
+        "batch_note": "Cohere v2 batch surface (POST /v2/batches) requires `input_dataset_id` referencing an uploaded dataset, but as of 2026-05-08 the Cohere docs only describe dataset_type=chat-finetune-input (for fine-tuning) and embed-input (for embeddings). No published JSONL schema for batch chat inference. Use online /v2/chat with concurrency throttling instead.",
+        "rate_limit": {
+          "trial_key": {
+            "requests_per_minute": 12,
+            "min_interval_seconds": 5.0,
+            "row_workers": 1,
+            "note": "Cohere trial-tier hits 429s when called faster than ~5s/req. Pilot-2 confirmed."
+          },
+          "production_key": {
+            "requests_per_minute": 500,
+            "min_interval_seconds": 0.12,
+            "row_workers": 4,
+            "note": "Cohere production tier; documented 500 RPM ceiling."
+          },
+          "adaptive_strategy": "use_COHERE_KEY_TIER_or_operator_preflight; default_to_trial_pacing_when_uncertain",
+          "tier_detection_env": "COHERE_KEY_TIER",
+          "tier_detection_note": "If COHERE_KEY_TIER is set to `trial` or `production`, the dispatcher uses that tier's parameters directly. If unset, operators must either run a documented preflight confirming production-tier pacing or default to trial-tier pacing. The first ~1000 main-run judge calls are likely on the trial key (each subject's judge phase is ~349 judge-required rows; first three subjects exhaust trial credits)."
+        }
+      },
+      "openrouter": {
+        "slug": "cohere/command-a",
+        "pinned_provider": "cohere"
+      },
+      "self_hosted": {
+        "source": "huggingface",
+        "hf_repo": "CohereLabs/c4ai-command-a-03-2025",
+        "hf_repo_url": "https://huggingface.co/CohereLabs/c4ai-command-a-03-2025",
+        "predeclared_serving_formats": [
+          {
+            "format": "bf16",
+            "serving_engine": "vllm",
+            "vllm_quantization": null,
+            "preference_rank": 1
+          },
+          {
+            "format": "int8_awq",
+            "serving_engine": "vllm",
+            "vllm_quantization": "awq_marlin",
+            "preference_rank": 2
+          },
+          {
+            "format": "int4_awq",
+            "serving_engine": "vllm",
+            "vllm_quantization": "awq_marlin",
+            "preference_rank": 3
+          }
+        ],
+        "vote_source_dir_slug": "command_a_self_hosted",
+        "audit_role": "judge_b_fallback_tier_3",
+        "supports_batch": false,
+        "fires_when": "Native /v2/chat and OpenRouter pinned-provider routes are both unrecoverable across an entire partition; fallback is whole-partition only and never row-by-row."
+      },
+      "route_preference": [
+        "native",
+        "openrouter",
+        "self_hosted"
+      ]
+    },
+    "mistral-large-2512": {
+      "display_name": "Mistral Large 3 (2512)",
+      "role": "judge_c",
+      "family": "mistral",
+      "selection_note": "Mistral Large 3 \u2014 open-weight, granular Mixture-of-Experts (675B total / 41B active parameters), multimodal (text + image), Mistral AI. Released 2025-12 under the version slug `mistral-large-2512` (full vendor name: 'Mistral Large 3 2512'). Default judge_c slot. Because Mistral Medium 3.5 128B is now a subject, this judge is excluded for Mistral-family subjects under the subject-level family-excluded routing rule and replaced by the first eligible substitute. Same model identity across all three routes: native (`mistral-large-2512`), OpenRouter (`mistralai/mistral-large-2512`, served by Mistral provider), and Ollama Cloud (`mistral-large-3:675b-cloud`).",
+      "native": {
+        "endpoint": "https://api.mistral.ai",
+        "url_path": "/v1/chat/completions",
+        "slug": "mistral-large-2512",
+        "auth_env": "MISTRAL_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/batch/jobs",
+        "batch_input_files_path": "/v1/files",
+        "batch_discount": 0.5,
+        "batch_note": "Mistral Le Plateforme batch (POST /v1/batch/jobs with input_files=[file_id]; 50% discount per pricing reference)."
+      },
+      "openrouter": {
+        "slug": "mistralai/mistral-large-2512",
+        "pinned_provider": "mistral"
+      },
+      "ollama_cloud": {
+        "endpoint": "https://ollama.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "mistral-large-3:675b-cloud",
+        "auth_env": "OLLAMA_API_KEY",
+        "digest_prefix": "3130fd5a5a1e",
+        "context_window_tokens": 256000,
+        "modalities": [
+          "text",
+          "image"
+        ],
+        "supports_batch": false,
+        "note": "Ollama Cloud secondary route for Mistral Large 3 (675B/41B-active MoE). Auth via OLLAMA_API_KEY. Same model as native/OpenRouter routes (vendor name 'Mistral Large 3 2512'); Ollama tag 'mistral-large-3:675b-cloud' is the cloud-served alias of the same `mistral-large-2512` version slug."
+      },
+      "route_override": null,
+      "route_preference": [
+        "native",
+        "ollama_cloud",
+        "openrouter"
+      ]
+    },
+    "gpt-5.5-judge": {
+      "display_name": "GPT-5.5 (substitute judge)",
+      "role": "substitute_judge_1",
+      "family": "openai",
+      "selection_note": "First substitute under the subject-level family-excluded judge-routing rule. Used only when a default judge shares family/provider lineage with the subject. Locked API route/model id; never row-by-row.",
+      "native": {
+        "endpoint": "https://api.openai.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "gpt-5.5",
+        "auth_env": "OPENAI_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/batches",
+        "batch_input_files_path": "/v1/files",
+        "batch_discount": 0.5
+      },
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "pinned_provider": "openai"
+      },
+      "route_override": "openrouter",
+      "route_preference": [
+        "openrouter",
+        "native"
+      ]
+    },
+    "claude-opus-4-7-judge": {
+      "display_name": "Claude Opus 4.7 (substitute judge)",
+      "role": "substitute_judge_2",
+      "family": "anthropic",
+      "selection_note": "Second substitute under the subject-level family-excluded judge-routing rule. Used only if the first substitute is unavailable or same-family; never row-by-row.",
+      "native": {
+        "endpoint": "https://api.anthropic.com",
+        "url_path": "/v1/messages",
+        "slug": "claude-opus-4-7",
+        "auth_env": "ANTHROPIC_API_KEY",
+        "supports_batch": true,
+        "batch_url_path": "/v1/messages/batches",
+        "batch_discount": 0.5,
+        "headers": {
+          "anthropic-version": "2023-06-01"
+        }
+      },
+      "openrouter": {
+        "slug": "anthropic/claude-opus-4.7",
+        "pinned_provider": "anthropic"
+      },
+      "route_override": "openrouter",
+      "route_preference": [
+        "openrouter",
+        "native"
+      ]
+    }
+  },
+  "extractor": {
+    "minimax-2.7": {
+      "display_name": "MiniMax M2.7",
+      "family": "minimax",
+      "native": {
+        "endpoint": "https://api.minimax.io",
+        "url_path": "/v1/text/chatcompletion_v2",
+        "slug": "MiniMax-M2.7",
+        "auth_env": "MINIMAX_API_KEY",
+        "supports_batch": true,
+        "batch_mechanism": "async_param",
+        "batch_url_path": "/v1/text/chatcompletion_v2",
+        "batch_async_query_path": "/v1/text/chatcompletion_async_query",
+        "batch_note": "MiniMax does not have a separate batch endpoint; pass `async: true` in the standard chat-completion body to enqueue, then poll the async_query endpoint with task_id. Per pricing reference docx.",
+        "host_note": "International host (.io only). Do NOT use .minimaxi.com or .minimax.chat \u2014 both reject this key."
+      },
+      "openrouter": {
+        "slug": "minimax/minimax-m2.7",
+        "pinned_provider": "minimax/fp8"
+      },
+      "route_override": null,
+      "ollama_cloud": {
+        "endpoint": "https://ollama.com",
+        "url_path": "/v1/chat/completions",
+        "slug": "minimax-m2.7:cloud",
+        "auth_env": "OLLAMA_API_KEY",
+        "digest_prefix": "06daa293c105",
+        "context_window_tokens": 200000,
+        "modalities": [
+          "text"
+        ],
+        "supports_batch": false,
+        "note": "Ollama Cloud secondary route for MiniMax M2.7 extractor. Auth via OLLAMA_API_KEY."
+      },
+      "route_preference": [
+        "native",
+        "ollama_cloud",
+        "openrouter"
+      ]
+    }
+  },
+  "validators": {
+    "granite-3.3-8b-instruct-8bit": {
+      "display_name": "Granite 3.3 8B Instruct (MLX int8)",
+      "role": "validator_a",
+      "family": "ibm",
+      "tier": "local_validator",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "model_freeze_key": "granite-3.3-8b-instruct-8bit"
+    },
+    "phi-4-8bit": {
+      "display_name": "Phi-4 14B Instruct (MLX int8)",
+      "role": "validator_b",
+      "family": "microsoft",
+      "tier": "local_validator",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "model_freeze_key": "phi-4-8bit"
+    },
+    "olmo-2-13b-instruct-8bit": {
+      "display_name": "OLMo 2 13B Instruct (MLX int8)",
+      "role": "validator_c_tiebreaker",
+      "family": "allenai",
+      "tier": "local_validator",
+      "native": null,
+      "openrouter": null,
+      "route_override": null,
+      "model_freeze_key": "olmo-2-13b-instruct-8bit"
+    }
+  },
+  "archived_models": {
+    "phi4-reasoning-plus-8bit": {
+      "display_name": "Phi-4-reasoning-plus-8bit (MLX int8)",
+      "role": "excluded_generator_candidate",
+      "family": "microsoft",
+      "tier": "local_archive",
+      "model_freeze_key": "phi4-reasoning-plus-8bit",
+      "archive_reason": "Non-current A3 generator candidate retained for provenance only."
+    },
+    "qwen3.6-plus": {
+      "display_name": "Qwen 3.6-Plus",
+      "role": "excluded_subject_candidate",
+      "family": "alibaba",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "qwen3.6-plus",
+      "archive_reason": "Rejected from the 10-subject roster after native/OpenRouter route testing showed the DISABLED arm hides or strips schemas rather than preserving model-visible schema."
+    },
+    "deepseek-v4-pro": {
+      "display_name": "DeepSeek V4-Pro",
+      "role": "excluded_subject_candidate",
+      "family": "deepseek",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "deepseek-v4-pro",
+      "archive_reason": "Rejected from the 10-subject roster after native and OpenRouter/Anthropic-compatible pilots showed schemas are stripped from DISABLED prompt accounting / visibility despite TOOL support."
+    },
+    "gpt-oss-120b": {
+      "display_name": "GPT-OSS-120B",
+      "role": "excluded_subject_candidate",
+      "family": "openai",
+      "tier": "excluded_disabled_semantics",
+      "model_freeze_key": "gpt-oss-120b",
+      "archive_reason": "Rejected despite schema-visible token deltas because the local vLLM canary produced tool calls in 9/12 DISABLED diagnostic rows with tool_choice=none; see ~/Desktop/playground/cagap_roster_option_scratch/schema_visibility_smoke/lambda_gpt-oss-120b_20260520T165432Z."
+    },
+    "minimax-2.7-subject-candidate": {
+      "display_name": "MiniMax M2.7 subject candidate",
+      "role": "excluded_subject_candidate",
+      "family": "minimax",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "minimax-2.7-subject-candidate",
+      "archive_reason": "Rejected as a subject because DISABLED schema semantics did not pass hidden/visible route audit; MiniMax remains extractor only."
+    },
+    "glm-5.1-subject-candidate": {
+      "display_name": "GLM 5.1 subject candidate",
+      "role": "excluded_subject_candidate",
+      "family": "zai",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "glm-5.1-subject-candidate",
+      "archive_reason": "Rejected as a subject because the candidate route failed DISABLED eligibility; GLM 5.1 remains a default judge except for Z.ai/GLM-family subjects."
+    },
+    "qwen3.5-subject-candidate": {
+      "display_name": "Qwen 3.5 subject candidate",
+      "role": "excluded_subject_candidate",
+      "family": "alibaba",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "qwen3.5-subject-candidate",
+      "archive_reason": "Rejected as a subject because route screening showed the same hidden-schema problem as Qwen hosted candidates."
+    },
+    "deepseek-3.2-subject-candidate": {
+      "display_name": "DeepSeek 3.2 subject candidate",
+      "role": "excluded_subject_candidate",
+      "family": "deepseek",
+      "tier": "excluded_hidden_schema",
+      "model_freeze_key": "deepseek-3.2-subject-candidate",
+      "archive_reason": "Rejected as a subject because route screening showed the same hidden-schema problem as DeepSeek hosted candidates."
+    }
+  },
+  "decoding": {
+    "default": {
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "max_tokens": 4096
+    },
+    "_overrides_note": "Per-model decoding overrides. All active runner requests use max_tokens=4096 unless a later design-locked provider-specific compatibility test requires removal. `null` value = remove the parameter entirely (do NOT pass it). Kimi K2.6 keeps temperature=1.0 because 0.0 is rejected by API and top_p=0.95 because that is the only value the Moonshot API accepts on this model (verified 2026-04-30 smoke test). Claude Opus 4.7 (and the rest of the Anthropic 4.X reasoning family) drops temperature and top_p entirely because the provider rejects temperature on this model family (verified 2026-04-30 smoke test). GLM 5.1 judge uses max_tokens=2048 because 1024-token canaries showed length truncation without parsable labels. GPT-5.5 decoding params (max_tokens rename to max_completion_tokens, temperature/top_p drop) are handled in the OpenAI adapter rather than here so the roster stays semantically uniform. Mistral Large 3 (2512) uses default decoding; no override needed.",
+    "overrides": {
+      "claude-opus-4-7": {
+        "temperature": null,
+        "top_p": null
+      },
+      "kimi-k2.6": {
+        "temperature": 1.0,
+        "top_p": 0.95
+      },
+      "glm-5.1": {
+        "temperature": 0.0,
+        "max_tokens": 2048
+      },
+      "llama-3.3-70b-instruct": {
+        "max_tokens": 4096
+      },
+      "gemma-4-31b-it": {
+        "max_tokens": 4096
+      },
+      "qwen3.6-35b-a3b": {
+        "max_tokens": 4096
+      }
+    }
+  },
+  "prices_per_1m_tokens_usd": {
+    "_note": "Local subjects have zero API cost. Public API prices were last reviewed on 2026-05-23 for entries touched by the current OSF readiness pass; final invoices may still differ from public list prices because of account terms, provider credits, and route-level batching.",
+    "claude-opus-4-7": {
+      "input": 5.0,
+      "output": 25.0,
+      "input_batch": 2.5,
+      "output_batch": 12.5,
+      "_note": "Anthropic Claude Opus 4.7 native pricing; selected as current generally available Anthropic frontier API subject."
+    },
+    "grok-4.3": {
+      "input": 1.25,
+      "output": 2.5,
+      "input_batch": 0.625,
+      "output_batch": 1.25,
+      "_note": "Verified 2026-05-23 against xAI published Grok 4.3 rates and OpenRouter /api/v1/models. xAI batch uses the HTTP file-batch route with batch_slug grok-4.3 (no dated suffix needed). Batch estimator uses the user-verified 50% Batch API token-discount case."
+    },
+    "command-a-03-2025": {
+      "input": 2.5,
+      "output": 10.0,
+      "_note": "Verified 2026-05-23 against Cohere Command A docs and OpenRouter cohere/command-a-03-2025 pricing. Online /v2/chat dispatch only; no native Cohere batch discount documented for this route."
+    },
+    "llama-3.3-70b-instruct": {
+      "input": 0.0,
+      "output": 0.0,
+      "_note": "local \u2014 zero API cost"
+    },
+    "gemma-4-31b-it": {
+      "input": 0.0,
+      "output": 0.0,
+      "_note": "local \u2014 zero API cost"
+    },
+    "qwen3.6-35b-a3b": {
+      "input": 0.0,
+      "output": 0.0,
+      "_note": "local \u2014 zero API cost"
+    },
+    "kimi-k2.6": {
+      "input": 0.95,
+      "output": 4.0,
+      "input_batch": 0.57,
+      "output_batch": 2.4,
+      "_note": "Synced to api_pricings_native_providers.json on 2026-04-30. Native Moonshot Kimi K2.6 pricing is $0.95/$4.00 per M tok; OpenRouter effective pricing is $0.74/$3.49 per M tok. Moonshot batch 40% discount."
+    },
+    "glm-5.1": {
+      "input": 1.4,
+      "output": 4.4,
+      "_note": "Synced to api_pricings_native_providers.json on 2026-04-30. Native Z.AI pricing is $1.40/$4.40 per M tok; OpenRouter effective pricing is $1.05/$3.50 per M tok. No batch discount confirmed at swap time."
+    },
+    "gpt-5.5": {
+      "input": 5.0,
+      "output": 30.0,
+      "input_batch": 2.5,
+      "output_batch": 15.0,
+      "_note": "OpenAI announced API availability soon on 2026-04-23; confirm account access before main run"
+    },
+    "mistral-large-2512": {
+      "input": 0.5,
+      "output": 1.5,
+      "input_batch": 0.25,
+      "output_batch": 0.75,
+      "_note": "Synced to api_pricings_native_providers.json on 2026-04-30. Mistral batch 50% discount."
+    },
+    "minimax-2.7": {
+      "input": 0.3,
+      "output": 1.2,
+      "_note": "MiniMax exposes async_param batch mechanism but no separate batch pricing (batch_api_input_usd_per_1m_tokens=null). Runner falls back to regular rates via price.get('input_batch', price['input']). Ollama-cloud-covered for our subscription = $0 marginal."
+    },
+    "_removed_2026_05_08_note": "gemini-3.1-pro-preview pricing entry dropped 2026-05-08 when Gemini was removed from subjects. grok-4.2 pricing entry dropped same date when xAI promoted from judge to subject (now grok-4.3).",
+    "gemini-3.5-flash": {
+      "input": 1.5,
+      "output": 9.0,
+      "_note": "Verified 2026-05-23 against OpenRouter /api/v1/models for route google/gemini-3.5-flash."
+    },
+    "glm-4.7-flash": {
+      "input": 0.0,
+      "output": 0.0,
+      "_note": "local/self-hosted \u2014 zero API cost; GPU rental cost tracked separately."
+    },
+    "mistral-medium-3.5-128b": {
+      "input": 0.0,
+      "output": 0.0,
+      "_note": "local/self-hosted \u2014 zero API cost; GPU rental cost tracked separately."
+    },
+    "gpt-5.5-judge": {
+      "input": 5.0,
+      "output": 30.0,
+      "input_batch": 2.5,
+      "output_batch": 15.0,
+      "_note": "Substitute judge route; same underlying model/pricing as gpt-5.5 subject route."
+    },
+    "claude-opus-4-7-judge": {
+      "input": 5.0,
+      "output": 25.0,
+      "input_batch": 2.5,
+      "output_batch": 12.5,
+      "_note": "Second substitute judge route; same underlying model/pricing as Claude Opus 4.7 subject route."
+    },
+    "_removed_2026_05_22_note": "Superseded active subject pricing entries removed after hidden-schema route audit exclusion; retained only in archived_models."
+  },
+  "deferred": [],
+  "judge_family_exclusion": {
+    "default_panel": [
+      "glm-5.1",
+      "command-a-03-2025",
+      "mistral-large-2512"
+    ],
+    "substitute_priority": [
+      "gpt-5.5-judge",
+      "claude-opus-4-7-judge"
+    ],
+    "scope": "subject_level_all_arms_personas_prompts_trials_chat_path_only",
+    "predicate_rows": "structured tool-call rows remain predicate-graded and do not route to substitute judges",
+    "rule": "No judge from the same model family/provider lineage may score that subject chat-path responses. Same-family default judges are replaced at the subject level by the first eligible substitute; no row-by-row switching."
+  }
+}
